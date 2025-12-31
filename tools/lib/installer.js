@@ -340,6 +340,7 @@ async function update() {
 
     // Check for user modifications
     const modifications = await manifestManager.checkModifications();
+    let backupPath = null;
 
     if (modifications.modified.length > 0) {
       console.log(chalk.yellow(`\nWarning: ${modifications.modified.length} file(s) have been modified:`));
@@ -366,7 +367,7 @@ async function update() {
 
       // Create backup
       spinner.start('Creating backup...');
-      const backupPath = path.join(projectRoot, `.tpg-core-backup-${Date.now()}`);
+      backupPath = path.join(projectRoot, `.tpg-core-backup-${Date.now()}`);
       const targetPath = path.join(projectRoot, '.tpg-core');
       const fileCopier = new FileCopier(targetPath, backupPath);
       await fileCopier.createBackup(backupPath);
