@@ -1,0 +1,228 @@
+# <!-- Powered by Product Genome™ Framework -->
+workflow:
+  id: genome-assessment-flow
+  name: Product Genome Assessment (Health Check)
+  version: 1.0
+  description: >-
+    Comprehensive assessment of Product Genome health across all 6 DNAs.
+    Evaluates maturity, identifies gaps, validates coherence, and generates
+    actionable recommendations for improvement.
+
+  use_cases:
+    - Quarterly genome health check
+    - New product genome audit
+    - Post-transformation validation (brownfield)
+    - Pre-major-release validation
+    - Troubleshooting product direction issues
+
+  prerequisites:
+    - All 6 DNAs should exist (or assessment identifies missing DNAs)
+    - Access to product documentation and codebase
+    - Time for thorough assessment (4-8 hours)
+
+  agents_involved:
+    - tpg-orchestrator
+
+  estimated_duration: "4-8 hours for complete assessment"
+
+  phases:
+    - phase: 1
+      name: Individual DNA Assessment
+      objective: Assess maturity of each DNA independently
+      duration: "3-5 hours"
+      steps:
+        - assess_purpose_dna
+        - assess_user_dna
+        - assess_experience_dna
+        - assess_architecture_dna
+        - assess_intelligence_dna
+        - assess_cultural_dna
+      checkpoint:
+        name: dna_assessments_complete
+        validation:
+          - All 6 DNAs assessed with maturity scores
+          - Evidence documented for each score
+          - Gaps identified for each DNA
+
+    - phase: 2
+      name: Coherence Validation
+      objective: Validate DNAs work together harmoniously
+      duration: "1-2 hours"
+      steps:
+        - validate_genome_coherence
+        - identify_conflicts
+        - assess_mutual_reinforcement
+      checkpoint:
+        name: coherence_validated
+        validation:
+          - Coherence score calculated
+          - Conflicts identified
+          - Strengths documented
+
+    - phase: 3
+      name: Report Generation and Recommendations
+      objective: Generate comprehensive report with actionable recommendations
+      duration: "1 hour"
+      steps:
+        - generate_assessment_report
+        - prioritize_recommendations
+        - create_action_plan
+      checkpoint:
+        name: assessment_complete
+        requires_approval: false
+        validation:
+          - Report generated
+          - Recommendations prioritized
+          - Action plan created
+
+  steps:
+    - id: assess_purpose_dna
+      name: Assess Purpose DNA Maturity
+      agent: tpg-orchestrator
+      task: assess-purpose-dna
+      outputs:
+        - Purpose DNA maturity score (1-5)
+        - Evidence and gaps
+        - Recommendations
+      validation:
+        - Score justified with evidence
+        - Gaps documented
+      handoff: "Purpose DNA assessed. Next: User DNA."
+
+    - id: assess_user_dna
+      name: Assess User DNA Maturity
+      agent: tpg-orchestrator
+      task: assess-user-dna
+      outputs:
+        - User DNA maturity score (1-5)
+        - Evidence and gaps
+        - Recommendations
+      validation:
+        - Evidence-based evaluation
+        - User research quality assessed
+      handoff: "User DNA assessed. Next: Experience DNA."
+
+    - id: assess_experience_dna
+      name: Assess Experience DNA Maturity
+      agent: tpg-orchestrator
+      task: assess-experience-dna
+      outputs:
+        - Experience DNA maturity score (1-5)
+        - MQB gate assessment
+        - Quality standards evaluation
+      handoff: "Experience DNA assessed. Next: Architecture DNA."
+
+    - id: assess_architecture_dna
+      name: Assess Architecture DNA Maturity
+      agent: tpg-orchestrator
+      task: assess-architecture-dna
+      outputs:
+        - Architecture DNA maturity score (1-5)
+        - ADR coverage assessment
+        - Technical debt evaluation
+      handoff: "Architecture DNA assessed. Next: Intelligence DNA."
+
+    - id: assess_intelligence_dna
+      name: Assess Intelligence DNA Maturity
+      agent: tpg-orchestrator
+      task: assess-intelligence-dna
+      outputs:
+        - Intelligence DNA maturity score (1-5)
+        - Instrumentation coverage
+        - Metrics quality assessment
+      handoff: "Intelligence DNA assessed. Next: Cultural DNA."
+
+    - id: assess_cultural_dna
+      name: Assess Cultural DNA Maturity
+      agent: tpg-orchestrator
+      task: assess-cultural-dna
+      outputs:
+        - Cultural DNA maturity score (1-5)
+        - Cultural practices evaluation
+        - Team alignment assessment
+      handoff: "All DNAs assessed. Next: Validate coherence."
+
+    - id: validate_genome_coherence
+      name: Validate Cross-DNA Coherence
+      agent: tpg-orchestrator
+      task: validate-genome-coherence
+      inputs:
+        - All 6 DNA assessments
+      outputs:
+        - Coherence score (1-5)
+        - DNA pair scores
+        - Conflicts and gaps
+      validation:
+        - All DNA pairs evaluated
+        - Coherence score calculated
+      handoff: "Coherence validated. Next: Generate report."
+
+    - id: identify_conflicts
+      name: Identify and Document Conflicts
+      agent: tpg-orchestrator
+      task: analyze-conflicts
+      outputs:
+        - Critical conflicts list
+        - Conflict resolutions
+      handoff: "Conflicts identified. Next: Assess mutual reinforcement."
+
+    - id: assess_mutual_reinforcement
+      name: Assess Mutual Reinforcement
+      agent: tpg-orchestrator
+      task: assess-reinforcement
+      outputs:
+        - Strengths (DNAs reinforcing each other)
+        - Opportunities for better integration
+      handoff: "Assessment complete. Generating report."
+
+    - id: generate_assessment_report
+      name: Generate Comprehensive Assessment Report
+      agent: tpg-orchestrator
+      task: generate-report
+      outputs:
+        - Genome assessment report (markdown)
+        - Executive summary
+        - Detailed findings
+      handoff: "Report generated. Next: Prioritize recommendations."
+
+    - id: prioritize_recommendations
+      name: Prioritize Recommendations
+      agent: tpg-orchestrator
+      task: prioritize-actions
+      outputs:
+        - High priority actions
+        - Medium priority improvements
+        - Long-term enhancements
+      handoff: "Recommendations prioritized. Creating action plan."
+
+    - id: create_action_plan
+      name: Create Action Plan
+      agent: tpg-orchestrator
+      task: create-plan
+      outputs:
+        - Action plan with owners and deadlines
+        - Next genome assessment scheduled
+      handoff: "Assessment complete. Action plan ready."
+
+  deliverables:
+    - Product Genome assessment report
+    - Individual DNA maturity scores (1-5 for each)
+    - Overall genome coherence score (1-5)
+    - Conflicts and gaps identified
+    - Prioritized recommendations
+    - Action plan with owners and deadlines
+    - Next assessment scheduled
+
+  success_criteria:
+    - All 6 DNAs assessed with maturity scores
+    - Coherence score calculated
+    - Critical conflicts identified
+    - Actionable recommendations generated
+    - Action plan created with owners
+    - Team aligned on priorities
+
+  next_steps:
+    - Execute high-priority recommendations immediately
+    - Schedule follow-up assessments (quarterly)
+    - Track action item completion
+    - Monitor genome health improvements

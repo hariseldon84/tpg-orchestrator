@@ -1,0 +1,270 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: genome-assessment-template-v1
+  name: Product Genome Assessment Report
+  version: 1.0
+  output:
+    format: markdown
+    filename: docs/genome/genome-assessment-{{date}}.md
+    title: "{{product_name}} Product Genome Assessment"
+
+workflow:
+  mode: automated
+  elicitation: none
+
+sections:
+  - id: executive-summary
+    title: Executive Summary
+    instruction: |
+      3-5 paragraph summary of current genome health, top strengths, critical gaps, and primary recommendations.
+    type: paragraph
+
+  - id: overall-health
+    title: Overall Genome Health
+    sections:
+      - id: health-score
+        title: Genome Health Score
+        template: "**Overall Score: {{score}} / 5.0** - {{maturity_level}}"
+
+      - id: score-interpretation
+        title: Score Interpretation
+        type: paragraph
+        instruction: |
+          Explain what this score means for the product's success trajectory.
+
+      - id: coherence-score
+        title: Genome Coherence Score
+        template: "**Coherence: {{coherence_score}} / 5.0** - {{coherence_level}}"
+        instruction: |
+          How well do the DNAs work together and reinforce each other?
+
+  - id: dna-maturity-summary
+    title: DNA Maturity Summary
+    type: table
+    columns: [DNA, Score, Maturity Level, Status, Priority]
+    instruction: |
+      Summary table of all 6 DNA maturity scores with visual status indicators.
+    examples:
+      - ["Purpose DNA", "4.2", "Strong", "🟢", "Maintain"]
+      - ["User DNA", "2.3", "Weak", "🔴", "Critical"]
+      - ["Experience DNA", "3.5", "Moderate", "🟡", "High"]
+      - ["Architecture DNA", "3.8", "Moderate", "🟡", "Medium"]
+      - ["Intelligence DNA", "2.8", "Weak", "🔴", "High"]
+      - ["Cultural DNA", "4.0", "Strong", "🟢", "Maintain"]
+
+  - id: detailed-assessments
+    title: Detailed DNA Assessments
+    sections:
+      - id: purpose-dna
+        title: Purpose DNA
+        template: "**Score: {{score}} / 5.0** - {{status}}"
+        sections:
+          - id: purpose-findings
+            title: Key Findings
+            type: bullet-list
+          - id: purpose-gaps
+            title: Critical Gaps
+            type: bullet-list
+          - id: purpose-strengths
+            title: Strengths
+            type: bullet-list
+
+      - id: user-dna
+        title: User DNA
+        template: "**Score: {{score}} / 5.0** - {{status}}"
+        sections:
+          - id: user-findings
+            title: Key Findings
+            type: bullet-list
+          - id: user-gaps
+            title: Critical Gaps
+            type: bullet-list
+          - id: user-strengths
+            title: Strengths
+            type: bullet-list
+
+      - id: experience-dna
+        title: Experience DNA
+        template: "**Score: {{score}} / 5.0** - {{status}}"
+        sections:
+          - id: experience-findings
+            title: Key Findings
+            type: bullet-list
+          - id: experience-gaps
+            title: Critical Gaps
+            type: bullet-list
+          - id: experience-strengths
+            title: Strengths
+            type: bullet-list
+
+      - id: architecture-dna
+        title: Architecture DNA
+        template: "**Score: {{score}} / 5.0** - {{status}}"
+        sections:
+          - id: architecture-findings
+            title: Key Findings
+            type: bullet-list
+          - id: architecture-gaps
+            title: Critical Gaps
+            type: bullet-list
+          - id: architecture-strengths
+            title: Strengths
+            type: bullet-list
+
+      - id: intelligence-dna
+        title: Intelligence DNA
+        template: "**Score: {{score}} / 5.0** - {{status}}"
+        sections:
+          - id: intelligence-findings
+            title: Key Findings
+            type: bullet-list
+          - id: intelligence-gaps
+            title: Critical Gaps
+            type: bullet-list
+          - id: intelligence-strengths
+            title: Strengths
+            type: bullet-list
+
+      - id: cultural-dna
+        title: Cultural DNA
+        template: "**Score: {{score}} / 5.0** - {{status}}"
+        sections:
+          - id: cultural-findings
+            title: Key Findings
+            type: bullet-list
+          - id: cultural-gaps
+            title: Critical Gaps
+            type: bullet-list
+          - id: cultural-strengths
+            title: Strengths
+            type: bullet-list
+
+  - id: cross-dna-analysis
+    title: Cross-DNA Analysis
+    sections:
+      - id: coherence-assessment
+        title: Coherence Assessment
+        type: paragraph
+        instruction: |
+          How well do the DNAs work together? Where do they reinforce each other? Where do they conflict?
+
+      - id: cascade-effects
+        title: Cascade Effects
+        type: bullet-list
+        instruction: |
+          How do weaknesses in one DNA create problems in others?
+        examples:
+          - "Weak Purpose DNA (2.1) → User DNA confusion (which segments to prioritize?) → diluted Experience DNA standards"
+
+      - id: leverage-points
+        title: Leverage Points
+        type: bullet-list
+        instruction: |
+          Strong DNAs that can help improve weak ones.
+        examples:
+          - "Strong Cultural DNA can be leveraged to build Intelligence DNA practices"
+
+  - id: critical-gaps
+    title: Critical Gaps Requiring Immediate Attention
+    repeatable: true
+    template: |
+      **{{gap_priority}}. {{gap_title}}**
+
+      - **Impact:** {{impact}}
+      - **Recommended Action:** {{action}}
+      - **Timeline:** {{timeline}}
+      - **Responsible DNA:** {{dna}}
+
+  - id: action-plan
+    title: Prioritized Action Plan
+    sections:
+      - id: phase-1
+        title: "Phase 1: Foundation (Weeks 1-4)"
+        sections:
+          - id: phase-1-objective
+            title: Objective
+            type: paragraph
+          - id: phase-1-actions
+            title: Actions
+            type: numbered-list
+          - id: phase-1-success
+            title: Success Criteria
+            type: bullet-list
+
+      - id: phase-2
+        title: "Phase 2: Structure (Weeks 5-8)"
+        sections:
+          - id: phase-2-objective
+            title: Objective
+            type: paragraph
+          - id: phase-2-actions
+            title: Actions
+            type: numbered-list
+          - id: phase-2-success
+            title: Success Criteria
+            type: bullet-list
+
+      - id: phase-3
+        title: "Phase 3: Evolution (Weeks 9-12)"
+        sections:
+          - id: phase-3-objective
+            title: Objective
+            type: paragraph
+          - id: phase-3-actions
+            title: Actions
+            type: numbered-list
+          - id: phase-3-success
+            title: Success Criteria
+            type: bullet-list
+
+      - id: ongoing-practices
+        title: Ongoing Practices
+        type: bullet-list
+        instruction: |
+          Habits and practices to maintain genome health over time.
+
+  - id: next-steps
+    title: Recommended Next Steps
+    sections:
+      - id: immediate
+        title: Immediate (This Week)
+        type: numbered-list
+
+      - id: this-month
+        title: This Month
+        type: numbered-list
+
+      - id: this-quarter
+        title: This Quarter
+        type: numbered-list
+
+  - id: specialist-recommendations
+    title: Specialist Agent Recommendations
+    instruction: |
+      Based on critical gaps, recommend specific agents to engage.
+    repeatable: true
+    template: |
+      **{{agent_name}}** for {{dna_task}}
+      - Command: `*agent {{agent_id}}`
+      - Focus: {{focus_area}}
+
+  - id: appendices
+    title: Appendices
+    sections:
+      - id: individual-reports
+        title: A. Individual DNA Assessment Reports
+        type: bullet-list
+        instruction: |
+          Links to detailed individual DNA assessment reports.
+
+      - id: methodology
+        title: B. Assessment Methodology
+        type: paragraph
+        instruction: |
+          Brief description of how this assessment was conducted.
+
+      - id: framework-reference
+        title: C. Product Genome Framework Reference
+        type: paragraph
+        instruction: |
+          Brief overview of the Product Genome framework used for assessment.

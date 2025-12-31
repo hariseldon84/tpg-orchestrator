@@ -1,0 +1,522 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: architecture-dna-template-v1
+  name: Architecture DNA Document
+  version: 1.0
+  dna: Architecture DNA
+  output:
+    format: markdown
+    filename: docs/dna/architecture-dna.md
+    title: "{{product_name}} Architecture DNA"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: metadata
+    title: Document Metadata
+    instruction: |
+      Capture document metadata for version tracking and ownership.
+    sections:
+      - id: changelog
+        title: Change Log
+        type: table
+        columns: [Date, Version, Description, Author]
+        instruction: Track document versions and changes
+        initial_rows:
+          - ["{{current_date}}", "1.0", "Initial Architecture DNA definition", "{{author}}"]
+
+  - id: overview
+    title: Architecture DNA Overview
+    instruction: |
+      Provide a high-level overview of the architectural philosophy and approach for this product.
+
+      This should explain:
+      - Why architecture matters for this specific product
+      - How architecture serves Purpose DNA and User DNA
+      - The role of Architecture Decision Records (ADRs)
+      - The relationship to team structure (Conway's Law)
+    elicit: true
+    type: paragraph
+    examples:
+      - "For a field technician diagnostic tool that must work offline, respond instantly, and scale to thousands of equipment types, architecture is not about elegance—it's about enabling core capabilities. Our architecture prioritizes: (1) Offline-first data architecture, (2) Modular diagnostic engine extensible to new equipment, (3) Mobile-optimized performance, (4) Resilient sync for unreliable connectivity. We document key decisions through ADRs and organize teams around architectural boundaries (Conway's Law), ensuring system structure and team structure reinforce each other."
+
+  - id: architectural-philosophy
+    title: Architectural Philosophy
+    instruction: |
+      Define the core architectural philosophy and principles that guide all technical decisions.
+    elicit: true
+    sections:
+      - id: core-principles
+        title: Core Architectural Principles
+        type: numbered-list
+        instruction: |
+          List 4-6 fundamental architectural principles. These should be:
+          - Specific to this product's needs
+          - Connected to Purpose DNA and User DNA
+          - Actionable for technical decisions
+          - Prioritized by importance
+        examples:
+          - "Offline-first architecture: All core functionality must work without network connectivity. Treat connectivity as enhancement, not requirement. Local-first data with sync."
+          - "Mobile-first performance: Optimize for mobile constraints (CPU, battery, memory, storage). Backend complexity must not increase mobile payload."
+          - "Modular extensibility: New equipment types should require minimal core changes. Plugin architecture for diagnostic logic."
+          - "Resilient degradation: System must gracefully handle failures (network, sensors, APIs). Partial data is better than no data."
+          - "Data accuracy over speed: Diagnostic correctness is non-negotiable. Cache aggressively but validate religiously."
+          - "Horizontal scalability: Architecture must scale to 10,000+ concurrent technicians and 100,000+ equipment instances."
+
+      - id: philosophy-rationale
+        title: Why These Principles
+        type: paragraph
+        instruction: |
+          Explain why these specific principles are critical for this product's success.
+        examples:
+          - "These principles emerge from user constraints and product purpose: Offline-first addresses the 40%+ of service calls in low-connectivity areas. Mobile-first performance serves time-constrained technicians who can't wait for slow loads. Modular extensibility enables scaling to new equipment types without architectural rewrites. Resilient degradation ensures technicians aren't blocked by partial failures. Data accuracy protects against costly misdiagnoses. Horizontal scalability supports business growth without architecture replacement."
+
+  - id: system-architecture
+    title: System Architecture
+    instruction: |
+      Define the high-level system architecture and key components.
+    elicit: true
+    sections:
+      - id: architecture-diagram
+        title: High-Level Architecture
+        type: mermaid
+        mermaid_type: graph
+        instruction: |
+          Create a high-level architecture diagram showing major components and data flow.
+        template: |
+          graph TB
+            Mobile[Mobile App<br/>React Native] --> LocalDB[(Local DB<br/>SQLite)]
+            Mobile --> SyncEngine[Sync Engine<br/>Background Service]
+            SyncEngine --> API[API Gateway<br/>REST + GraphQL]
+            API --> DiagnosticEngine[Diagnostic Engine<br/>Rule-Based + ML]
+            API --> EquipmentDB[(Equipment DB<br/>PostgreSQL)]
+            API --> IoTBridge[IoT Bridge<br/>Real-time Data]
+            DiagnosticEngine --> MLModel[ML Models<br/>Diagnostic Predictions]
+            IoTBridge --> EquipmentSensors[Equipment Sensors<br/>MQTT/HTTP]
+
+      - id: component-overview
+        title: Component Overview
+        type: table
+        columns: [Component, Responsibility, Technology, Rationale]
+        instruction: |
+          List major system components with their responsibilities and technology choices.
+        examples:
+          - ["Mobile App", "User interface, offline functionality, local data", "React Native, SQLite", "Cross-platform with native performance, offline-capable"]
+          - ["Sync Engine", "Background data synchronization, conflict resolution", "Background service, exponential backoff", "Handles unreliable connectivity gracefully"]
+          - ["API Gateway", "Request routing, authentication, rate limiting", "Node.js, Express, JWT", "Lightweight, scalable, handles mobile API patterns"]
+          - ["Diagnostic Engine", "Equipment diagnosis, repair recommendations", "Python, scikit-learn, rule engine", "Flexibility for ML and rule-based logic"]
+          - ["Equipment DB", "Equipment specs, diagnostic history, repair procedures", "PostgreSQL, full-text search", "Relational integrity, complex queries, reliability"]
+          - ["IoT Bridge", "Real-time equipment sensor data ingestion", "MQTT broker, WebSocket", "Real-time data for live diagnostics"]
+
+  - id: data-architecture
+    title: Data Architecture
+    instruction: |
+      Define how data flows, is stored, and is synchronized across the system.
+    elicit: true
+    sections:
+      - id: data-flow
+        title: Data Flow Architecture
+        type: mermaid
+        mermaid_type: sequence
+        instruction: |
+          Show how data flows through the system for critical workflows.
+        template: |
+          sequenceDiagram
+            participant Tech as Technician
+            participant Mobile as Mobile App
+            participant LocalDB as Local DB
+            participant Sync as Sync Engine
+            participant API as API Gateway
+            participant Backend as Backend Services
+
+            Tech->>Mobile: Open diagnostic for equipment
+            Mobile->>LocalDB: Query cached equipment data
+            LocalDB-->>Mobile: Equipment specs & history
+            Mobile->>Tech: Display diagnostic interface
+
+            Tech->>Mobile: Input symptoms & sensor data
+            Mobile->>LocalDB: Save diagnostic session locally
+            Mobile->>Sync: Queue for sync (when online)
+
+            Sync->>API: Sync diagnostic session
+            API->>Backend: Process & store
+            Backend->>API: Return updated recommendations
+            API->>Sync: New diagnostic insights
+            Sync->>LocalDB: Update local cache
+            Mobile->>Tech: Notify of new recommendations
+
+      - id: offline-strategy
+        title: Offline-First Data Strategy
+        type: paragraph
+        instruction: |
+          Explain the offline-first data strategy in detail.
+        examples:
+          - "We implement an offline-first architecture where the mobile app is the source of truth for user actions. All diagnostic data, equipment specs, and repair procedures are cached locally in SQLite. The app functions fully offline with local data. When connectivity is available, a background sync engine uses exponential backoff to synchronize: (1) Push local changes to backend, (2) Pull updated equipment data and recommendations, (3) Resolve conflicts (last-write-wins for user data, server-wins for equipment specs). Sync is transparent—technicians never wait for uploads. Critical reference data (equipment specs, procedures) is pre-synced on app launch over WiFi."
+
+      - id: data-models
+        title: Core Data Models
+        type: bullet-list
+        instruction: |
+          List core data entities and their relationships.
+        examples:
+          - "Equipment: ID, model, location, IoT endpoints, sensor configurations, current status"
+          - "Diagnostic Session: ID, technician, equipment, timestamp, symptoms, sensor readings, diagnosis, repair steps, outcome"
+          - "Repair Procedure: ID, equipment models, steps, diagrams, estimated time, required tools, success rate"
+          - "Technician Profile: ID, skills, certification level, equipment expertise, performance metrics"
+          - "Sync Queue: Pending changes awaiting synchronization, retry count, last attempt"
+
+  - id: modularity
+    title: Modularity & Extensibility
+    instruction: |
+      Define how the system achieves modularity and supports future extensibility.
+    elicit: true
+    sections:
+      - id: module-boundaries
+        title: Module Boundaries
+        type: bullet-list
+        instruction: |
+          Define clear module boundaries and interfaces.
+        examples:
+          - "Diagnostic Engine: Pluggable diagnostic providers for different equipment types (interface: symptoms in, diagnosis + steps out)"
+          - "Equipment Adapters: Equipment-specific logic isolated in adapters (interface: sensor data → normalized format)"
+          - "Sync Adapters: Pluggable sync strategies for different connectivity patterns (interface: changes → synced state)"
+          - "UI Components: Reusable mobile components isolated from business logic (interface: props in, events out)"
+          - "Data Access Layer: All database access through repository pattern (interface: domain entities, not SQL)"
+
+      - id: extension-points
+        title: Extension Points
+        type: bullet-list
+        instruction: |
+          Where can new functionality be added without core changes?
+        examples:
+          - "New equipment types: Add equipment adapter + diagnostic rules without touching core engine"
+          - "New diagnostic methods: Plug in ML models or rule sets via provider interface"
+          - "New data sources: Add IoT adapters for different sensor protocols (MQTT, HTTP, BLE)"
+          - "New sync strategies: Add sync adapters for different backend systems"
+          - "New UI features: Add screens/components using established patterns and design system"
+
+      - id: dependency-management
+        title: Dependency Management
+        type: paragraph
+        instruction: |
+          How are dependencies managed to maintain modularity?
+        examples:
+          - "We enforce strict dependency rules: (1) Mobile app depends on abstraction interfaces, not concrete implementations, (2) Core business logic has zero dependencies on UI or data storage, (3) Each module declares explicit interface contracts, (4) Circular dependencies are prohibited (enforced via linting), (5) External libraries are wrapped in adapters to enable swapping. This ensures we can change implementations (e.g., swap SQLite for Realm) without cascading changes."
+
+  - id: scalability
+    title: Scalability Strategy
+    instruction: |
+      Define how the architecture scales as usage grows.
+    elicit: true
+    sections:
+      - id: scalability-dimensions
+        title: Scalability Dimensions
+        type: table
+        columns: [Dimension, Current Scale, Target Scale, Strategy]
+        instruction: |
+          Define scalability dimensions and strategies.
+        examples:
+          - ["Concurrent users", "100 technicians", "10,000+ technicians", "Horizontal API scaling, load balancing, CDN for static assets"]
+          - ["Equipment instances", "5,000 units", "100,000+ units", "Database sharding by region, caching layer (Redis), read replicas"]
+          - ["Diagnostic requests", "500/day", "50,000/day", "Async processing queue, diagnostic engine horizontal scaling, result caching"]
+          - ["Data storage", "10 GB", "10 TB", "Object storage (S3) for media, database partitioning, archival strategy"]
+          - ["Equipment types", "3 types", "50+ types", "Modular diagnostic providers, plugin architecture, isolated equipment logic"]
+
+      - id: performance-targets
+        title: Performance Targets
+        type: table
+        columns: [Metric, Target, Architecture Support]
+        instruction: |
+          Define performance targets and how architecture achieves them.
+        examples:
+          - ["Mobile app load time", "<2 seconds", "Code splitting, lazy loading, minimal initial bundle, SQLite for instant local data"]
+          - ["Diagnostic query response", "<500ms", "Local-first (instant), cached ML models, pre-computed common scenarios"]
+          - ["Sync completion", "<30 seconds", "Background sync, delta updates only, compressed payloads, batch operations"]
+          - ["API response time (p95)", "<200ms", "Database indexing, query optimization, caching layer, connection pooling"]
+          - ["Real-time sensor data", "<1 second latency", "MQTT pub-sub, WebSocket connections, edge processing"]
+
+      - id: bottleneck-mitigation
+        title: Known Bottlenecks & Mitigation
+        type: bullet-list
+        instruction: |
+          Identify potential bottlenecks and mitigation strategies.
+        examples:
+          - "Mobile device storage: Limit cached data to 500MB; intelligent cache eviction (LRU for old equipment data)"
+          - "Sync conflicts at scale: Conflict resolution at field level, not document level; technician-owned data always wins"
+          - "ML model size: Quantized models for mobile (<50MB), cloud fallback for complex diagnostics"
+          - "Database write contention: Write sharding by geographic region, async writes to non-critical tables"
+          - "API rate limits: Client-side rate limiting, exponential backoff, batch requests where possible"
+
+  - id: conways-law
+    title: Conway's Law Application
+    instruction: |
+      Define how team structure mirrors and reinforces architectural boundaries.
+
+      Conway's Law: "Organizations design systems that mirror their communication structure."
+
+      Apply this intentionally—align team boundaries with module boundaries.
+    elicit: true
+    sections:
+      - id: team-architecture-alignment
+        title: Team-Architecture Alignment
+        type: table
+        columns: [Team, Architecture Ownership, Rationale]
+        instruction: |
+          Map teams to architectural components they own.
+        examples:
+          - ["Mobile Team", "Mobile app, offline functionality, sync engine", "Owns the user-facing experience and offline-first implementation"]
+          - ["Backend Team", "API gateway, diagnostic engine, IoT bridge", "Owns server-side logic and real-time data processing"]
+          - ["Data Team", "Equipment DB, ML models, analytics", "Owns data integrity, diagnostic intelligence, and insights"]
+          - ["Platform Team", "Infrastructure, CI/CD, monitoring, security", "Enables all teams with reliable platform services"]
+
+      - id: interface-contracts
+        title: Interface Contracts Between Teams
+        type: bullet-list
+        instruction: |
+          Define clear interface contracts between team-owned modules.
+        examples:
+          - "Mobile ↔ Backend: REST API with versioned endpoints, GraphQL for complex queries, documented in OpenAPI spec"
+          - "Backend ↔ Data: Database schema contracts, event streaming for analytics, ML model API interface"
+          - "All Teams ↔ Platform: Deployment pipelines, monitoring dashboards, shared logging format, security standards"
+          - "Cross-team changes: RFC process for breaking changes, backwards compatibility requirements, deprecation timeline"
+
+      - id: communication-structure
+        title: Communication Structure
+        type: paragraph
+        instruction: |
+          How does communication structure support this architecture?
+        examples:
+          - "Teams own their architectural modules end-to-end, reducing cross-team dependencies for feature delivery. Weekly architecture sync reviews interface changes. Each team maintains an ADR log for decisions affecting other teams. Cross-functional projects (e.g., new equipment type) use temporary task forces with clear interface contracts. This structure ensures teams can move independently while maintaining system coherence."
+
+  - id: adrs
+    title: Architecture Decision Records (ADRs)
+    instruction: |
+      Document significant architectural decisions and their rationale. Use ADRs for decisions that:
+      - Impact multiple teams or modules
+      - Are difficult to reverse
+      - Represent significant tradeoffs
+      - Establish patterns for future decisions
+    elicit: true
+    sections:
+      - id: adr-process
+        title: ADR Process
+        type: paragraph
+        instruction: |
+          Describe the process for creating and managing ADRs.
+        examples:
+          - "When facing a significant architectural decision: (1) Author drafts ADR with context, options, and recommendation, (2) Share with affected teams for feedback (async via PR comments), (3) Architecture review meeting for complex/contentious decisions, (4) Decision finalized and merged to docs/adrs/, (5) ADRs are immutable once accepted—new decisions supersede via new ADRs. All engineers can propose ADRs; architects facilitate decision-making."
+
+      - id: adr-template
+        title: ADR Template Reference
+        type: paragraph
+        instruction: |
+          Reference the ADR template for creating decision records.
+        template: |
+          ADRs follow the template defined in `adr-tmpl.yaml`. Each ADR includes:
+          - Context (why is this decision needed?)
+          - Decision (what did we decide?)
+          - Rationale (why this option over alternatives?)
+          - Consequences (what are the tradeoffs?)
+          - Alternatives Considered (what else did we evaluate?)
+
+      - id: key-adrs
+        title: Key ADRs for This Product
+        type: table
+        columns: [ADR, Title, Status, Date]
+        instruction: |
+          List key architectural decisions documented in ADRs.
+        examples:
+          - ["ADR-001", "Offline-first architecture with SQLite", "Accepted", "2024-Q1"]
+          - ["ADR-002", "React Native for cross-platform mobile", "Accepted", "2024-Q1"]
+          - ["ADR-003", "PostgreSQL for equipment database", "Accepted", "2024-Q1"]
+          - ["ADR-004", "MQTT for real-time IoT data streaming", "Accepted", "2024-Q2"]
+          - ["ADR-005", "Modular diagnostic provider architecture", "Accepted", "2024-Q2"]
+          - ["ADR-006", "GraphQL for complex mobile queries", "Proposed", "2024-Q3"]
+
+  - id: technology-stack
+    title: Technology Stack
+    instruction: |
+      Document the technology stack with rationale for each choice.
+    elicit: true
+    sections:
+      - id: frontend-stack
+        title: Frontend Stack
+        type: table
+        columns: [Technology, Version, Purpose, Rationale]
+        instruction: |
+          List frontend technologies.
+        examples:
+          - ["React Native", "0.73+", "Cross-platform mobile framework", "Native performance, code reuse, strong ecosystem, offline-capable"]
+          - ["TypeScript", "5.0+", "Type-safe development", "Catch errors early, better IDE support, team scalability"]
+          - ["SQLite", "Latest", "Local database", "Mature, reliable, zero-config, perfect for offline-first"]
+          - ["React Query", "5.0+", "Data fetching & caching", "Simplified async state, automatic retries, cache management"]
+          - ["Zustand", "4.0+", "State management", "Lightweight, simple API, better than Redux for mobile"]
+
+      - id: backend-stack
+        title: Backend Stack
+        type: table
+        columns: [Technology, Version, Purpose, Rationale]
+        instruction: |
+          List backend technologies.
+        examples:
+          - ["Node.js", "20 LTS", "API runtime", "JavaScript consistency, async I/O, large ecosystem, team familiarity"]
+          - ["Express", "4.18+", "API framework", "Minimal, flexible, proven for REST APIs"]
+          - ["PostgreSQL", "15+", "Primary database", "ACID compliance, complex queries, full-text search, reliability"]
+          - ["Redis", "7.0+", "Caching layer", "Sub-millisecond latency, pub-sub for real-time, session storage"]
+          - ["Python", "3.11+", "Diagnostic engine", "ML libraries (scikit-learn, TensorFlow), data processing strengths"]
+
+      - id: infrastructure-stack
+        title: Infrastructure & DevOps Stack
+        type: table
+        columns: [Technology, Purpose, Rationale]
+        instruction: |
+          List infrastructure and DevOps technologies.
+        examples:
+          - ["Docker", "Containerization", "Consistent environments, easy deployment, horizontal scaling"]
+          - ["Kubernetes", "Container orchestration", "Auto-scaling, self-healing, declarative infrastructure"]
+          - ["AWS", "Cloud platform", "Proven reliability, global reach, comprehensive services"]
+          - ["GitHub Actions", "CI/CD", "Native GitHub integration, flexible workflows, cost-effective"]
+          - ["Terraform", "Infrastructure as code", "Declarative infra, version control, reproducible environments"]
+          - ["Datadog", "Monitoring & observability", "Full-stack monitoring, APM, real-time alerts, log aggregation"]
+
+  - id: security-architecture
+    title: Security Architecture
+    instruction: |
+      Define security principles and implementation.
+    elicit: true
+    sections:
+      - id: security-principles
+        title: Security Principles
+        type: bullet-list
+        instruction: |
+          List core security principles.
+        examples:
+          - "Defense in depth: Multiple layers of security (authentication, authorization, encryption, network security)"
+          - "Principle of least privilege: Users and services have minimum necessary permissions"
+          - "Zero trust architecture: Verify every request, never assume trust based on network location"
+          - "Data encryption: Encrypt data at rest (database, local storage) and in transit (TLS 1.3)"
+          - "Security by default: Secure configurations out-of-the-box, opt-in for reduced security"
+
+      - id: security-implementation
+        title: Security Implementation
+        type: bullet-list
+        instruction: |
+          How are security principles implemented?
+        examples:
+          - "Authentication: JWT tokens with short expiry (15min access, 7-day refresh), biometric auth on mobile"
+          - "Authorization: Role-based access control (RBAC), field-level permissions, audit logging"
+          - "API security: Rate limiting, input validation, SQL injection prevention, CORS policies"
+          - "Mobile security: Encrypted local storage (SQLCipher), certificate pinning, jailbreak detection"
+          - "Infrastructure security: VPC isolation, security groups, WAF, DDoS protection, secrets management (Vault)"
+
+  - id: quality-attributes
+    title: Quality Attributes
+    instruction: |
+      Define quality attributes (non-functional requirements) and how architecture supports them.
+    elicit: true
+    sections:
+      - id: quality-attributes-table
+        title: Quality Attributes
+        type: table
+        columns: [Attribute, Target, Architectural Support]
+        instruction: |
+          List quality attributes and architectural strategies.
+        examples:
+          - ["Reliability", "99.9% uptime", "Redundant services, health checks, auto-recovery, circuit breakers"]
+          - ["Performance", "P95 <200ms API, <2s mobile load", "Caching, indexing, code splitting, CDN, connection pooling"]
+          - ["Scalability", "10,000 concurrent users", "Horizontal scaling, stateless services, database sharding, load balancing"]
+          - ["Maintainability", "New features in <2 weeks", "Modular design, clear interfaces, comprehensive tests, documentation"]
+          - ["Security", "Zero breaches, GDPR compliant", "Encryption, authentication, authorization, audit logs, pen testing"]
+          - ["Availability", "Offline-capable core features", "Offline-first architecture, local data, background sync"]
+
+  - id: technical-debt
+    title: Technical Debt Management
+    instruction: |
+      Define strategy for managing technical debt.
+    sections:
+      - id: debt-definition
+        title: What Constitutes Technical Debt
+        type: bullet-list
+        instruction: |
+          Define what the team considers technical debt.
+        examples:
+          - "Code that violates architectural principles (e.g., tight coupling, circular dependencies)"
+          - "Deprecated libraries or patterns requiring migration"
+          - "Missing tests for critical paths (below 80% coverage threshold)"
+          - "Performance bottlenecks impacting user experience"
+          - "Security vulnerabilities (any severity level)"
+          - "Documentation gaps for complex systems"
+
+      - id: debt-tracking
+        title: Debt Tracking & Prioritization
+        type: paragraph
+        instruction: |
+          How is technical debt tracked and prioritized?
+        examples:
+          - "Technical debt is tracked in a dedicated backlog with severity levels: Critical (security, data integrity), High (performance, scalability blockers), Medium (maintainability, code quality), Low (nice-to-haves). Each sprint allocates 20% capacity to debt reduction. Critical debt blocks releases. High debt is addressed within one quarter. Architecture review quarterly identifies systemic debt patterns."
+
+      - id: debt-prevention
+        title: Debt Prevention Strategies
+        type: bullet-list
+        instruction: |
+          How do you prevent debt accumulation?
+        examples:
+          - "Code review process catches architectural violations before merge"
+          - "Automated linting enforces dependency rules and code standards"
+          - "Definition of Done includes tests, documentation, and performance validation"
+          - "Refactoring is part of feature work, not separate initiative"
+          - "ADRs document intentional compromises with mitigation plans"
+
+  - id: evolution-strategy
+    title: Architecture Evolution Strategy
+    instruction: |
+      Define how the architecture will evolve as the product matures.
+    sections:
+      - id: current-stage
+        title: Current Architecture Stage
+        type: paragraph
+        instruction: |
+          What is the current architectural maturity and focus?
+        examples:
+          - "We're in the 'Proven Foundation' stage. Core architecture (offline-first mobile, modular diagnostic engine, sync infrastructure) is established and proven with 100+ technicians. Current focus: Optimize performance, increase test coverage to 85%+, refine module boundaries based on usage patterns. We're NOT prematurely optimizing for 100,000 users—current architecture scales to 5,000 users, which gives us 12-18 months runway."
+
+      - id: evolution-roadmap
+        title: Architecture Evolution Roadmap
+        type: bullet-list
+        instruction: |
+          How will architecture evolve as the product grows?
+        examples:
+          - "Short-term (6 months): Optimize mobile performance, improve sync efficiency, expand diagnostic engine to 10 equipment types"
+          - "Mid-term (12 months): Introduce caching layer (Redis), implement read replicas, add real-time collaboration features"
+          - "Long-term (24 months): Evaluate microservices for diagnostic engine (if team grows beyond 30 engineers), implement ML pipeline for predictive diagnostics, multi-region deployment for global scale"
+
+      - id: evolution-principles
+        title: Evolution Principles
+        type: bullet-list
+        instruction: |
+          What principles guide architectural evolution?
+        examples:
+          - "Evolve based on evidence, not speculation (wait for bottlenecks to emerge before over-engineering)"
+          - "Backwards compatibility is sacred (mobile apps update slowly, API must support N-1 versions)"
+          - "Incremental evolution over big rewrites (refactor continuously, never 'stop the world')"
+          - "Team structure drives architecture evolution (don't split modules until teams split)"
+          - "Document decisions via ADRs (evolution is intentional, not accidental)"
+
+  - id: validation-questions
+    title: Architecture DNA Validation Questions
+    instruction: |
+      Questions to ask when making architectural decisions to ensure alignment with Architecture DNA.
+    type: numbered-list
+    examples:
+      - "Does this support offline-first functionality or require constant connectivity?"
+      - "Does this introduce tight coupling or maintain module independence?"
+      - "Can this scale horizontally as user count grows 10x?"
+      - "Does this decision warrant an ADR (significant, difficult to reverse, multi-team impact)?"
+      - "Does this align with team structure (Conway's Law) or create communication bottlenecks?"
+      - "Does this maintain backwards compatibility with existing mobile app versions?"
+      - "Does this improve or degrade mobile performance (battery, memory, load time)?"
+      - "Have we considered the technical debt implications of this approach?"
+      - "Does this support our quality attributes (reliability, security, maintainability)?"
+      - "Would we make the same decision if we had to support this for 5 years?"

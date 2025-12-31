@@ -1,0 +1,378 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: cultural-dna-template-v1
+  name: Cultural DNA Document
+  version: 1.0
+  dna: Cultural DNA
+  output:
+    format: markdown
+    filename: docs/dna/cultural-dna.md
+    title: "{{product_name}} Cultural DNA"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: metadata
+    title: Document Metadata
+    instruction: |
+      Capture document metadata for version tracking and ownership.
+    sections:
+      - id: changelog
+        title: Change Log
+        type: table
+        columns: [Date, Version, Description, Author]
+        instruction: Track document versions and changes
+        initial_rows:
+          - ["{{current_date}}", "1.0", "Initial Cultural DNA definition", "{{author}}"]
+
+  - id: cultural-philosophy
+    title: Cultural Philosophy
+    instruction: |
+      Define the core philosophy for how the team works and makes decisions.
+    elicit: true
+    type: paragraph
+    examples:
+      - "Our culture is shaped by our purpose: serving field technicians with efficient, reliable diagnostic tools. We value ruthless prioritization over feature accumulation, user evidence over assumptions, quality over speed, and learning over being right. We believe great products come from aligned teams who respect each other, challenge assumptions, and celebrate both successes and intelligent failures."
+
+  - id: core-values
+    title: Core Values
+    instruction: |
+      Define 4-6 core values that guide team behavior and decisions.
+    elicit: true
+    sections:
+      - id: values-list
+        title: Our Values
+        type: numbered-list
+        instruction: |
+          List core values with brief explanations. Values should be specific, not generic.
+        examples:
+          - "**User Truth Over Assumptions**: We seek evidence from real users, not opinions from conference rooms. User research isn't optional—it's how we stay grounded in reality."
+          - "**Quality is Non-Negotiable**: We ship when features pass MQB gates, not when deadlines demand. Saying 'not ready' is celebrated, not punished."
+          - "**Ruthless Prioritization**: We say no to good ideas to say yes to great ones. Scope discipline protects purpose from feature creep."
+          - "**Learn Fast, Fail Smart**: We run experiments, validate hypotheses, and embrace intelligent failure. Being wrong quickly beats being right slowly."
+          - "**Radical Transparency**: We share context, metrics, and decisions openly. Information asymmetry creates alignment problems."
+          - "**Respect Through Challenge**: We challenge ideas vigorously while respecting people deeply. Disagreement is how we get to truth."
+
+      - id: values-rationale
+        title: Why These Values
+        type: paragraph
+        instruction: |
+          Explain why these specific values matter for this product and team.
+        examples:
+          - "These values emerged from our product reality: field technicians need reliability (quality), our purpose demands focus (prioritization), and we operate in uncertainty (learning). We chose values that reinforce Product Genome principles and prevent common product failure modes (building without users, shipping low quality, feature factory syndrome)."
+
+  - id: decision-making-framework
+    title: Decision-Making Framework
+    instruction: |
+      Define how decisions are made and who makes them.
+    elicit: true
+    sections:
+      - id: decision-authority
+        title: Decision Authority Levels
+        type: table
+        columns: [Decision Type, Authority, Process, Escalation]
+        instruction: |
+          Define who makes what decisions.
+        examples:
+          - ["Purpose/Strategy", "Product Leadership + Stakeholders", "Collaborative, Purpose DNA process", "CEO if conflicts"]
+          - ["Feature Prioritization", "Product Manager", "Backlog ranking, transparent rationale", "Product Leadership if contested"]
+          - ["UX/Design", "Design Lead", "Design review, user testing validation", "Product Manager if conflicts with goals"]
+          - ["Technical Approach", "Engineering Lead", "Architecture review, ADR if significant", "CTO if high-risk"]
+          - ["Quality Gates", "Entire Team (MQB)", "MQB checklist, no-ship if fail", "Product Leadership for exceptions only"]
+          - ["Scope Changes", "Product Manager", "Impact analysis, team consultation", "Product Leadership if major"]
+
+      - id: decision-principles
+        title: Decision-Making Principles
+        type: bullet-list
+        instruction: |
+          Core principles that guide decisions.
+        examples:
+          - "Default to data over opinions (what do metrics and users say?)"
+          - "Bias toward user value over technical elegance"
+          - "Prefer reversible decisions made quickly over slow perfect decisions"
+          - "Escalate only when truly stuck or high-stakes"
+          - "Document significant decisions (ADRs, meeting notes)"
+          - "Disagree and commit: voice concerns, then align on decision"
+
+      - id: consensus-vs-authority
+        title: Consensus vs. Authority
+        type: paragraph
+        instruction: |
+          When do we seek consensus vs. when does one person decide?
+        examples:
+          - "We seek input widely but avoid consensus paralysis. Product Manager has final say on roadmap priorities. Engineering Lead has final say on technical approach. Design Lead has final say on UX. For cross-functional decisions (e.g., Purpose DNA changes), we use collaborative decision-making with clear DRI (Directly Responsible Individual). If we can't align, we escalate rather than compromise to mediocrity."
+
+  - id: rituals-and-practices
+    title: Team Rituals and Practices
+    instruction: |
+      Define the recurring practices that reinforce culture.
+    elicit: true
+    sections:
+      - id: weekly-rituals
+        title: Weekly Rituals
+        type: bullet-list
+        instruction: |
+          What happens every week?
+        examples:
+          - "**Monday: Week Planning** - Review priorities, align on goals, surface blockers"
+          - "**Wednesday: Metrics Review** - North star metric, KPIs, experiment results"
+          - "**Friday: User Feedback Session** - Review user research, support tickets, feedback"
+          - "**Friday: Demo Day** - Show completed work, celebrate wins and learnings"
+
+      - id: sprint-rituals
+        title: Sprint/Iteration Rituals
+        type: bullet-list
+        instruction: |
+          What happens each sprint or iteration?
+        examples:
+          - "**Sprint Planning**: Select stories from backlog, commit to scope, define success"
+          - "**Daily Standups**: Quick sync (15 min max), blockers surfaced"
+          - "**Sprint Review**: Demo to stakeholders, gather feedback"
+          - "**Retrospective**: What went well, what didn't, action items for improvement"
+          - "**MQB Review**: Validate all features pass quality gates before release"
+
+      - id: strategic-rituals
+        title: Strategic Rituals
+        type: bullet-list
+        instruction: |
+          What happens quarterly or annually?
+        examples:
+          - "**Quarterly Product Review**: North star progress, roadmap adjustments, DNA updates"
+          - "**Quarterly Genome Assessment**: Full Product Genome coherence validation"
+          - "**Annual Purpose Review**: Is our purpose still valid and inspiring?"
+          - "**Annual User Immersion**: Entire team observes users, builds empathy"
+
+  - id: collaboration-norms
+    title: Collaboration Norms
+    instruction: |
+      Define how the team works together.
+    elicit: true
+    sections:
+      - id: communication-norms
+        title: Communication Norms
+        type: bullet-list
+        instruction: |
+          How do we communicate effectively?
+        examples:
+          - "Default to written, asynchronous communication (documents, Slack)"
+          - "Meetings have agendas and outcomes (no agenda = no meeting)"
+          - "Decisions documented in writing (meeting notes, ADRs, PRDs)"
+          - "Respond to messages within 24 hours (urgent = DM or call)"
+          - "Use video for complex discussions, async for simple updates"
+          - "Share context generously (over-communicate rather than under-communicate)"
+
+      - id: feedback-culture
+        title: Feedback Culture
+        type: bullet-list
+        instruction: |
+          How do we give and receive feedback?
+        examples:
+          - "Feedback is a gift, given with care and received with gratitude"
+          - "Be specific and actionable (not vague or judgmental)"
+          - "Assume positive intent, clarify before reacting"
+          - "Focus on behavior and impact, not personality"
+          - "Give feedback early and often (don't let issues fester)"
+          - "360-degree feedback: everyone gives and receives, regardless of role"
+
+      - id: conflict-resolution
+        title: Conflict Resolution
+        type: paragraph
+        instruction: |
+          How do we handle disagreements?
+        examples:
+          - "Conflict is natural and healthy—it's how we get to better decisions. When disagreements arise: (1) Assume good intent, (2) Seek to understand before being understood, (3) Argue with data and user evidence, (4) Propose alternatives with clear trade-offs, (5) Escalate if stuck (don't let conflicts linger). After decision, we disagree and commit—voice concerns, then align."
+
+  - id: quality-culture
+    title: Quality Culture
+    instruction: |
+      Define how quality is valued and enforced.
+    elicit: true
+    sections:
+      - id: mqb-commitment
+        title: MQB (Minimum Quality Bar) Commitment
+        type: paragraph
+        instruction: |
+          How does the team treat MQB gates?
+        examples:
+          - "MQB gates are sacred. Features don't ship below the bar, period. Saying 'not ready to ship' is not failure—it's the MQB doing its job. We celebrate when features are rejected for quality issues (caught before users suffered). Bypassing MQB requires VP-level approval and is rare. We'd rather ship late with quality than on-time with defects."
+
+      - id: quality-practices
+        title: Quality Practices
+        type: bullet-list
+        instruction: |
+          Specific practices that enforce quality.
+        examples:
+          - "Code review required for all changes (no exceptions)"
+          - "Automated tests required for new code (≥80% coverage target)"
+          - "Usability testing required for major UX changes"
+          - "Performance testing before major releases"
+          - "Security review for authentication, data handling, integrations"
+          - "MQB checklist completed before deployment"
+
+      - id: quality-celebrations
+        title: Celebrating Quality
+        type: bullet-list
+        instruction: |
+          How do we reinforce quality culture?
+        examples:
+          - "Shout-outs for catching bugs before production"
+          - "Post-mortems without blame (focus on process improvement)"
+          - "Quality wins celebrated in demos (performance improvements, accessibility enhancements)"
+          - "'No-ship' decisions celebrated publicly (protected users from bad experience)"
+          - "Zero critical bugs for X days → team celebration"
+
+  - id: learning-culture
+    title: Learning and Growth Culture
+    instruction: |
+      Define how the team learns and grows.
+    elicit: true
+    sections:
+      - id: experimentation-mindset
+        title: Experimentation Mindset
+        type: paragraph
+        instruction: |
+          How do we approach experiments and uncertainty?
+        examples:
+          - "We embrace uncertainty as an opportunity to learn. Experiments aren't failures if they teach us something—they're failures if we don't learn. We run A/B tests, prototypes, and user tests to validate hypotheses. We document learnings (what worked, what didn't, why). We avoid 'HiPPO' decisions (Highest Paid Person's Opinion) in favor of evidence."
+
+      - id: knowledge-sharing
+        title: Knowledge Sharing
+        type: bullet-list
+        instruction: |
+          How do we share knowledge across the team?
+        examples:
+          - "Weekly 'Lunch & Learn' sessions (team members teach each other)"
+          - "Documentation culture (ADRs, technical guides, user research findings)"
+          - "Onboarding buddy system (new members paired with experienced)"
+          - "Retrospectives capture and share learnings"
+          - "Public Slack channels (default to open, not DMs)"
+          - "User research findings shared with entire team (build empathy)"
+
+      - id: growth-opportunities
+        title: Growth Opportunities
+        type: bullet-list
+        instruction: |
+          How do team members grow professionally?
+        examples:
+          - "Rotate roles on projects (backend dev tries frontend, designer tries research)"
+          - "Conference attendance budget ($X per year per person)"
+          - "Skill development time (10% time for learning)"
+          - "Mentorship program (junior paired with senior)"
+          - "Stretch assignments (tackle challenges beyond current skill level)"
+
+  - id: user-centricity
+    title: User-Centric Culture
+    instruction: |
+      Define how the team stays connected to users.
+    elicit: true
+    sections:
+      - id: user-immersion
+        title: User Immersion Practices
+        type: bullet-list
+        instruction: |
+          How do we maintain empathy for users?
+        examples:
+          - "Quarterly 'ride-alongs' (team members shadow technicians in the field)"
+          - "User interviews open to all team members (not just researchers)"
+          - "Support ticket rotation (everyone reads support tickets weekly)"
+          - "Usability testing observations (watch users struggle with our product)"
+          - "User personas visible in workspace (constant reminder of who we serve)"
+          - "User quotes in product reviews (let users speak to us directly)"
+
+      - id: evidence-over-assumptions
+        title: Evidence Over Assumptions
+        type: paragraph
+        instruction: |
+          How do we avoid building on assumptions?
+        examples:
+          - "We challenge assumptions with 'What evidence do we have?' If the answer is 'none,' we conduct research before building. User DNA must be evidence-based. Features must be validated with real users (prototypes, tests, beta). Metrics must validate assumptions post-launch. We admit when we're wrong and course-correct quickly."
+
+  - id: ownership-and-autonomy
+    title: Ownership and Autonomy
+    instruction: |
+      Define how ownership and autonomy work in the team.
+    elicit: true
+    sections:
+      - id: ownership-model
+        title: Ownership Model
+        type: paragraph
+        instruction: |
+          How do we define ownership?
+        examples:
+          - "Ownership means you're responsible for outcomes, not just outputs. Product Managers own user value delivery. Engineers own technical quality and architecture. Designers own user experience. Everyone owns quality (MQB). Owners have authority to make decisions within their domain but must consider impact on others (shared responsibility for coherence)."
+
+      - id: autonomy-with-alignment
+        title: Autonomy with Alignment
+        type: paragraph
+        instruction: |
+          How do we balance autonomy and alignment?
+        examples:
+          - "We give teams maximum autonomy within Product Genome constraints. Purpose DNA, User DNA, and MQB gates provide alignment guardrails. Within those, teams have freedom to execute. Teams don't need permission to ship features—they need to pass MQB. Innovation happens at the edges, but purpose keeps us aligned."
+
+  - id: diversity-and-inclusion
+    title: Diversity and Inclusion
+    instruction: |
+      Define how diversity strengthens the team and product.
+    sections:
+      - id: diversity-commitment
+        title: Diversity Commitment
+        type: bullet-list
+        instruction: |
+          How do we build diverse and inclusive teams?
+        examples:
+          - "Diverse perspectives lead to better products (we serve diverse users)"
+          - "Inclusive hiring practices (remove bias, diverse interview panels)"
+          - "Psychological safety (all voices heard, dissent encouraged)"
+          - "Accessibility champions (team members with lived experience of disabilities)"
+          - "Regular inclusion training (unconscious bias, inclusive language)"
+
+  - id: cultural-evolution
+    title: Cultural Evolution
+    instruction: |
+      Define how culture evolves as the team and product grow.
+    sections:
+      - id: culture-review
+        title: Cultural Review Process
+        type: paragraph
+        instruction: |
+          How do we evolve culture intentionally?
+        examples:
+          - "Culture evolves through intentional reflection. Quarterly retros include 'culture check': Are our values still serving us? Are our practices aligned with values? What cultural debt are we accumulating? Annual culture survey measures team sentiment and identifies gaps. Cultural DNA updated when team or product changes significantly."
+
+      - id: scaling-culture
+        title: Scaling Culture
+        type: paragraph
+        instruction: |
+          How does culture scale as team grows?
+        examples:
+          - "Culture scales through: (1) Clear documentation (this Cultural DNA), (2) Onboarding immersion (new members live the culture, not just read about it), (3) Cultural ambassadors (experienced members model values), (4) Rituals that scale (weekly demos, retrospectives), (5) Leadership modeling (leaders embody values visibly). As team grows beyond 15, we'll revisit practices to maintain culture without bureaucracy."
+
+  - id: cultural-anti-patterns
+    title: Cultural Anti-Patterns to Avoid
+    instruction: |
+      Define what this team explicitly rejects culturally.
+    type: bullet-list
+    examples:
+      - "**Hero Culture**: No heroes saving the day through unsustainable work—fix processes instead"
+      - "**Blame Culture**: No finger-pointing when things fail—learn and improve systems"
+      - "**Consensus Paralysis**: Don't wait for everyone to agree—DRI decides after input"
+      - "**Perfection Paralysis**: Don't delay shipping waiting for perfect—ship MQB-passing increments"
+      - "**Ivory Tower Design**: Don't design in isolation—validate with real users"
+      - "**Feature Factory**: Don't ship features without measuring impact—validate value delivered"
+      - "**HiPPO Decisions**: Don't defer to highest-paid opinion—use evidence and data"
+
+  - id: validation-questions
+    title: Cultural Validation Questions
+    instruction: |
+      Questions to ask when making decisions to ensure alignment with Cultural DNA.
+    type: numbered-list
+    examples:
+      - "Does this decision reflect our values (user truth, quality, prioritization, learning)?"
+      - "Are we seeking user evidence or relying on assumptions?"
+      - "Would we celebrate this decision in a retrospective?"
+      - "Is this decision transparent and well-documented?"
+      - "Are we giving autonomy while maintaining alignment?"
+      - "Does this practice scale as the team grows?"
+      - "Are we creating psychological safety or fear?"

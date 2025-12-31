@@ -1,0 +1,307 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: purpose-dna-template-v1
+  name: Purpose DNA Document
+  version: 1.0
+  dna: Purpose DNA
+  output:
+    format: markdown
+    filename: docs/dna/purpose-dna.md
+    title: "{{product_name}} Purpose DNA"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: metadata
+    title: Document Metadata
+    instruction: |
+      Capture document metadata for version tracking and ownership.
+    sections:
+      - id: changelog
+        title: Change Log
+        type: table
+        columns: [Date, Version, Description, Author]
+        instruction: Track document versions and changes
+        initial_rows:
+          - ["{{current_date}}", "1.0", "Initial Purpose DNA definition", "{{author}}"]
+
+  - id: purpose-statement
+    title: Purpose Statement
+    instruction: |
+      The core purpose statement answers: WHY does this product exist?
+
+      This must be:
+      - One clear sentence (maximum 2 sentences)
+      - Focused on the problem being solved
+      - Not about features or solutions
+      - Inspiring yet grounded in reality
+
+      Example: "To eliminate the frustration of coordinating group schedules by making it effortless to find time that works for everyone."
+    elicit: true
+    type: paragraph
+    validation:
+      max_sentences: 2
+      requires: problem clarity, user benefit, emotional resonance
+
+  - id: problem-definition
+    title: Problem Definition
+    instruction: |
+      Clearly articulate the core problem this product solves. This section should answer:
+
+      1. What is the problem?
+      2. Who experiences this problem?
+      3. When/where does this problem occur?
+      4. What is the current cost/pain of this problem?
+      5. Why hasn't this been solved adequately yet?
+
+      Be specific. Vague problem definitions lead to vague products.
+    elicit: true
+    sections:
+      - id: problem-statement
+        title: Core Problem Statement
+        type: paragraph
+        instruction: |
+          2-3 paragraphs describing the problem in detail. Include evidence of the problem (research, data, observations).
+        examples:
+          - "Field maintenance technicians at retail locations struggle to diagnose and fix IoT-enabled coolers and vending machines efficiently. Currently, they rely on generic troubleshooting guides, phone calls to support, and trial-and-error approaches, leading to 2-3 hour average repair times and 40% first-visit failure rates. This results in prolonged equipment downtime, lost revenue for retailers, and frustrated technicians who feel unsupported."
+
+      - id: problem-evidence
+        title: Evidence of Problem
+        type: bullet-list
+        instruction: |
+          List specific evidence that validates this problem exists and matters:
+          - Research findings
+          - User feedback/complaints
+          - Market data
+          - Observational studies
+          - Cost analysis
+        examples:
+          - "User interviews with 25 field technicians revealed average 2-3 hour repair time"
+          - "Support ticket analysis showed 800+ calls per month from technicians needing guidance"
+          - "Lost revenue estimated at $50K per month from equipment downtime"
+
+      - id: current-alternatives
+        title: Current Alternatives and Why They Fail
+        type: bullet-list
+        instruction: |
+          What are users doing now to solve this problem, and why do those solutions fail?
+        examples:
+          - "Generic PDF troubleshooting guides - too broad, not specific to equipment model or failure mode"
+          - "Phone support - slow, creates dependency, doesn't scale"
+          - "Trial and error - wastes time, increases costs, frustrates technicians"
+
+  - id: solution-vision
+    title: Solution Vision
+    instruction: |
+      Describe HOW this product solves the problem. This is your vision for the solution.
+
+      Note: This is vision, not detailed features. Save feature details for other documents.
+    elicit: true
+    sections:
+      - id: solution-approach
+        title: Solution Approach
+        type: paragraph
+        instruction: |
+          2-3 paragraphs describing the core approach to solving the problem. What makes this solution different/better than alternatives?
+        examples:
+          - "We provide field technicians with a mobile-first diagnostic assistant that uses real-time IoT data, AI-powered troubleshooting, and equipment-specific guidance to reduce repair time by 60%. Unlike generic guides, our solution adapts to the specific equipment model, failure symptoms, and technician skill level, providing step-by-step visual instructions with exactly the information needed at the moment of need."
+
+      - id: key-differentiators
+        title: Key Differentiators
+        type: bullet-list
+        instruction: |
+          What makes this solution uniquely valuable? How is it different from alternatives?
+        examples:
+          - "Real-time IoT integration - we use live equipment data, not generic guides"
+          - "AI-powered diagnosis - system learns from past repairs to improve accuracy"
+          - "Context-aware guidance - adapts to technician skill level and specific equipment"
+          - "Mobile-first with offline capability - works in locations with poor connectivity"
+
+  - id: north-star-metric
+    title: North Star Metric
+    instruction: |
+      Define the ONE metric that best captures value delivery to users. This metric should:
+      - Be measurable
+      - Connect to user value (not vanity metric)
+      - Be influenced by team actions
+      - Be simple enough to explain to anyone
+
+      This is your north star - the metric you optimize for above all others.
+    elicit: true
+    sections:
+      - id: primary-metric
+        title: Primary North Star Metric
+        type: structured
+        template: "{{metric_name}}: {{metric_definition}}"
+        instruction: |
+          Name and define your north star metric clearly.
+        examples:
+          - "Average Repair Time: Time from technician arrival to equipment restoration (measured in minutes)"
+          - "User Progress Rate: Percentage of users who complete their primary job-to-be-done within target time"
+
+      - id: metric-rationale
+        title: Why This Metric
+        type: paragraph
+        instruction: |
+          Explain why this metric captures true value delivery better than alternatives.
+        examples:
+          - "We chose Average Repair Time as our north star because it directly measures the core value we deliver: making technicians more efficient. Revenue, user count, and feature usage are important, but they're lagging indicators. Repair time is a real-time measure of whether we're solving the problem."
+
+      - id: target-value
+        title: Target Value
+        type: structured
+        template: "Current Baseline: {{current_value}} | Target: {{target_value}} | Timeline: {{timeline}}"
+        instruction: |
+          What's the current baseline, target value, and timeframe?
+        examples:
+          - "Current Baseline: 150 minutes average | Target: 60 minutes average | Timeline: 12 months"
+
+  - id: success-criteria
+    title: Success Criteria
+    instruction: |
+      Define specific, measurable criteria that indicate the product is succeeding. These should be:
+      - Measurable (not subjective)
+      - Time-bound
+      - Connected to business outcomes
+      - Realistic but ambitious
+    elicit: true
+    sections:
+      - id: quantitative-criteria
+        title: Quantitative Success Criteria
+        type: numbered-list
+        instruction: |
+          List specific numeric goals with timeframes.
+        examples:
+          - "Reduce average repair time from 150 min to 60 min within 12 months"
+          - "Achieve 70% first-visit fix rate (up from 40%) within 9 months"
+          - "Reach 500 active technician users within 6 months"
+          - "Maintain 90%+ system uptime"
+
+      - id: qualitative-criteria
+        title: Qualitative Success Criteria
+        type: numbered-list
+        instruction: |
+          List quality-based success indicators.
+        examples:
+          - "Technicians report feeling 'confident and supported' in 80%+ of feedback"
+          - "Net Promoter Score (NPS) of 40+ from technicians"
+          - "Recognition as 'preferred diagnostic tool' by technician community"
+
+  - id: non-negotiables
+    title: Non-Negotiables
+    instruction: |
+      Define what this product will NEVER compromise on. These are hard boundaries that serve as filters for all decisions.
+
+      Non-negotiables should be:
+      - Specific and clear
+      - Truly non-negotiable (not just "important")
+      - Small in number (3-5 max)
+      - Actively used to reject features/requests
+    elicit: true
+    type: numbered-list
+    examples:
+      - "We will never sacrifice data accuracy for speed - wrong diagnostic guidance is worse than no guidance"
+      - "We will never require constant internet connectivity - technicians work in areas with poor coverage"
+      - "We will never add features that increase cognitive load during high-stress repairs"
+      - "We will never compromise user privacy - technician performance data stays anonymous"
+      - "We will never ship features that don't reduce repair time or improve first-visit fix rate"
+
+  - id: value-proposition
+    title: Value Proposition
+    instruction: |
+      Articulate the value delivered to each key stakeholder group.
+    elicit: true
+    sections:
+      - id: user-value
+        title: Value to Primary Users
+        type: bullet-list
+        instruction: |
+          What value do primary users (the people using the product) receive?
+        examples:
+          - "Field technicians: Complete repairs faster, feel more confident, reduce stress"
+          - "End result: More jobs per day, better performance reviews, less frustration"
+
+      - id: business-value
+        title: Value to Business
+        type: bullet-list
+        instruction: |
+          What value does the business (company, stakeholders, sponsors) receive?
+        examples:
+          - "Reduced equipment downtime saves $30K+ per month in lost revenue"
+          - "Higher first-visit fix rate reduces costly return trips"
+          - "Better technician satisfaction improves retention, reduces hiring costs"
+
+      - id: ecosystem-value
+        title: Value to Ecosystem
+        type: bullet-list
+        instruction: |
+          What value does the broader ecosystem (partners, retailers, end consumers) receive?
+        examples:
+          - "Retailers: Equipment back online faster, improved customer satisfaction"
+          - "End consumers: Better product availability, fewer 'out of stock' experiences"
+          - "Equipment manufacturers: Better support experience improves brand perception"
+
+  - id: scope-boundaries
+    title: Scope Boundaries
+    instruction: |
+      Clearly define what is IN scope and OUT of scope. This prevents scope creep and feature factory syndrome.
+    elicit: true
+    sections:
+      - id: in-scope
+        title: In Scope
+        type: bullet-list
+        instruction: |
+          What is this product explicitly designed to do?
+        examples:
+          - "Diagnostic assistance for IoT-enabled coolers and vending machines"
+          - "Step-by-step repair guidance for field technicians"
+          - "Real-time equipment status monitoring"
+          - "Offline capability for low-connectivity environments"
+
+      - id: out-of-scope
+        title: Out of Scope (Explicitly Not Included)
+        type: bullet-list
+        instruction: |
+          What will this product explicitly NOT do? This is critical for saying no to requests.
+        examples:
+          - "NOT a full asset management system (only diagnostic focus)"
+          - "NOT for office-based administrators (mobile field use only)"
+          - "NOT for non-IoT equipment (requires sensor data)"
+          - "NOT a replacement for human expertise (augmentation, not automation)"
+          - "NOT a sales or inventory management tool"
+
+  - id: purpose-evolution
+    title: Purpose Evolution
+    instruction: |
+      Document how the purpose might evolve over time as the product matures. This keeps purpose alive, not static.
+    sections:
+      - id: current-purpose-focus
+        title: Current Purpose Focus (Now)
+        type: paragraph
+        instruction: |
+          What is the primary purpose focus right now, at this stage?
+        examples:
+          - "Currently, our focus is entirely on field technician efficiency for IoT coolers and vending machines. We are purpose-built for this specific use case and will not dilute focus until we achieve our north star metric target."
+
+      - id: future-purpose-evolution
+        title: Future Purpose Evolution (If Successful)
+        type: paragraph
+        instruction: |
+          How might the purpose evolve IF the current purpose is achieved successfully? This is not a roadmap commitment, but a vision for evolution.
+        examples:
+          - "If successful at dramatically improving repair times for IoT equipment, we may expand to support additional equipment types, or extend diagnostic capabilities to preventive maintenance. However, we will ONLY pursue evolution if it serves technician efficiency and maintains our core non-negotiables."
+
+  - id: alignment-check
+    title: Purpose Alignment Check
+    instruction: |
+      Provide questions that help teams check if new ideas align with purpose. Use these as filters for feature requests.
+    type: numbered-list
+    examples:
+      - "Does this reduce average repair time?"
+      - "Does this improve first-visit fix rate?"
+      - "Does this work offline in low-connectivity environments?"
+      - "Does this add cognitive load during high-stress situations? (If yes, reject)"
+      - "Does this compromise data accuracy for speed? (If yes, reject)"
+      - "Does this serve field technicians directly? (If no, deprioritize)"

@@ -1,0 +1,35 @@
+bundle:
+  name: Product Genome Team
+  icon: 🧬
+  description: Complete team for implementing The Product Genome framework - all 6 DNAs and supporting capabilities
+  agents:
+    - tpg-orchestrator
+    - purpose-architect
+    - user-analyst
+    - experience-guardian
+    - architecture-expert
+    - intelligence-analyst
+    - culture-coach
+    - evolution-manager
+    - product-owner
+    - quality-specialist
+  workflows:
+    - greenfield-product.yaml
+    - brownfield-product.yaml
+    - genome-assessment-flow.yaml
+    - dna-creation-flow.yaml
+    - feature-validation-flow.yaml
+    - ship-validation-flow.yaml
+  primary_use_cases:
+    - New product development from scratch
+    - Existing product genome assessment
+    - DNA-driven feature validation
+    - Quality gate enforcement
+    - Strategic product decisions
+    - Team alignment on product principles
+  quick_start:
+    - "Start with *assess-genome to evaluate current product health"
+    - "Use *agent purpose-architect to define Purpose DNA"
+    - "Use *agent user-analyst to establish User DNA foundation"
+    - "Before any feature ships, run *mqb-gate validation"
+    - "For strategic decisions, use *party-mode for multi-agent consultation"

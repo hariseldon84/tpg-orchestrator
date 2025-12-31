@@ -1,0 +1,317 @@
+# <!-- Powered by Product Genome™ Framework -->
+workflow:
+  id: ship-validation-flow
+  name: Ship Validation Flow (Pre-Release Gate)
+  version: 1.0
+  description: >-
+    Final validation workflow before shipping features or releases to production.
+    Combines MQB gate validation with deployment readiness checks to ensure
+    quality and minimize post-launch issues.
+
+  use_cases:
+    - Feature release validation
+    - Sprint release validation
+    - Major version release validation
+    - Hotfix validation (expedited)
+
+  prerequisites:
+    - Feature or release complete
+    - MQB gates defined
+    - Product Genome exists
+
+  agents_involved:
+    - quality-specialist
+    - tpg-orchestrator
+
+  estimated_duration: "2-4 hours for feature, 1 day for major release"
+
+  phases:
+    - phase: 1
+      name: MQB Gates Validation
+      objective: Validate all 12 MQB gates
+      duration: "1-2 hours"
+      steps:
+        - validate_mqb_gates
+        - document_evidence
+      checkpoint:
+        name: mqb_validated
+        requires_approval: true
+        validation:
+          - All 12 gates validated
+          - Evidence documented
+          - No critical failures
+
+    - phase: 2
+      name: Deployment Readiness
+      objective: Ensure deployment is prepared and safe
+      duration: "30-60 min"
+      steps:
+        - validate_deployment_plan
+        - verify_monitoring
+        - confirm_rollback_plan
+      checkpoint:
+        name: deployment_ready
+        requires_approval: true
+        validation:
+          - Deployment plan complete
+          - Monitoring configured
+          - Rollback plan ready
+
+    - phase: 3
+      name: Stakeholder Sign-Off
+      objective: Get final approvals from all stakeholders
+      duration: "30 min"
+      steps:
+        - get_product_approval
+        - get_engineering_approval
+        - get_qa_approval
+      checkpoint:
+        name: approvals_complete
+        requires_approval: true
+        validation:
+          - Product Manager approved
+          - Engineering Lead approved
+          - QA Lead approved
+
+    - phase: 4
+      name: Final Go/No-Go Decision
+      objective: Make final ship decision
+      duration: "15 min"
+      steps:
+        - assess_overall_readiness
+        - make_ship_decision
+      checkpoint:
+        name: ship_decision_made
+        requires_approval: true
+        validation:
+          - Decision documented
+          - Ship time scheduled (if GO)
+          - Communication plan ready
+
+  steps:
+    - id: validate_mqb_gates
+      name: Validate All 12 MQB Gates
+      agent: quality-specialist
+      task: run-mqb-gates
+      inputs:
+        - Feature/release to validate
+        - MQB gate definitions
+      outputs:
+        - MQB validation report
+        - Gate-by-gate status
+      validation:
+        - All 12 gates validated
+        - Pass/fail status for each gate
+        - Evidence documented
+      handoff: "MQB gates validated. Next: Document evidence."
+
+    - id: document_evidence
+      name: Document MQB Evidence
+      agent: quality-specialist
+      task: document-evidence
+      inputs:
+        - MQB validation results
+      outputs:
+        - Evidence artifacts collected
+        - Validation report complete
+      validation:
+        - Test results attached
+        - User research linked
+        - Performance data included
+        - All evidence accessible
+      handoff: "Evidence documented. Next: Check deployment readiness."
+
+    - id: validate_deployment_plan
+      name: Validate Deployment Plan
+      agent: tpg-orchestrator
+      task: deployment-validation
+      inputs:
+        - Ship readiness checklist
+      outputs:
+        - Deployment plan validated
+      validation:
+        - Deployment steps documented
+        - Deployment window scheduled
+        - Communication plan ready
+        - Team assignments clear
+      handoff: "Deployment plan validated. Next: Verify monitoring."
+
+    - id: verify_monitoring
+      name: Verify Monitoring and Alerting
+      agent: tpg-orchestrator
+      task: monitoring-check
+      outputs:
+        - Monitoring verification
+      validation:
+        - Analytics instrumentation verified
+        - Error tracking configured
+        - Performance monitoring active
+        - Alerts configured
+        - Dashboards accessible
+      handoff: "Monitoring verified. Next: Confirm rollback plan."
+
+    - id: confirm_rollback_plan
+      name: Confirm Rollback Plan
+      agent: tpg-orchestrator
+      task: rollback-validation
+      outputs:
+        - Rollback plan confirmed
+      validation:
+        - Rollback steps documented
+        - Rollback tested (if possible)
+        - Rollback criteria defined
+        - Team knows how to rollback
+      handoff: "Rollback plan ready. Next: Get product approval."
+
+    - id: get_product_approval
+      name: Get Product Manager Approval
+      agent: tpg-orchestrator
+      task: approval-request
+      inputs:
+        - MQB validation report
+        - Ship readiness checklist
+      outputs:
+        - Product Manager sign-off
+      validation:
+        - PM reviewed readiness
+        - PM approved or requested changes
+      handoff: "PM approval received. Next: Get engineering approval."
+
+    - id: get_engineering_approval
+      name: Get Engineering Lead Approval
+      agent: tpg-orchestrator
+      task: approval-request
+      inputs:
+        - Technical quality validation
+        - Deployment plan
+      outputs:
+        - Engineering Lead sign-off
+      validation:
+        - Engineering reviewed technical readiness
+        - Engineering approved or requested changes
+      handoff: "Engineering approval received. Next: Get QA approval."
+
+    - id: get_qa_approval
+      name: Get QA Lead Approval
+      agent: quality-specialist
+      task: qa-signoff
+      inputs:
+        - MQB validation report
+        - Test results
+      outputs:
+        - QA Lead sign-off
+      validation:
+        - QA reviewed all test results
+        - QA confirmed MQB gates passed
+        - QA approved for release
+      handoff: "QA approval received. Next: Assess overall readiness."
+
+    - id: assess_overall_readiness
+      name: Assess Overall Ship Readiness
+      agent: tpg-orchestrator
+      task: readiness-assessment
+      inputs:
+        - All MQB gates status
+        - All approvals
+        - Deployment readiness
+      outputs:
+        - Overall readiness assessment
+      validation:
+        - All critical items checked
+        - All approvals received
+        - No blockers identified
+      handoff: "Readiness assessed. Next: Make ship decision."
+
+    - id: make_ship_decision
+      name: Make Final Ship Decision
+      agent: tpg-orchestrator
+      task: ship-decision
+      inputs:
+        - Overall readiness assessment
+      outputs:
+        - Ship decision: GO / NO-GO / DELAY
+        - Rationale documented
+        - Next steps clear
+      validation:
+        - Decision documented
+        - If GO: Ship time scheduled
+        - If NO-GO: Blockers documented
+        - If DELAY: Timeline for resolution
+        - Team notified
+      handoff: "Ship decision made!"
+
+  deliverables:
+    - MQB validation report (all gates)
+    - Ship readiness checklist (complete)
+    - Deployment plan
+    - Rollback plan
+    - Monitoring verification
+    - Stakeholder approvals (PM, Engineering, QA)
+    - Ship decision documentation
+    - Communication plan
+
+  success_criteria:
+    - All 12 MQB gates passed (100%)
+    - All stakeholders approved
+    - Deployment plan complete
+    - Monitoring configured
+    - Rollback plan ready
+    - Ship decision made with confidence
+
+  failure_recovery:
+    - error_type: mqb_gate_failure
+      action: remediate_and_revalidate
+      message: "One or more MQB gates failed"
+      resolution: "Fix issues, re-run MQB validation, do not ship until all gates pass"
+
+    - error_type: approval_rejected
+      action: address_concerns
+      message: "Stakeholder rejected approval"
+      resolution: "Address stakeholder concerns, provide additional evidence, re-request approval"
+
+    - error_type: deployment_not_ready
+      action: complete_preparation
+      message: "Deployment plan incomplete"
+      resolution: "Complete deployment preparation, verify readiness, restart validation"
+
+  expedited_flow:
+    name: "Hotfix Expedited Validation"
+    description: "Abbreviated flow for critical hotfixes"
+    steps:
+      - Validate critical MQB gates only (Security, Regression Prevention, Error Handling)
+      - Skip non-critical gates with documented exception
+      - Require VP-level approval for exception
+      - Fast-track stakeholder approvals
+      - Deploy with enhanced monitoring
+      - Full MQB validation post-deployment (remediate within 24 hours)
+
+  ship_decision_outcomes:
+    GO:
+      action: "Proceed with deployment"
+      next_steps:
+        - Execute deployment plan
+        - Monitor launch closely
+        - Track success metrics
+        - Conduct post-launch review
+
+    NO_GO:
+      action: "Do not ship, address blockers"
+      next_steps:
+        - Fix blocking issues
+        - Re-run ship validation
+        - Reschedule ship when ready
+
+    DELAY:
+      action: "Postpone ship, resolve concerns"
+      next_steps:
+        - Address identified concerns
+        - Set new ship date
+        - Re-validate before new date
+
+  next_steps_after_ship:
+    - Monitor first 24 hours closely
+    - Track success metrics
+    - Collect user feedback
+    - Conduct 1-week post-launch review
+    - Validate hypothesis (if feature)
+    - Document learnings

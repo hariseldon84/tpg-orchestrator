@@ -1,0 +1,441 @@
+# <!-- Powered by Product Genome™ Framework -->
+workflow:
+  id: greenfield-product
+  name: New Product Development (Product Genome)
+  version: 1.0
+  description: >-
+    End-to-end workflow for building a new product from scratch using Product Genome principles.
+    Establishes all 6 DNAs sequentially, ensuring coherence across Purpose, User, Experience,
+    Architecture, Intelligence, and Cultural dimensions before first feature development.
+
+  use_cases:
+    - Starting a brand new product from scratch
+    - No existing Product Genome documents
+    - Team committed to Product Genome approach
+    - Need systematic product foundation before building
+    - Want to avoid feature factory syndrome from day one
+
+  prerequisites:
+    - Product idea or problem space identified
+    - Key stakeholders available for input
+    - Team aligned on using Product Genome framework
+    - Time allocated for foundation work (2-4 weeks typically)
+
+  agents_involved:
+    - tpg-orchestrator
+    - purpose-architect
+    - user-analyst
+    - experience-guardian
+    - architecture-expert
+    - intelligence-analyst
+    - culture-coach
+    - evolution-manager
+    - quality-specialist
+
+  estimated_duration: "2-4 weeks (foundation phase), then ongoing for feature development"
+
+  phases:
+    - phase: 1
+      name: Foundation (DNAs 1-2)
+      objective: Establish WHY the product exists and WHO it serves
+      duration: "Week 1"
+      steps:
+        - define_purpose
+        - research_users
+        - validate_purpose_user_alignment
+      checkpoint:
+        name: foundation_review
+        requires_approval: true
+        validation:
+          - Purpose DNA validated by stakeholders
+          - North star metric defined and agreed
+          - User segments identified with evidence
+          - User research plan established
+
+    - phase: 2
+      name: Quality & Structure (DNAs 3-4)
+      objective: Define HOW we build (quality standards + technical foundation)
+      duration: "Week 2"
+      steps:
+        - set_experience_standards
+        - design_architecture
+        - validate_experience_architecture_alignment
+      checkpoint:
+        name: architecture_review
+        requires_approval: true
+        validation:
+          - Experience standards defined and committed
+          - MQB gates established
+          - Architecture decisions documented (ADRs)
+          - Technical choices align with user constraints
+
+    - phase: 3
+      name: Intelligence & Culture (DNAs 5-6)
+      objective: Establish HOW we measure and HOW we work
+      duration: "Week 3"
+      steps:
+        - establish_metrics
+        - define_culture
+        - validate_intelligence_culture_alignment
+      checkpoint:
+        name: culture_metrics_review
+        requires_approval: true
+        validation:
+          - Instrumentation plan defined
+          - North star metric tracking ready
+          - Team values and culture defined
+          - Decision framework established
+
+    - phase: 4
+      name: Validation & Launch Preparation
+      objective: Validate genome coherence and prepare for first feature
+      duration: "Week 4"
+      steps:
+        - validate_genome_coherence
+        - setup_mqb_gates
+        - plan_first_feature
+        - implement_first_feature
+        - ship_with_validation
+      checkpoint:
+        name: launch_readiness
+        requires_approval: true
+        validation:
+          - All 6 DNAs coherent and complete
+          - MQB gates operational
+          - First feature planned using Builder's Hierarchy
+          - Team trained on Product Genome workflow
+
+  steps:
+    - id: define_purpose
+      name: Define Purpose DNA
+      agent: purpose-architect
+      task: create-purpose-dna
+      inputs:
+        - Product idea or problem statement
+        - Market/competitive context
+        - Business constraints and goals
+        - Initial stakeholder vision
+      outputs:
+        - docs/purpose-dna.md
+      validation:
+        - Purpose statement is clear and specific (not vague)
+        - Problem definition is measurable
+        - North star metric defined (ONE primary metric)
+        - Success criteria are quantifiable
+        - 3-5 non-negotiables established
+        - Scope boundaries clear (IN vs OUT)
+        - Value proposition articulated for all stakeholders
+      handoff: "Purpose DNA complete. This is your product's north star. Next: validate with real users."
+
+    - id: research_users
+      name: Create User DNA
+      agent: user-analyst
+      task: create-user-dna
+      inputs:
+        - docs/purpose-dna.md (ensures user research serves purpose)
+        - Access to potential users for research
+        - Existing user data if available
+      outputs:
+        - docs/user-dna.md
+        - User research findings
+        - JTBD analysis
+      validation:
+        - User segments are specific (not "everyone")
+        - Primary user segment explicitly chosen
+        - JTBD format followed ("When [situation], I want to [motivation], so I can [outcome]")
+        - User context documented (where, when, how they'll use product)
+        - User constraints identified (time, skills, environment, tech)
+        - Evidence sources documented (research methods used)
+        - Ongoing discovery plan established
+      handoff: "User DNA complete with evidence-based segments. Next: set quality standards for these users."
+
+    - id: validate_purpose_user_alignment
+      name: Validate Purpose-User Alignment
+      agent: tpg-orchestrator
+      task: validate-coherence
+      inputs:
+        - docs/purpose-dna.md
+        - docs/user-dna.md
+      outputs:
+        - Coherence assessment report
+      validation:
+        - User segments align with purpose
+        - User JTBD connect to problem being solved
+        - No conflicts between purpose and user focus
+        - User constraints don't block purpose achievement
+      handoff: "Foundation validated. Purpose and Users aligned. Ready for quality standards."
+
+    - id: set_experience_standards
+      name: Define Experience DNA
+      agent: experience-guardian
+      task: create-experience-dna
+      inputs:
+        - docs/purpose-dna.md
+        - docs/user-dna.md (especially user context and constraints)
+      outputs:
+        - docs/experience-dna.md
+        - MQB gate definitions
+      validation:
+        - Quality thresholds are measurable (not subjective)
+        - Performance standards defined (load times, response times, uptime)
+        - Usability standards established (cognitive load, error handling)
+        - Accessibility standards committed (WCAG level specified)
+        - Interaction patterns documented
+        - MQB gates defined (all 12 gates)
+        - Standards respect user constraints from User DNA
+      handoff: "Experience DNA complete. Quality bar is set. Next: architect the system to meet these standards."
+
+    - id: design_architecture
+      name: Document Architecture DNA
+      agent: architecture-expert
+      task: create-architecture-dna
+      inputs:
+        - docs/purpose-dna.md
+        - docs/user-dna.md (user constraints inform technical choices)
+        - docs/experience-dna.md (quality thresholds inform architecture)
+      outputs:
+        - docs/architecture-dna.md
+        - ADRs (Architecture Decision Records)
+      validation:
+        - System structure documented (modularity, boundaries)
+        - Technical decisions documented with rationale (ADRs)
+        - Scalability design addresses growth expectations
+        - Technical constraints documented
+        - Evolution path planned (how architecture enables future changes)
+        - Architecture supports Experience DNA performance standards
+        - Technical choices respect User DNA constraints (offline, mobile, etc.)
+      handoff: "Architecture DNA complete. System designed to evolve. Next: establish measurement infrastructure."
+
+    - id: validate_experience_architecture_alignment
+      name: Validate Experience-Architecture Alignment
+      agent: tpg-orchestrator
+      task: validate-coherence
+      inputs:
+        - docs/experience-dna.md
+        - docs/architecture-dna.md
+      outputs:
+        - Coherence assessment report
+      validation:
+        - Architecture can deliver experience standards
+        - Technical choices support quality thresholds
+        - No conflicts between desired experience and technical reality
+        - Performance standards achievable with chosen architecture
+      handoff: "Quality and structure aligned. Architecture supports experience goals. Ready for metrics."
+
+    - id: establish_metrics
+      name: Establish Intelligence DNA
+      agent: intelligence-analyst
+      task: create-intelligence-dna
+      inputs:
+        - docs/purpose-dna.md (north star metric)
+        - docs/user-dna.md
+        - docs/experience-dna.md
+        - docs/architecture-dna.md (instrumentation capabilities)
+      outputs:
+        - docs/intelligence-dna.md
+        - Instrumentation plan
+        - Experimentation framework
+      validation:
+        - North star metric tracking plan defined
+        - Supporting metrics identified
+        - Instrumentation approach documented
+        - Analytics infrastructure specified
+        - Experimentation framework established (A/B testing capability)
+        - Learning loops defined (how insights → action)
+        - Hypothesis-driven development process documented
+      handoff: "Intelligence DNA complete. Measurement infrastructure planned. Next: define team culture."
+
+    - id: define_culture
+      name: Define Cultural DNA
+      agent: culture-coach
+      task: create-cultural-dna
+      inputs:
+        - docs/purpose-dna.md (purpose informs values)
+        - docs/experience-dna.md (quality culture)
+        - All other DNAs (culture must support all)
+      outputs:
+        - docs/cultural-dna.md
+        - Decision framework
+        - Team rituals and practices
+      validation:
+        - Product values clearly stated (3-5 core values)
+        - Decision framework documented
+        - Team collaboration approach defined
+        - Growth strategies align with sustainable practices
+        - Learning culture processes established
+        - Quality culture reinforces MQB gates
+        - Values align with purpose and non-negotiables
+      handoff: "Cultural DNA complete. Team values and practices defined. Next: validate full genome coherence."
+
+    - id: validate_intelligence_culture_alignment
+      name: Validate Intelligence-Culture Alignment
+      agent: tpg-orchestrator
+      task: validate-coherence
+      inputs:
+        - docs/intelligence-dna.md
+        - docs/cultural-dna.md
+      outputs:
+        - Coherence assessment report
+      validation:
+        - Culture supports evidence-based decisions
+        - Learning culture enables experimentation
+        - Values reinforce measurement and learning
+        - No conflicts between culture and intelligence approach
+      handoff: "Measurement and culture aligned. Ready for full genome validation."
+
+    - id: validate_genome_coherence
+      name: Validate Complete Genome Coherence
+      agent: tpg-orchestrator
+      task: assess-genome
+      inputs:
+        - docs/purpose-dna.md
+        - docs/user-dna.md
+        - docs/experience-dna.md
+        - docs/architecture-dna.md
+        - docs/intelligence-dna.md
+        - docs/cultural-dna.md
+      outputs:
+        - Comprehensive genome assessment
+        - Coherence score (1-5 for each DNA)
+        - Gap analysis and recommendations
+      validation:
+        - All 6 DNAs present and complete
+        - Coherence score ≥ 4 for all DNAs
+        - No critical conflicts between DNAs
+        - All DNAs reinforce each other
+        - Product Genome ready for feature development
+      handoff: "Product Genome validated and coherent. Ready to set up quality gates."
+
+    - id: setup_mqb_gates
+      name: Set Up MQB Gate Process
+      agent: quality-specialist
+      task: setup-mqb-process
+      inputs:
+        - docs/experience-dna.md (MQB gate definitions)
+        - Product Genome (all DNAs)
+      outputs:
+        - MQB gate checklist (operational)
+        - Quality gate process documentation
+        - Team training materials
+      validation:
+        - All 12 MQB gates documented
+        - Gate enforcement process established
+        - Team trained on MQB gates
+        - Exception handling process defined
+        - Quality culture committed to gates
+      handoff: "MQB gates operational. Quality bar enforceable. Ready to plan first feature."
+
+    - id: plan_first_feature
+      name: Plan First Feature Using Builder's Hierarchy
+      agent: evolution-manager
+      task: plan-feature
+      inputs:
+        - Product Genome (all DNAs)
+        - North star metric
+      outputs:
+        - First feature plan using Builder's Hierarchy
+        - Goal → Actor → Impact → Deliverable mapping
+      validation:
+        - Goal is measurable and outcome-focused
+        - Actor is specific (not "users")
+        - Impact is behavioral change that serves goal
+        - Deliverable serves the impact
+        - Feature passes purpose alignment filter
+        - Feature validated by User DNA
+      handoff: "First feature planned systematically. Ready to build and validate."
+
+    - id: implement_first_feature
+      name: Implement First Feature
+      agent: evolution-manager
+      task: implement-feature
+      inputs:
+        - First feature plan
+        - Product Genome (all DNAs)
+        - MQB gate checklist
+      outputs:
+        - Implemented feature
+        - Feature documentation
+      validation:
+        - Feature meets all acceptance criteria
+        - Feature implementation follows Architecture DNA
+        - Feature instrumented per Intelligence DNA
+        - Feature developed per Cultural DNA practices
+      handoff: "First feature implemented. Ready for comprehensive validation before ship."
+
+    - id: ship_with_validation
+      name: Ship First Feature with Full Validation
+      agent: quality-specialist
+      task: validate-ship-readiness
+      inputs:
+        - Implemented feature
+        - MQB gate checklist
+        - Product Genome (all DNAs)
+      outputs:
+        - MQB gate assessment
+        - Ship/No-Ship decision
+      validation:
+        - All 12 MQB gates pass
+        - Feature serves Purpose DNA
+        - Feature validated by User DNA
+        - Feature meets Experience DNA standards
+        - Feature follows Architecture DNA
+        - Feature instrumented per Intelligence DNA
+        - Feature aligns with Cultural DNA values
+      handoff: "First feature shipped with full Product Genome validation. Foundation proven. Continue with Evolution Flow for subsequent features."
+
+  deliverables:
+    - docs/purpose-dna.md
+    - docs/user-dna.md
+    - docs/experience-dna.md
+    - docs/architecture-dna.md
+    - docs/intelligence-dna.md
+    - docs/cultural-dna.md
+    - Operational MQB gate process
+    - First feature shipped successfully
+    - Team trained on Product Genome workflow
+
+  success_criteria:
+    - All 6 DNAs created and validated
+    - Genome coherence score ≥ 4.0 across all DNAs
+    - MQB gates operational and enforced
+    - First feature shipped meeting all quality gates
+    - Team understands and follows Product Genome principles
+    - North star metric tracking in place
+    - No feature factory syndrome (all features tied to purpose)
+    - Quality culture established (celebrating "no-ship" decisions)
+
+  failure_recovery:
+    - error_type: incomplete_dna
+      action: pause_workflow
+      message: "DNA {dna_name} incomplete or failing validation"
+      resolution: "Return to relevant agent to complete/fix DNA before proceeding"
+
+    - error_type: coherence_failure
+      action: identify_conflicts
+      message: "DNAs {dna_1} and {dna_2} have conflicts"
+      resolution: "Resolve conflicts through party-mode discussion with relevant agents"
+
+    - error_type: mqb_gate_failure
+      action: block_ship
+      message: "Feature fails MQB gates: {failed_gates}"
+      resolution: "Fix issues and re-validate. Never ship with failures."
+
+    - error_type: stakeholder_misalignment
+      action: pause_for_alignment
+      message: "Stakeholders not aligned on {topic}"
+      resolution: "Facilitate alignment session before proceeding"
+
+  next_steps_after_completion:
+    - Continue feature development using Evolution Flow
+    - Run genome assessment quarterly to maintain health
+    - Update DNAs as product evolves (living documents)
+    - Enforce MQB gates on every feature/increment
+    - Build Product Genome into team rituals
+    - Celebrate evidence-based decisions and quality protection
+
+  references:
+    - .tpg-core/data/tpg-kb.md
+    - .tpg-core/utils/workflow-management.md
+    - .tpg-core/checklists/mqb-gate-checklist.md
+    - Evolution Flow for ongoing feature development
+    - Builder's Hierarchy for feature planning

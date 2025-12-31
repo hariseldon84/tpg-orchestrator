@@ -1,0 +1,380 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: mqb-definition-template-v1
+  name: Minimum Quality Bar (MQB) Definition
+  version: 1.0
+  output:
+    format: markdown
+    filename: docs/mqb-definition.md
+    title: "{{product_name}} Minimum Quality Bar"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: metadata
+    title: Document Metadata
+    sections:
+      - id: changelog
+        title: Change Log
+        type: table
+        columns: [Date, Version, Description, Author]
+        initial_rows:
+          - ["{{current_date}}", "1.0", "Initial MQB definition", "{{author}}"]
+
+  - id: mqb-purpose
+    title: MQB Purpose and Philosophy
+    type: paragraph
+    instruction: |
+      Explain why MQB exists and its role in Product Genome.
+    examples:
+      - "The Minimum Quality Bar (MQB) is our quality immune system—it prevents features from shipping below acceptable standards, protects users from poor experiences, and stops quality debt accumulation. MQB is not about perfection; it's about maintaining a baseline that protects Product Genome integrity and user trust."
+
+  - id: gate-1
+    title: "Gate 1: Purpose Alignment"
+    sections:
+      - id: gate-1-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "Feature maps to Purpose DNA objective"
+          - "Supports north star metric or doesn't harm it"
+          - "Within scope boundaries (not out-of-scope)"
+          - "Respects non-negotiables"
+          - "Purpose alignment documented"
+      - id: gate-1-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "Purpose alignment questionnaire completed. Product Owner sign-off on alignment."
+      - id: gate-1-owner
+        title: Owner
+        type: text
+        examples:
+          - "Product Manager"
+
+  - id: gate-2
+    title: "Gate 2: User Need Validation"
+    sections:
+      - id: gate-2-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "User need documented with evidence"
+          - "Maps to User DNA segment and JTBD"
+          - "User validation conducted (prototype/usability test)"
+          - "User acceptance criteria defined and met"
+      - id: gate-2-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "User research artifacts attached. Usability test results showing validation. Product Owner confirms need validated."
+      - id: gate-2-owner
+        title: Owner
+        type: text
+        examples:
+          - "Product Manager / UX Researcher"
+
+  - id: gate-3
+    title: "Gate 3: Experience Standards"
+    sections:
+      - id: gate-3-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "Meets UX consistency (design system compliance)"
+          - "Meets usability thresholds (task success rate ≥ 90%)"
+          - "Responsive design implemented"
+          - "Visual quality standards met"
+          - "Interaction patterns follow conventions"
+      - id: gate-3-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "Design review approval. Usability testing results. Design system compliance check."
+      - id: gate-3-owner
+        title: Owner
+        type: text
+        examples:
+          - "Design Lead"
+
+  - id: gate-4
+    title: "Gate 4: Performance Standards"
+    sections:
+      - id: gate-4-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "Page load time ≤ {{performance_threshold}} (e.g., 2 seconds)"
+          - "API response time (p95) ≤ {{api_threshold}} (e.g., 200ms)"
+          - "No performance regressions vs. baseline"
+          - "Performance tested under realistic load"
+      - id: gate-4-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "Performance test results attached. Automated performance tests passing. Metrics within thresholds."
+      - id: gate-4-owner
+        title: Owner
+        type: text
+        examples:
+          - "Engineering Lead"
+
+  - id: gate-5
+    title: "Gate 5: Accessibility Standards"
+    sections:
+      - id: gate-5-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "WCAG {{wcag_level}} compliance (e.g., WCAG 2.1 AA)"
+          - "Screen reader compatible"
+          - "Keyboard navigation fully functional"
+          - "Color contrast meets standards"
+          - "Alt text for images"
+      - id: gate-5-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "Automated accessibility testing (Axe, Lighthouse). Manual screen reader testing. Keyboard navigation testing."
+      - id: gate-5-owner
+        title: Owner
+        type: text
+        examples:
+          - "Design Lead / QA"
+
+  - id: gate-6
+    title: "Gate 6: Security Standards"
+    sections:
+      - id: gate-6-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "No critical or high-severity vulnerabilities"
+          - "Authentication and authorization correct"
+          - "Input validation and sanitization"
+          - "Sensitive data encrypted"
+          - "OWASP Top 10 mitigations applied"
+      - id: gate-6-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "Security scan results (no critical/high issues). Security review sign-off."
+      - id: gate-6-owner
+        title: Owner
+        type: text
+        examples:
+          - "Security Lead / Engineering"
+
+  - id: gate-7
+    title: "Gate 7: Data Integrity"
+    sections:
+      - id: gate-7-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "Data validation implemented (client and server)"
+          - "Data storage uses proper constraints"
+          - "Data migrations tested and reversible"
+          - "No data loss scenarios"
+          - "Concurrent access handled correctly"
+      - id: gate-7-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "Data integrity test suite passing. Edge case testing. Migration testing in staging."
+      - id: gate-7-owner
+        title: Owner
+        type: text
+        examples:
+          - "Engineering Lead"
+
+  - id: gate-8
+    title: "Gate 8: Error Handling"
+    sections:
+      - id: gate-8-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "All error states have user-friendly messages"
+          - "Errors don't expose sensitive information"
+          - "System recovers gracefully from errors"
+          - "Critical errors logged and monitored"
+          - "User can recover from error states"
+      - id: gate-8-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "Error scenario testing (simulate failures). Error message review. Logging verification."
+      - id: gate-8-owner
+        title: Owner
+        type: text
+        examples:
+          - "QA / Engineering"
+
+  - id: gate-9
+    title: "Gate 9: Documentation"
+    sections:
+      - id: gate-9-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "User-facing help documentation exists"
+          - "In-app guidance for complex features"
+          - "Release notes updated"
+          - "API documentation updated (if applicable)"
+          - "Error messages include helpful guidance"
+      - id: gate-9-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "Documentation review. Help content accessible from feature. Completeness check."
+      - id: gate-9-owner
+        title: Owner
+        type: text
+        examples:
+          - "Product Manager / Technical Writer"
+
+  - id: gate-10
+    title: "Gate 10: Instrumentation"
+    sections:
+      - id: gate-10-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "Feature usage tracked (events, actions)"
+          - "Success/failure metrics instrumented"
+          - "Performance metrics captured"
+          - "Error rates tracked"
+          - "User journey analytics in place"
+      - id: gate-10-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "Analytics instrumentation verified in staging. Metrics visible in analytics dashboard. Event tracking tested."
+      - id: gate-10-owner
+        title: Owner
+        type: text
+        examples:
+          - "Engineering / Product Manager"
+
+  - id: gate-11
+    title: "Gate 11: Technical Quality"
+    sections:
+      - id: gate-11-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "Code review completed and approved"
+          - "Test coverage ≥ {{coverage_threshold}}% (e.g., 80%)"
+          - "No critical code quality issues"
+          - "Cyclomatic complexity ≤ {{complexity_threshold}} (e.g., 10)"
+          - "Architecture patterns followed"
+      - id: gate-11-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "Code review approval. Automated tests passing. Code quality tools passing (SonarQube, ESLint, etc.)."
+      - id: gate-11-owner
+        title: Owner
+        type: text
+        examples:
+          - "Engineering Lead"
+
+  - id: gate-12
+    title: "Gate 12: Regression Prevention"
+    sections:
+      - id: gate-12-criteria
+        title: Criteria
+        type: bullet-list
+        examples:
+          - "Existing automated tests passing (100%)"
+          - "Regression test suite executed and passing"
+          - "Critical user journeys tested"
+          - "No breaking changes to APIs"
+          - "Backward compatibility maintained"
+      - id: gate-12-validation
+        title: Validation Method
+        type: paragraph
+        examples:
+          - "Full test suite passing (zero failures). Regression tests executed in staging. Smoke tests passing."
+      - id: gate-12-owner
+        title: Owner
+        type: text
+        examples:
+          - "QA / Engineering"
+
+  - id: enforcement-process
+    title: MQB Enforcement Process
+    sections:
+      - id: when-validated
+        title: When MQB is Validated
+        type: bullet-list
+        examples:
+          - "Before code merge: Technical Quality, Regression Prevention"
+          - "Before deploy to staging: All gates initial check"
+          - "Before release to production: All gates final validation"
+      - id: gate-ownership
+        title: Gate Ownership
+        type: paragraph
+        examples:
+          - "Engineering owns technical gates (4, 6, 7, 8, 11, 12). Product owns purpose and user gates (1, 2). Design owns experience gates (3, 5). Cross-functional ownership for documentation and instrumentation (9, 10). QA coordinates overall validation."
+      - id: validation-checklist
+        title: Validation Checklist
+        type: paragraph
+        examples:
+          - "For each feature, complete MQB gate checklist (see .tpg-core/checklists/mqb-gate-checklist.md). All 12 gates must PASS before release. Any FAIL blocks shipment."
+
+  - id: exception-process
+    title: Exception Handling Process
+    sections:
+      - id: when-exceptions-allowed
+        title: When Exceptions Are Allowed
+        type: paragraph
+        examples:
+          - "MQB exceptions are RARE and require explicit approval. Exceptions allowed only for: (1) Time-critical hotfixes (security vulnerabilities), (2) Critical business deadlines with explicit risk acceptance. Exceptions NEVER allowed for user-facing quality issues."
+      - id: exception-approval
+        title: Exception Approval Process
+        type: numbered-list
+        examples:
+          - "Document specific gate failure and reason"
+          - "Assess risk and user impact"
+          - "Define mitigation plan and timeline for remediation"
+          - "Get approval from {{exception_approver}} (e.g., VP Product + VP Engineering)"
+          - "Track exception and ensure remediation within {{remediation_timeline}}"
+      - id: exception-tracking
+        title: Exception Tracking
+        type: paragraph
+        examples:
+          - "All exceptions logged in MQB exception log (docs/mqb-exceptions.md). Quarterly review of exceptions. Goal: Zero exceptions (quality culture)."
+
+  - id: cultural-commitment
+    title: Cultural Commitment to MQB
+    type: paragraph
+    examples:
+      - "MQB is sacred. Saying 'not ready to ship' is celebrated, not punished. We ship features when they pass MQB, not when deadlines demand. Quality protects users and Product Genome from erosion. MQB compliance is non-negotiable."
+
+  - id: mqb-evolution
+    title: MQB Evolution
+    sections:
+      - id: review-schedule
+        title: Review Schedule
+        type: paragraph
+        examples:
+          - "MQB reviewed quarterly. Review includes: Are gates still relevant? Are criteria appropriate? Should gates be tightened or adjusted?"
+      - id: continuous-improvement
+        title: Continuous Improvement
+        type: paragraph
+        examples:
+          - "Track gate pass/fail rates. Identify common failures → improve upstream processes. Adjust criteria based on learnings. Add new gates if new quality dimensions emerge."
+
+  - id: success-metrics
+    title: MQB Success Metrics
+    type: bullet-list
+    examples:
+      - "MQB compliance rate ≥ 95%"
+      - "Post-launch critical defects ↓ by {{defect_reduction_target}}%"
+      - "User-reported quality issues ↓ by {{quality_issue_reduction}}%"
+      - "Quality debt stable or decreasing"
+      - "Team celebrates 'no-ship' decisions"

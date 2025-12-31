@@ -1,0 +1,539 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: experience-dna-template-v1
+  name: Experience DNA Document
+  version: 1.0
+  dna: Experience DNA
+  output:
+    format: markdown
+    filename: docs/dna/experience-dna.md
+    title: "{{product_name}} Experience DNA"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: metadata
+    title: Document Metadata
+    instruction: |
+      Capture document metadata for version tracking and ownership.
+    sections:
+      - id: changelog
+        title: Change Log
+        type: table
+        columns: [Date, Version, Description, Author]
+        instruction: Track document versions and changes
+        initial_rows:
+          - ["{{current_date}}", "1.0", "Initial Experience DNA definition", "{{author}}"]
+
+  - id: overview
+    title: Experience DNA Overview
+    instruction: |
+      Provide a high-level overview of experience quality standards and philosophy for this product.
+
+      This should explain:
+      - Why experience quality matters for this specific product
+      - The relationship between Purpose DNA, User DNA, and Experience DNA
+      - The role of MQB (Minimum Quality Bar) in protecting experience
+    elicit: true
+    type: paragraph
+    examples:
+      - "For field technicians working under time pressure in challenging environments, experience quality isn't a luxury—it's essential. Poor UX literally costs money in extended repair times and creates safety risks. Our Experience DNA defines non-negotiable quality thresholds that ensure the product serves users effectively, even under stress. These standards are informed by our Purpose DNA (reducing repair time) and User DNA (field technician constraints) and enforced through 12 MQB gates that every feature must pass."
+
+  - id: ux-philosophy
+    title: UX Philosophy
+    instruction: |
+      Define the core UX philosophy that guides all experience decisions. This should connect to:
+      - User context and constraints (from User DNA)
+      - Product purpose (from Purpose DNA)
+      - Strategic differentiation
+    elicit: true
+    sections:
+      - id: core-principles
+        title: Core UX Principles
+        type: numbered-list
+        instruction: |
+          List 3-5 fundamental UX principles that guide all design decisions. These should be:
+          - Specific to this product (not generic like "simple and intuitive")
+          - Connected to user context and constraints
+          - Actionable (teams can apply them to decisions)
+          - Prioritized (ordered by importance)
+        examples:
+          - "Clarity over cleverness: Technicians need to understand instantly, not discover gradually. Every interface element must have obvious purpose."
+          - "One-handed operation: Assume users have one hand holding tools. All critical actions must be thumb-reachable on mobile."
+          - "Offline-first: Never assume connectivity. All core functionality must work offline, sync when available."
+          - "Progressive disclosure: Show only what's needed now. Hide complexity until needed, but make it accessible when required."
+          - "Zero onboarding: Users should be productive immediately. No tutorials required for basic tasks."
+
+      - id: philosophy-rationale
+        title: Why These Principles
+        type: paragraph
+        instruction: |
+          Explain why these specific principles matter for this product's success. Connect to user research and Purpose DNA.
+        examples:
+          - "These principles emerge directly from field technician constraints: time pressure (need clarity), hands-busy context (one-handed operation), poor connectivity (offline-first), variable expertise (progressive disclosure), and zero tolerance for learning curves (zero onboarding). Every principle addresses a real constraint that impacts repair time—our north star metric."
+
+  - id: mqb-gates
+    title: Minimum Quality Bar (MQB) Gates
+    instruction: |
+      Define the 12 non-negotiable quality gates that EVERY feature must pass before shipping. These gates protect experience quality and prevent quality regression.
+
+      MQB gates should be:
+      - Specific and measurable (not subjective)
+      - Evidence-based (validated by research or data)
+      - Consistently enforced (no exceptions)
+      - Automated where possible
+    elicit: true
+    sections:
+      - id: mqb-gate-1
+        title: "MQB Gate 1: Purpose Alignment"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Does this feature serve the core purpose and advance the north star metric?
+        examples:
+          - |
+            **Gate:** Purpose Alignment
+
+            **Threshold:** Feature must demonstrably reduce average repair time OR improve first-visit fix rate by measurable amount
+
+            **Validation Method:** PM must articulate specific connection to north star metric; validated by user testing showing time/accuracy improvement
+
+            **Rationale:** Every feature consumes resources and adds complexity. If it doesn't advance our purpose, it dilutes focus and slows delivery of features that do.
+
+      - id: mqb-gate-2
+        title: "MQB Gate 2: User Validation"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Has this been validated with actual users from the primary segment?
+        examples:
+          - |
+            **Gate:** User Validation
+
+            **Threshold:** Minimum 5 field technicians have tested the feature in realistic conditions; 80%+ report it improves their workflow
+
+            **Validation Method:** Field testing sessions with documented feedback; video recordings of usage; measured task completion time
+
+            **Rationale:** We build for field technicians, not assumptions. Real usage in field conditions reveals issues office testing misses.
+
+      - id: mqb-gate-3
+        title: "MQB Gate 3: Offline Functionality"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Does core functionality work without internet connectivity?
+        examples:
+          - |
+            **Gate:** Offline Functionality
+
+            **Threshold:** 100% of core diagnostic and guidance features must work offline; data sync when connectivity available
+
+            **Validation Method:** Automated testing in airplane mode; manual testing in field locations with no connectivity
+
+            **Rationale:** 40%+ of service calls occur in low/no connectivity areas. Features that require connectivity are useless in these contexts.
+
+      - id: mqb-gate-4
+        title: "MQB Gate 4: Mobile Performance"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Does the feature perform well on older mobile devices?
+        examples:
+          - |
+            **Gate:** Mobile Performance
+
+            **Threshold:** Load time <2 seconds on 3-year-old mid-range Android device; smooth scrolling (60fps); minimal battery drain
+
+            **Validation Method:** Automated performance testing on Samsung Galaxy A52 (2021); battery consumption benchmarks; manual testing
+
+            **Rationale:** Technicians use company-provided devices, often not latest models. Slow performance wastes time and frustrates users.
+
+      - id: mqb-gate-5
+        title: "MQB Gate 5: Accessibility Standards"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Does the feature meet accessibility standards for various user abilities?
+        examples:
+          - |
+            **Gate:** Accessibility Standards
+
+            **Threshold:** WCAG 2.1 AA compliance minimum; usable with screen readers; minimum touch target 44x44px; sufficient color contrast (4.5:1)
+
+            **Validation Method:** Automated accessibility testing (axe DevTools); manual testing with screen readers; visual contrast checks
+
+            **Rationale:** Technicians work in challenging conditions (glare, gloves, poor lighting). Accessibility standards ensure usability for all.
+
+      - id: mqb-gate-6
+        title: "MQB Gate 6: Cognitive Load"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Does the feature minimize cognitive load during high-stress usage?
+        examples:
+          - |
+            **Gate:** Cognitive Load
+
+            **Threshold:** Maximum 3 choices per screen; clear visual hierarchy; obvious primary action; zero jargon; guided workflows for complex tasks
+
+            **Validation Method:** Cognitive walkthrough with UX team; user testing observation for confusion/hesitation; task completion time analysis
+
+            **Rationale:** Technicians diagnose problems under time pressure. High cognitive load slows decision-making and increases errors.
+
+      - id: mqb-gate-7
+        title: "MQB Gate 7: Error Prevention & Recovery"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Does the feature prevent errors and enable easy recovery?
+        examples:
+          - |
+            **Gate:** Error Prevention & Recovery
+
+            **Threshold:** Destructive actions require confirmation; undo capability for all data changes; clear error messages with recovery steps; data auto-saved
+
+            **Validation Method:** Error scenario testing; review of all destructive actions for confirmation prompts; error message clarity review
+
+            **Rationale:** Errors waste time and create frustration. In field conditions, data loss can mean repeating diagnostic work.
+
+      - id: mqb-gate-8
+        title: "MQB Gate 8: Visual Clarity"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Is the interface clear and readable in various lighting conditions?
+        examples:
+          - |
+            **Gate:** Visual Clarity
+
+            **Threshold:** Readable in direct sunlight and low light; minimum font size 16px for body text; clear visual hierarchy; icons recognizable at glance
+
+            **Validation Method:** Device testing in outdoor sunlight and dark environments; readability testing with users 40+ years old
+
+            **Rationale:** Technicians work in varied lighting (bright stores, dark storage rooms, outdoor locations). Poor visibility slows work.
+
+      - id: mqb-gate-9
+        title: "MQB Gate 9: One-Handed Usability"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Can critical actions be performed with one hand on a mobile device?
+        examples:
+          - |
+            **Gate:** One-Handed Usability
+
+            **Threshold:** All critical actions reachable by thumb on standard phone screens (6-6.5"); primary actions in bottom 2/3 of screen
+
+            **Validation Method:** Manual testing holding phone in one hand; thumb reach mapping; user observation in field conditions
+
+            **Rationale:** Technicians often hold tools, parts, or steady equipment with one hand while using the app. Two-handed UI blocks work.
+
+      - id: mqb-gate-10
+        title: "MQB Gate 10: Data Accuracy"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Is the data and guidance provided accurate and trustworthy?
+        examples:
+          - |
+            **Gate:** Data Accuracy
+
+            **Threshold:** 95%+ diagnostic accuracy (validated against expert technician diagnoses); 100% accuracy for equipment specifications and procedures
+
+            **Validation Method:** Accuracy testing against known failure scenarios; expert technician review; field validation tracking
+
+            **Rationale:** Wrong diagnostic guidance is worse than no guidance—leads to wasted time, wrong repairs, return trips. Trust is everything.
+
+      - id: mqb-gate-11
+        title: "MQB Gate 11: Consistency"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Does the feature follow established UI/UX patterns consistently?
+        examples:
+          - |
+            **Gate:** Consistency
+
+            **Threshold:** Navigation patterns match existing screens; button styles consistent; terminology aligned with established vocabulary; interactions predictable
+
+            **Validation Method:** Design system compliance check; UX team review; cross-feature interaction testing
+
+            **Rationale:** Inconsistent UI increases cognitive load and training time. Technicians should transfer knowledge across features seamlessly.
+
+      - id: mqb-gate-12
+        title: "MQB Gate 12: Security & Privacy"
+        template: |
+          **Gate:** {{gate_name}}
+
+          **Threshold:** {{threshold}}
+
+          **Validation Method:** {{validation_method}}
+
+          **Rationale:** {{rationale}}
+        instruction: |
+          Does the feature protect user data and maintain privacy?
+        examples:
+          - |
+            **Gate:** Security & Privacy
+
+            **Threshold:** Sensitive data encrypted at rest and in transit; authentication required for account access; user performance data anonymized
+
+            **Validation Method:** Security audit; penetration testing; privacy policy review; data handling audit
+
+            **Rationale:** Technicians trust us with their performance data. Privacy breaches damage trust and violate non-negotiables.
+
+  - id: performance-metrics
+    title: Performance Metrics
+    instruction: |
+      Define specific, measurable performance targets that protect experience quality.
+    elicit: true
+    sections:
+      - id: speed-metrics
+        title: Speed & Performance Metrics
+        type: table
+        columns: [Metric, Target, Measurement Method]
+        instruction: |
+          Define performance targets for speed and responsiveness.
+        examples:
+          - ["Initial load time", "<2 seconds", "Lighthouse performance audit on mid-range device"]
+          - ["Screen transition", "<300ms", "Automated interaction testing"]
+          - ["Search results", "<500ms", "Database query performance monitoring"]
+          - ["Offline sync", "<30 seconds for typical session", "Field testing with connectivity restoration"]
+
+      - id: reliability-metrics
+        title: Reliability Metrics
+        type: table
+        columns: [Metric, Target, Measurement Method]
+        instruction: |
+          Define reliability and stability targets.
+        examples:
+          - ["App crash rate", "<0.1% of sessions", "Error monitoring (Sentry/Bugsnag)"]
+          - ["Offline capability uptime", "100% for core features", "Offline testing suite"]
+          - ["Data sync success rate", ">99% when connectivity available", "Sync monitoring logs"]
+          - ["API uptime", ">99.9%", "Uptime monitoring (Pingdom/Datadog)"]
+
+      - id: quality-metrics
+        title: Quality Metrics
+        type: table
+        columns: [Metric, Target, Measurement Method]
+        instruction: |
+          Define user-perceived quality metrics.
+        examples:
+          - ["Task success rate", ">95% for primary tasks", "User testing observation"]
+          - ["Time on task", "<30 seconds for common actions", "Analytics tracking"]
+          - ["Error rate", "<5% of user actions", "Error tracking analytics"]
+          - ["User satisfaction (SUS)", ">80/100", "System Usability Scale survey"]
+
+  - id: design-system
+    title: Design System Standards
+    instruction: |
+      Define design system components and standards that ensure consistency.
+    elicit: true
+    sections:
+      - id: visual-standards
+        title: Visual Design Standards
+        type: bullet-list
+        instruction: |
+          Define core visual design standards.
+        examples:
+          - "Color palette: High contrast colors for outdoor readability (primary: #0066CC, secondary: #00AA66, error: #CC3300)"
+          - "Typography: System fonts for performance (iOS: SF Pro, Android: Roboto); minimum 16px body text; 24px headings"
+          - "Spacing: 8px grid system; 16px minimum touch target padding; 44x44px minimum interactive elements"
+          - "Icons: Outlined style for clarity; 24x24px standard size; recognizable without labels"
+
+      - id: interaction-patterns
+        title: Interaction Patterns
+        type: bullet-list
+        instruction: |
+          Define standard interaction patterns.
+        examples:
+          - "Navigation: Bottom tab bar for primary sections (thumb-reachable); back button top-left"
+          - "Primary actions: Bottom-right floating action button or bottom sheet"
+          - "Destructive actions: Swipe-to-delete with undo; confirmation dialogs for irreversible actions"
+          - "Forms: Autofocus first field; clear labels above inputs; validation on blur; save on field exit"
+          - "Feedback: Toast notifications (3s auto-dismiss); persistent banners for critical issues; loading states for all async actions"
+
+      - id: component-library
+        title: Core Component Library
+        type: bullet-list
+        instruction: |
+          List core reusable components and their usage guidelines.
+        examples:
+          - "Button: Primary (high contrast), Secondary (outline), Text button (tertiary actions)"
+          - "Input: Text field, Number pad (for numeric entry), Dropdown (max 7 options), Date picker"
+          - "Cards: Equipment card, Diagnostic step card, Issue card (consistent structure)"
+          - "Lists: Selectable list (radio/checkbox), Action list (tap actions), Swipeable list (delete/archive)"
+          - "Modals: Bottom sheet (common), Full screen (complex forms), Dialog (confirmations)"
+          - "Empty states: Helpful guidance when no data (not just 'no results')"
+
+  - id: user-testing
+    title: User Testing Standards
+    instruction: |
+      Define standards for ongoing user testing to validate experience quality.
+    elicit: true
+    sections:
+      - id: testing-frequency
+        title: Testing Frequency
+        type: paragraph
+        instruction: |
+          How often should user testing occur to maintain experience quality?
+        examples:
+          - "We conduct user testing at three key intervals: (1) Early concept testing with 5+ technicians before significant development investment, (2) Iterative testing during development every 2 weeks with 3-5 users, (3) Pre-release testing with 10+ field technicians in realistic conditions. Additionally, we conduct quarterly comprehensive UX audits to identify systemic issues."
+
+      - id: testing-methods
+        title: Testing Methods
+        type: bullet-list
+        instruction: |
+          What testing methods are used to validate experience?
+        examples:
+          - "Field observation: Observe technicians using the product during actual service calls (most realistic)"
+          - "Moderated usability testing: Task-based testing with think-aloud protocol (5-8 users per round)"
+          - "Unmoderated remote testing: Record actual usage patterns in field conditions (larger sample)"
+          - "A/B testing: Compare experience variations for measurable improvements (data-driven)"
+          - "Expert heuristic evaluation: UX team reviews against established principles quarterly"
+
+      - id: success-criteria
+        title: Testing Success Criteria
+        type: bullet-list
+        instruction: |
+          What constitutes passing user testing?
+        examples:
+          - "Task completion rate: 95%+ for primary tasks without assistance"
+          - "Time on task: Meets or beats target times for common workflows"
+          - "Error rate: <5% of actions result in errors or confusion"
+          - "Satisfaction: 80%+ of users rate experience as 'good' or 'excellent'"
+          - "Recommendation: Net Promoter Score (NPS) of 40+ from field technicians"
+
+  - id: accessibility-commitment
+    title: Accessibility Commitment
+    instruction: |
+      Define specific accessibility commitments beyond basic compliance.
+    elicit: true
+    sections:
+      - id: accessibility-standards
+        title: Accessibility Standards
+        type: bullet-list
+        instruction: |
+          What accessibility standards will be followed?
+        examples:
+          - "WCAG 2.1 Level AA compliance (minimum baseline)"
+          - "Mobile-specific accessibility: Large touch targets (44x44px), voice control support, haptic feedback for confirmations"
+          - "Environmental accessibility: High contrast for outdoor use, legibility in gloves, usability in noisy environments"
+          - "Inclusive design: Support for color blindness, motor impairments, age-related vision changes"
+
+      - id: testing-process
+        title: Accessibility Testing Process
+        type: bullet-list
+        instruction: |
+          How will accessibility be validated?
+        examples:
+          - "Automated testing: axe DevTools, Lighthouse accessibility audit on every build"
+          - "Manual testing: Keyboard navigation, screen reader testing (iOS VoiceOver, Android TalkBack)"
+          - "Real user testing: Include users with accessibility needs in testing groups"
+          - "Quarterly audit: Comprehensive accessibility review by specialist"
+
+  - id: experience-evolution
+    title: Experience Evolution Strategy
+    instruction: |
+      Define how experience quality will evolve as the product matures.
+    sections:
+      - id: current-focus
+        title: Current Experience Focus
+        type: paragraph
+        instruction: |
+          What is the current experience priority at this product stage?
+        examples:
+          - "At this early stage, we prioritize core functionality reliability and mobile performance over visual polish. Technicians need tools that work consistently under pressure. Once core workflows are rock-solid (MQB gates 1-10 consistently passing), we'll invest in micro-interactions and delight moments that don't compromise simplicity."
+
+      - id: future-evolution
+        title: Future Experience Evolution
+        type: paragraph
+        instruction: |
+          How might experience standards evolve as the product matures?
+        examples:
+          - "As the product matures and core experience solidifies, we'll evolve toward: (1) Contextual intelligence - system learns technician patterns and proactively surfaces relevant guidance, (2) Visual diagnosis - AR/camera-based diagnostic assistance, (3) Personalization - adapt interface to individual technician expertise levels. All evolution must maintain existing MQB gates—we never compromise fundamentals for new capabilities."
+
+  - id: validation-questions
+    title: Experience DNA Validation Questions
+    instruction: |
+      Questions to ask when evaluating if new features/changes align with Experience DNA.
+    type: numbered-list
+    examples:
+      - "Does this pass all 12 MQB gates without exception?"
+      - "Does this work offline for core functionality?"
+      - "Can this be used effectively with one hand while holding a tool?"
+      - "Does this reduce cognitive load or add complexity?"
+      - "Have we tested this with actual field technicians in realistic conditions?"
+      - "Does this meet performance targets on 3-year-old devices?"
+      - "Is this accessible in challenging conditions (glare, noise, gloves)?"
+      - "Does this follow established design patterns or create inconsistency?"
+      - "Does this improve task completion time or just add features?"
+      - "Would we ship this to our own family members if they were technicians?"

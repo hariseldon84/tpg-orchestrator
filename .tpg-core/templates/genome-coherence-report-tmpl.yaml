@@ -1,0 +1,115 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: genome-coherence-report-template-v1
+  name: Product Genome Coherence Report
+  version: 1.0
+  output:
+    format: markdown
+    filename: "docs/genome-coherence-report-{{date}}.md"
+    title: "Product Genome Coherence Report"
+
+workflow:
+  mode: automated
+
+sections:
+  - id: metadata
+    title: Report Metadata
+    type: structured
+    template: |
+      **Date:** {{date}}
+      **Validator:** {{validator_name}}
+      **Genome Version:** {{version}}
+
+  - id: executive-summary
+    title: Executive Summary
+    instruction: |
+      2-3 paragraphs: overall coherence state, critical issues, top recommendations.
+    type: paragraph
+
+  - id: overall-score
+    title: Overall Coherence Score
+    type: structured
+    template: "**Score:** {{coherence_score}} / 5.0\n**Level:** {{coherence_level}}"
+    examples:
+      - "**Score:** 4.2 / 5.0\n**Level:** Strong"
+
+  - id: dna-pair-scores
+    title: DNA Pair Coherence Scores
+    type: table
+    columns: [DNA Pair, Score, Status, Key Issues]
+    examples:
+      - ["Purpose ↔ User", "4.5", "Strong", "Well aligned, users match purpose focus"]
+      - ["User ↔ Experience", "4.0", "Strong", "Experience standards fit user needs well"]
+      - ["Purpose ↔ Experience", "4.2", "Strong", "Quality gates support purpose achievement"]
+      - ["Architecture ↔ Experience", "3.8", "Moderate", "Some performance targets challenging architecturally"]
+      - ["Architecture ↔ User", "4.1", "Strong", "Offline-first architecture serves user constraints"]
+      - ["Intelligence ↔ Purpose", "3.5", "Moderate", "North star tracked but some KPIs undefined"]
+      - ["Intelligence ↔ User", "3.7", "Moderate", "User metrics tracked, gaps in segment analysis"]
+      - ["Intelligence ↔ Experience", "4.0", "Strong", "Performance and quality metrics well instrumented"]
+      - ["Cultural ↔ Purpose", "4.3", "Strong", "Culture values align with purpose focus"]
+      - ["Cultural ↔ Experience", "4.5", "Strong", "Quality culture strongly embedded (MQB compliance high)"]
+
+  - id: critical-conflicts
+    title: Critical Conflicts
+    instruction: |
+      List any DNA contradictions requiring immediate resolution.
+    sections:
+      - id: conflict-template
+        type: structured
+        template: |
+          ### Conflict: {{conflict_title}}
+          **DNAs Involved:** {{dnas}}
+          **Description:** {{description}}
+          **Impact:** {{impact}}
+          **Resolution:** {{resolution}}
+          **Priority:** {{priority}}
+        repeatable: true
+
+  - id: gaps
+    title: Gaps and Missing Elements
+    type: bullet-list
+    examples:
+      - "Intelligence DNA: Instrumentation incomplete for user journey funnels"
+      - "Cultural DNA: Rituals defined but not consistently practiced"
+      - "Architecture DNA: Some ADRs missing for legacy decisions"
+
+  - id: strengths
+    title: Coherence Strengths
+    type: bullet-list
+    examples:
+      - "Purpose and User DNAs tightly aligned (users perfectly match purpose focus)"
+      - "Cultural DNA strongly reinforces quality (MQB compliance 98%)"
+      - "Architecture DNA designed explicitly for user constraints (offline-first)"
+      - "Experience DNA thresholds well-grounded in user research"
+
+  - id: recommendations
+    title: Recommendations
+    sections:
+      - id: high-priority
+        title: High Priority (Address Immediately)
+        type: numbered-list
+        examples:
+          - "Complete Intelligence DNA instrumentation for user journey funnels (enables data-driven decisions)"
+          - "Document missing ADRs for legacy architectural decisions (prevents knowledge loss)"
+      - id: medium-priority
+        title: Medium Priority (Address Soon)
+        type: numbered-list
+        examples:
+          - "Formalize Cultural DNA rituals (move from ad-hoc to consistent practice)"
+          - "Tighten alignment between Architecture and Experience DNA performance targets"
+      - id: ongoing
+        title: Ongoing Coherence Practices
+        type: bullet-list
+        examples:
+          - "Quarterly genome coherence validation (maintain high coherence score)"
+          - "Update DNAs when product or team evolves significantly"
+          - "Cross-reference DNAs during decision-making (ensure coherence maintained)"
+
+  - id: next-steps
+    title: Next Steps
+    type: numbered-list
+    examples:
+      - "Address high-priority recommendations within 2 weeks"
+      - "Schedule DNA updates for identified gaps"
+      - "Next coherence validation: Q4 2024"
+      - "Share report with entire product team and stakeholders"

@@ -1,0 +1,363 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: user-dna-template-v1
+  name: User DNA Document
+  version: 1.0
+  dna: User DNA
+  output:
+    format: markdown
+    filename: docs/dna/user-dna.md
+    title: "{{product_name}} User DNA"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: metadata
+    title: Document Metadata
+    instruction: |
+      Capture document metadata for version tracking and ownership.
+    sections:
+      - id: changelog
+        title: Change Log
+        type: table
+        columns: [Date, Version, Description, Author]
+        instruction: Track document versions and changes
+        initial_rows:
+          - ["{{current_date}}", "1.0", "Initial User DNA definition", "{{author}}"]
+
+  - id: overview
+    title: User DNA Overview
+    instruction: |
+      Provide a high-level overview of who you're building for and why user understanding is critical for this product.
+    elicit: true
+    type: paragraph
+    examples:
+      - "This product serves field maintenance technicians who repair IoT-enabled equipment in retail locations. Understanding these users—their context, constraints, skills, and jobs-to-be-done—is essential because they work in high-pressure, low-connectivity environments where poor UX literally costs money and creates frustration. We don't build for 'everyone' or generic 'users.' We build for field technicians specifically."
+
+  - id: user-segments
+    title: User Segments
+    instruction: |
+      Define distinct user segments based on meaningful differences in needs, behaviors, context, or constraints. Segments should be:
+      - Based on evidence (research, data, observation)
+      - Mutually exclusive (users fit clearly in one segment)
+      - Specific enough to guide different product decisions
+      - Limited in number (3-5 segments max for focus)
+
+      CRITICAL: Building for "everyone" means building for no one. Choose your segments deliberately.
+    elicit: true
+    sections:
+      - id: primary-segment
+        title: Primary User Segment
+        repeatable: false
+        instruction: |
+          Identify the ONE primary segment you're optimizing for first. This is your focus.
+        template: |
+          **Segment Name:** {{segment_name}}
+
+          **Who They Are:** {{description}}
+
+          **Why Primary:** {{rationale_for_primary}}
+
+          **Population Size:** {{estimated_size}}
+
+          **Strategic Importance:** {{business_value}}
+        examples:
+          - |
+            **Segment Name:** Field Maintenance Technicians (Primary)
+
+            **Who They Are:** Mobile technicians who travel to retail locations to diagnose and repair IoT-enabled coolers and vending machines. They typically handle 3-6 service calls per day across a geographic territory.
+
+            **Why Primary:** They are the bottleneck in equipment uptime. If they work faster and more accurately, the entire business benefits. They also have the most acute pain with current solutions.
+
+            **Population Size:** ~2,000 active technicians across the service region
+
+            **Strategic Importance:** Their efficiency directly impacts revenue (equipment uptime), costs (reduced return visits), and customer satisfaction (faster restoration).
+
+      - id: secondary-segments
+        title: Secondary User Segments
+        repeatable: true
+        instruction: |
+          List other important segments who will use the product but are not the primary optimization target.
+        template: |
+          **Segment Name:** {{segment_name}}
+
+          **Who They Are:** {{description}}
+
+          **Needs Difference from Primary:** {{how_different}}
+
+          **Priority Level:** {{priority}}
+        examples:
+          - |
+            **Segment Name:** Senior Technicians / Team Leads
+
+            **Who They Are:** Experienced technicians who mentor others and handle escalated complex repairs
+
+            **Needs Difference from Primary:** Need advanced diagnostic capabilities, prefer more technical detail, use product as teaching tool for junior technicians
+
+            **Priority Level:** Secondary - support them but don't compromise primary segment UX
+
+  - id: jobs-to-be-done
+    title: Jobs-to-be-Done (JTBD) Analysis
+    instruction: |
+      Define the specific "jobs" users are hiring this product to accomplish. Jobs-to-be-Done framework focuses on:
+      - The progress users want to make
+      - The context in which they're trying to make progress
+      - Functional, emotional, and social dimensions of the job
+
+      Format: "When [situation], I want to [motivation], so I can [expected outcome]"
+    elicit: true
+    sections:
+      - id: primary-jtbd
+        title: Primary Job-to-be-Done
+        instruction: |
+          The main job users hire this product for.
+        template: |
+          **Job Statement:** When {{situation}}, I want to {{motivation}}, so I can {{outcome}}.
+
+          **Functional Job:** {{functional_aspect}}
+
+          **Emotional Job:** {{emotional_aspect}}
+
+          **Social Job:** {{social_aspect}}
+
+          **Success Criteria (from user perspective):** {{success_metrics}}
+        examples:
+          - |
+            **Job Statement:** When I arrive at a retail location with a malfunctioning cooler or vending machine, I want to quickly diagnose the problem and complete the repair on the first visit, so I can maximize my daily productivity and avoid frustrating return trips.
+
+            **Functional Job:** Diagnose equipment failure, identify correct fix, restore equipment to working order efficiently
+
+            **Emotional Job:** Feel confident and competent, reduce stress and frustration, avoid feeling stuck or helpless
+
+            **Social Job:** Be seen as reliable and skilled by clients and management, avoid negative performance reviews
+
+            **Success Criteria (from user perspective):**
+            - Diagnosed root cause in <10 minutes
+            - Fixed on first visit without calling support
+            - Completed entire job in <60 minutes
+            - Client satisfied, no complaints
+
+      - id: secondary-jtbds
+        title: Secondary Jobs-to-be-Done
+        repeatable: true
+        instruction: |
+          Other important jobs users hire the product for (but not primary focus).
+        template: |
+          **Job Statement:** When {{situation}}, I want to {{motivation}}, so I can {{outcome}}.
+
+          **Job Type:** [Functional / Emotional / Social]
+
+          **Priority:** [High / Medium / Low]
+        examples:
+          - |
+            **Job Statement:** When I encounter a problem I haven't seen before, I want to learn from the diagnostic process so I can handle it independently next time.
+
+            **Job Type:** Functional + Emotional
+
+            **Priority:** Medium
+          - |
+            **Job Statement:** When I'm working in an area with poor cell coverage, I want to access diagnostic guidance offline so I don't get blocked.
+
+            **Job Type:** Functional
+
+            **Priority:** High
+
+  - id: user-context
+    title: User Context
+    instruction: |
+      Document the context in which users interact with the product. Context dramatically affects needs and constraints.
+    elicit: true
+    sections:
+      - id: usage-environment
+        title: Usage Environment
+        type: bullet-list
+        instruction: |
+          Where and when do users interact with the product?
+        examples:
+          - "Retail store locations (grocery, convenience, gas stations)"
+          - "Outdoors, indoors, warehouses, various lighting conditions"
+          - "Often in tight spaces (behind counters, storage rooms)"
+          - "Temperature extremes (refrigerated areas, hot outdoor locations)"
+          - "Noisy environments (busy stores, traffic)"
+
+      - id: device-context
+        title: Device & Connectivity Context
+        type: bullet-list
+        instruction: |
+          What devices do users use and what's the connectivity situation?
+        examples:
+          - "Primary: Mobile phones (iOS and Android), often older models"
+          - "Sometimes tablets for complex diagnostics"
+          - "Variable connectivity: 4G in cities, 3G/2G in rural, often no signal"
+          - "Must work offline - cannot rely on constant internet"
+
+      - id: time-context
+        title: Time Context
+        type: bullet-list
+        instruction: |
+          What time pressures or temporal factors affect usage?
+        examples:
+          - "Time-constrained: Typically 30-60 minutes per service call"
+          - "Multiple calls per day: Need to move efficiently"
+          - "Pressure from clients: Stores want equipment back ASAP"
+          - "Performance metrics: Repair time tracked by management"
+
+      - id: cognitive-context
+        title: Cognitive Context
+        type: bullet-list
+        instruction: |
+          What is the user's mental state and cognitive load during usage?
+        examples:
+          - "High stress: Client watching, time pressure, performance anxiety"
+          - "Problem-solving mode: Actively diagnosing, testing hypotheses"
+          - "Hands busy: Often holding tools, cannot type easily"
+          - "Switching between physical work and app: Interrupted attention"
+          - "Variable expertise: Junior technicians need more guidance"
+
+  - id: user-constraints
+    title: User Constraints
+    instruction: |
+      Document constraints that limit what users can do or use. Constraints are CRITICAL for design decisions.
+    elicit: true
+    sections:
+      - id: skill-constraints
+        title: Skill & Knowledge Constraints
+        type: bullet-list
+        instruction: |
+          What skills, knowledge, or expertise limitations do users have?
+        examples:
+          - "Variable technical expertise: Junior to senior technicians"
+          - "Limited formal training: Often learn on the job"
+          - "May not understand complex technical jargon"
+          - "Different experience with different equipment models"
+
+      - id: time-constraints
+        title: Time Constraints
+        type: bullet-list
+        instruction: |
+          What time limitations affect users?
+        examples:
+          - "30-60 minutes per service call target"
+          - "3-6 calls per day quota"
+          - "Cannot spend 10+ minutes learning new tool"
+          - "Client pressure to restore service quickly"
+
+      - id: physical-constraints
+        title: Physical & Environmental Constraints
+        type: bullet-list
+        instruction: |
+          What physical or environmental limitations exist?
+        examples:
+          - "Often need one hand free to hold tools"
+          - "Working in poor lighting conditions"
+          - "Screen glare in outdoor environments"
+          - "Cold hands in refrigerated areas (reduced dexterity)"
+          - "Need to move between equipment and device frequently"
+
+      - id: technology-constraints
+        title: Technology Constraints
+        type: bullet-list
+        instruction: |
+          What technology limitations do users face?
+        examples:
+          - "Older mobile devices (not always latest iPhone)"
+          - "Limited storage space on devices"
+          - "Variable internet connectivity (must work offline)"
+          - "Battery life concerns (long days in field)"
+
+      - id: organizational-constraints
+        title: Organizational Constraints
+        type: bullet-list
+        instruction: |
+          What organizational policies or constraints affect users?
+        examples:
+          - "Company-provided devices (may restrict apps/permissions)"
+          - "Privacy policies around data collection"
+          - "Limited IT support for troubleshooting"
+          - "Budget constraints for premium features/devices"
+
+  - id: user-behaviors
+    title: User Behaviors & Patterns
+    instruction: |
+      Document actual observed behaviors (not what users say, but what they DO). Behavioral evidence is more reliable than stated preferences.
+    elicit: true
+    sections:
+      - id: observed-behaviors
+        title: Observed Behavioral Patterns
+        type: bullet-list
+        instruction: |
+          List specific behaviors observed through research, analytics, or field studies.
+        examples:
+          - "Technicians prefer visual step-by-step guides over text-heavy manuals"
+          - "90% of users skip tutorial/onboarding and try to use immediately"
+          - "Users call support as last resort (prefer self-service)"
+          - "Most successful repairs follow simple diagnostic flowcharts"
+          - "Users take photos of equipment for reference/documentation"
+
+      - id: workarounds
+        title: Current Workarounds
+        type: bullet-list
+        instruction: |
+          What workarounds do users currently employ? These reveal unmet needs.
+        examples:
+          - "Take photos of error codes to reference later"
+          - "Call more experienced technicians for guidance"
+          - "Keep handwritten notes on common issues by equipment model"
+          - "Use trial-and-error when guides don't match specific situation"
+          - "Memorize common fixes to avoid looking up documentation"
+
+  - id: evidence-sources
+    title: Evidence Sources
+    instruction: |
+      Document the sources of evidence for this User DNA. User understanding MUST be evidence-based, not assumed.
+    elicit: true
+    sections:
+      - id: research-conducted
+        title: Research Conducted
+        type: table
+        columns: [Method, Date, Sample Size, Key Findings]
+        instruction: |
+          List all user research conducted to build this understanding.
+        examples:
+          - ["Field observation", "2024-Q2", "15 technicians", "Average 2.5hr repair time, 40% first-visit fix rate"]
+          - ["User interviews", "2024-Q2", "25 technicians", "High frustration with generic guides, strong desire for offline capability"]
+          - ["Survey", "2024-Q3", "120 technicians", "73% prefer mobile, 82% work in low-connectivity areas"]
+
+      - id: data-sources
+        title: Data Sources
+        type: bullet-list
+        instruction: |
+          List data sources that inform user understanding.
+        examples:
+          - "Support ticket analysis: 800+ monthly calls from technicians"
+          - "Service call duration data: Average 150 minutes per repair"
+          - "First-visit fix rate analytics: 40% currently"
+          - "Equipment downtime logs: $50K monthly revenue impact"
+
+      - id: ongoing-research
+        title: Ongoing Research Plan
+        type: bullet-list
+        instruction: |
+          How will you continue to learn about users? User DNA must evolve.
+        examples:
+          - "Monthly user interviews (5-10 technicians)"
+          - "Quarterly surveys to validate assumptions"
+          - "Usage analytics: Track actual behavior patterns"
+          - "Field observation sessions (2x per quarter)"
+          - "Support ticket trend analysis (weekly)"
+
+  - id: user-dna-validation
+    title: User DNA Validation Questions
+    instruction: |
+      Questions to ask when making product decisions to ensure alignment with User DNA.
+    type: numbered-list
+    examples:
+      - "Have we validated this with actual field technicians (not just assumed)?"
+      - "Does this work in low-connectivity environments?"
+      - "Can this be used with one hand while holding a tool?"
+      - "Does this reduce cognitive load during high-stress repairs?"
+      - "Is this optimized for the primary segment (field technicians)?"
+      - "Have we tested this in realistic field conditions (not just in office)?"
+      - "Does this respect user time constraints (30-60 min calls)?"

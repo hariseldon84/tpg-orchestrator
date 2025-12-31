@@ -1,0 +1,91 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: culture-rituals-template-v1
+  name: Team Culture Rituals
+  version: 1.0
+  output:
+    format: markdown
+    filename: docs/culture-rituals.md
+    title: "{{product_name}} Team Rituals"
+
+workflow:
+  mode: interactive
+
+sections:
+  - id: daily-rituals
+    title: Daily Rituals
+    type: table
+    columns: [Ritual, Time, Duration, Purpose, Owner]
+    examples:
+      - ["Daily Standup", "9:30 AM", "15 min", "Sync on progress, surface blockers", "Scrum Master"]
+      - ["Metrics Check", "10:00 AM", "5 min", "Review north star metric trend", "Product Manager"]
+
+  - id: weekly-rituals
+    title: Weekly Rituals
+    type: table
+    columns: [Ritual, Day/Time, Duration, Purpose, Participants]
+    examples:
+      - ["Week Planning", "Monday 10 AM", "60 min", "Align on priorities, assign work", "Entire Team"]
+      - ["Metrics Review", "Wednesday 2 PM", "45 min", "Deep dive on KPIs and experiments", "Product + Engineering Leads"]
+      - ["User Feedback Session", "Friday 11 AM", "30 min", "Review user research and support tickets", "Entire Team"]
+      - ["Demo Day", "Friday 4 PM", "60 min", "Show completed work, celebrate wins", "Entire Team + Stakeholders"]
+
+  - id: sprint-rituals
+    title: Sprint/Iteration Rituals (Every 2 Weeks)
+    type: table
+    columns: [Ritual, When, Duration, Purpose]
+    examples:
+      - ["Sprint Planning", "Monday (Week 1)", "2 hours", "Select stories, commit to scope, define success"]
+      - ["Sprint Review", "Friday (Week 2)", "1 hour", "Demo to stakeholders, gather feedback"]
+      - ["Retrospective", "Friday (Week 2)", "1 hour", "What went well, what didn't, action items"]
+      - ["MQB Review", "Before release", "30 min", "Validate all features pass quality gates"]
+
+  - id: monthly-rituals
+    title: Monthly Rituals
+    type: table
+    columns: [Ritual, When, Duration, Purpose]
+    examples:
+      - ["Product Metrics Deep Dive", "First Monday", "90 min", "Comprehensive metrics analysis, insights to action"]
+      - ["Lunch & Learn", "Third Thursday", "60 min", "Team members teach each other skills"]
+      - ["All-Hands Update", "Last Friday", "30 min", "Share progress, celebrate wins, align on priorities"]
+
+  - id: quarterly-rituals
+    title: Quarterly Rituals
+    type: table
+    columns: [Ritual, When, Duration, Purpose]
+    examples:
+      - ["Product Review", "Week 1 of Q", "3 hours", "North star progress, roadmap adjustments, DNA updates"]
+      - ["Genome Assessment", "Week 2 of Q", "2 hours", "Validate Product Genome coherence and health"]
+      - ["User Immersion Day", "Week 3 of Q", "Full day", "Team shadows users, builds empathy"]
+      - ["Retrospective (Quarterly)", "Week 4 of Q", "2 hours", "Reflect on quarter, process improvements"]
+
+  - id: annual-rituals
+    title: Annual Rituals
+    type: table
+    columns: [Ritual, When, Duration, Purpose]
+    examples:
+      - ["Purpose Review", "January", "4 hours", "Validate purpose still relevant and inspiring"]
+      - ["Strategy Planning", "December", "2 days", "Define next year's priorities and roadmap"]
+      - ["Team Offsite", "Mid-year", "2 days", "Team building, culture reinforcement, strategic alignment"]
+      - ["360 Performance Reviews", "Ongoing", "-", "Continuous feedback, growth conversations"]
+
+  - id: celebration-rituals
+    title: Celebration Rituals
+    type: bullet-list
+    examples:
+      - "**Feature Launch Celebrations:** Demo to entire company, share user feedback, team dinner"
+      - "**MQB No-Ship Celebrations:** Publicly recognize catching quality issues before users"
+      - "**Milestone Achievements:** Ring gong when north star milestones hit, team shout-outs"
+      - "**Learning Celebrations:** Share 'intelligent failures' and learnings in retrospectives"
+      - "**User Win Stories:** Share user success stories in weekly demos"
+
+  - id: ritual-principles
+    title: Ritual Principles
+    type: bullet-list
+    examples:
+      - "Every ritual has a clear purpose and owner"
+      - "Rituals have agendas prepared in advance"
+      - "Rituals end with clear action items and owners"
+      - "Rituals are time-boxed (start and end on time)"
+      - "Optional attendance only if explicitly stated"
+      - "Rituals reviewed quarterly: keep, modify, or remove"

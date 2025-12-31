@@ -1,0 +1,110 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: epic-template-v1
+  name: Epic (Builder's Hierarchy Level 1)
+  version: 1.0
+  output:
+    format: markdown
+    filename: "docs/epics/epic-{{epic_id}}-{{short_title}}.md"
+    title: "Epic {{epic_id}}: {{epic_title}}"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: header
+    title: Epic Header
+    sections:
+      - id: metadata
+        type: structured
+        template: |
+          **Status:** {{status}}
+          **Priority:** {{priority}}
+          **Timeline:** {{timeline}}
+          **Owner:** {{owner}}
+        examples:
+          - "**Status:** In Progress\n**Priority:** P0 (Critical)\n**Timeline:** Q3 2024 (3 months)\n**Owner:** Product Manager"
+
+  - id: epic-vision
+    title: Epic Vision
+    instruction: |
+      Describe the strategic vision and outcome of this epic.
+    elicit: true
+    type: paragraph
+    examples:
+      - "Transform diagnostic accuracy and speed by providing technicians with AI-powered diagnostic suggestions based on real-time sensor data, historical repair patterns, and equipment-specific knowledge. This epic aims to reduce average repair time from 150 minutes to 90 minutes by enabling technicians to diagnose issues in under 5 minutes."
+
+  - id: purpose-alignment
+    title: Purpose Alignment
+    instruction: |
+      How does this epic serve Purpose DNA?
+    elicit: true
+    type: paragraph
+    examples:
+      - "This epic directly serves our north star metric: reducing average repair time. It addresses the Purpose DNA objective of 'eliminating technician frustration through intelligent assistance.' By achieving 60-minute average repair time (from current 150 min), we move significantly toward our 12-month target."
+
+  - id: user-need
+    title: User Need
+    instruction: |
+      What user problem does this epic solve?
+    elicit: true
+    type: paragraph
+    examples:
+      - "Field technicians spend 40% of repair time diagnosing issues (interviews with 30 technicians). Current troubleshooting guides are generic and don't leverage equipment-specific data. Technicians want intelligent, contextual guidance that helps them pinpoint issues quickly without trial-and-error or calling support."
+
+  - id: success-criteria
+    title: Success Criteria
+    instruction: |
+      How do we measure epic success?
+    elicit: true
+    type: numbered-list
+    examples:
+      - "Average diagnostic time ≤ 5 minutes (down from 60 minutes)"
+      - "Diagnostic accuracy ≥ 95% (correct diagnosis on first attempt)"
+      - "Technician confidence score ≥ 4.5/5 (post-repair survey)"
+      - "First-visit fix rate ≥ 75% (up from 60%)"
+      - "80% of technicians use AI suggestions in every diagnostic session"
+
+  - id: stories
+    title: User Stories (Level 2)
+    instruction: |
+      List the user stories that comprise this epic.
+    type: table
+    columns: [Story ID, Title, Status, Priority, Estimate]
+    examples:
+      - ["STORY-101", "View real-time sensor data in diagnostic interface", "Done", "P0", "8 pts"]
+      - ["STORY-102", "Receive AI-powered diagnostic suggestions", "In Progress", "P0", "13 pts"]
+      - ["STORY-103", "Access equipment-specific repair procedures", "Backlog", "P1", "5 pts"]
+      - ["STORY-104", "Track diagnostic accuracy and outcomes", "Backlog", "P2", "3 pts"]
+
+  - id: dependencies
+    title: Dependencies
+    instruction: |
+      What must be in place for this epic to succeed?
+    type: bullet-list
+    examples:
+      - "IoT sensor data integration (Infrastructure team)"
+      - "ML model training pipeline (Data Science team)"
+      - "Equipment repair history database (complete backfill)"
+      - "Mobile app performance optimization (prerequisite for real-time data)"
+
+  - id: risks
+    title: Risks and Mitigations
+    type: table
+    columns: [Risk, Impact, Mitigation]
+    examples:
+      - ["AI suggestions inaccurate", "High - damages trust", "Validate model accuracy ≥95%, allow technician override, track feedback"]
+      - ["Sensor data unreliable", "High - blocks feature", "Graceful degradation, use historical data, clear offline messaging"]
+      - ["Timeline slips due to ML complexity", "Medium - delays value", "MVP with rule-based suggestions first, enhance with ML later"]
+
+  - id: metrics
+    title: Metrics to Track
+    type: bullet-list
+    examples:
+      - "North star metric: Average repair time"
+      - "Diagnostic time (diagnosis phase only)"
+      - "Diagnostic accuracy (correct vs. incorrect diagnosis)"
+      - "AI suggestion usage rate"
+      - "AI suggestion acceptance rate (technician follows suggestion)"
+      - "First-visit fix rate"

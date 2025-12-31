@@ -1,0 +1,153 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: product-brief-template-v1
+  name: Product Brief
+  version: 1.0
+  output:
+    format: markdown
+    filename: docs/product-brief.md
+    title: "{{product_name}} Product Brief"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: overview
+    title: Product Overview
+    instruction: |
+      One-paragraph elevator pitch for the product.
+    elicit: true
+    type: paragraph
+    examples:
+      - "FieldFix is a mobile-first diagnostic assistant that helps field maintenance technicians repair IoT-enabled equipment 60% faster. Using real-time sensor data and AI-powered diagnostic suggestions, we reduce average repair time from 2.5 hours to under 1 hour, eliminating technician frustration and equipment downtime. Built for technicians who work in low-connectivity environments and need instant, accurate guidance at the moment of need."
+
+  - id: problem
+    title: Problem Statement
+    instruction: |
+      What problem does this product solve? For whom?
+    elicit: true
+    type: paragraph
+    examples:
+      - "Field maintenance technicians struggle to diagnose and fix IoT-enabled coolers and vending machines efficiently. Generic troubleshooting guides, phone support dependency, and trial-and-error approaches lead to 2-3 hour average repair times and 40% first-visit failure rates. This creates prolonged equipment downtime, lost revenue for retailers, and frustrated technicians who feel unsupported."
+
+  - id: solution
+    title: Solution Approach
+    instruction: |
+      How does this product solve the problem?
+    elicit: true
+    type: paragraph
+    examples:
+      - "We provide field technicians with a mobile-first diagnostic assistant that uses real-time IoT data, AI-powered troubleshooting, and equipment-specific guidance to reduce repair time by 60%. Unlike generic guides, our solution adapts to the specific equipment model, failure symptoms, and technician skill level, providing step-by-step visual instructions with exactly the information needed at the moment of need. Works offline with intelligent sync."
+
+  - id: target-users
+    title: Target Users
+    instruction: |
+      Who are the primary users? Reference User DNA segments.
+    elicit: true
+    type: bullet-list
+    examples:
+      - "**Primary:** Expert Field Technicians (3+ years experience) servicing IoT equipment"
+      - "**Secondary:** Novice Technicians (<1 year) needing training and support"
+      - "**Context:** 60% work in low-connectivity areas, 100% mobile-first, time-pressured environments"
+
+  - id: value-proposition
+    title: Value Proposition
+    instruction: |
+      What unique value do we deliver?
+    elicit: true
+    sections:
+      - id: user-value
+        title: User Value
+        type: bullet-list
+        examples:
+          - "Complete repairs 60% faster (2.5 hours → 1 hour average)"
+          - "Higher first-visit fix rate (60% → 75%)"
+          - "Reduced stress and increased confidence"
+          - "More jobs per day, better performance reviews"
+      - id: business-value
+        title: Business Value
+        type: bullet-list
+        examples:
+          - "Reduced equipment downtime saves $30K+ per month"
+          - "Higher first-visit fix rate reduces costly return trips"
+          - "Better technician satisfaction improves retention"
+          - "Scalable diagnostic knowledge (doesn't depend on phone support)"
+
+  - id: key-features
+    title: Key Features
+    instruction: |
+      Top 5-7 features that deliver core value.
+    type: numbered-list
+    examples:
+      - "Real-time IoT sensor data integration (temperature, pressure, status)"
+      - "AI-powered diagnostic suggestions based on symptoms and equipment type"
+      - "Equipment-specific repair procedures with visual step-by-step guides"
+      - "Offline-first architecture (works without connectivity, syncs when available)"
+      - "Performance tracking (technician metrics, repair time, success rate)"
+      - "Multi-language support (English, Spanish)"
+      - "Equipment scanning (QR code, NFC) for instant data loading"
+
+  - id: differentiators
+    title: Competitive Differentiators
+    instruction: |
+      What makes this product unique vs. alternatives?
+    type: bullet-list
+    examples:
+      - "Real-time IoT integration (not static guides)"
+      - "AI-powered diagnosis (learns from past repairs)"
+      - "Context-aware guidance (adapts to skill level and equipment)"
+      - "Mobile-first with offline capability (works in low-connectivity)"
+      - "Purpose-built for field technicians (not generic asset management)"
+
+  - id: north-star
+    title: North Star Metric
+    type: structured
+    template: "**Metric:** {{metric}}\n**Current:** {{current}}\n**Target:** {{target}}\n**Timeline:** {{timeline}}"
+    examples:
+      - "**Metric:** Average Repair Time\n**Current:** 150 minutes\n**Target:** 60 minutes\n**Timeline:** 12 months"
+
+  - id: success-criteria
+    title: Success Criteria (12 Months)
+    type: bullet-list
+    examples:
+      - "Average repair time ≤ 60 minutes (from 150 min baseline)"
+      - "First-visit fix rate ≥ 75% (from 60% baseline)"
+      - "5,000 active technician users"
+      - "NPS ≥ 50 from technicians"
+      - "95%+ uptime and reliability"
+      - "$500K+ monthly revenue"
+
+  - id: roadmap-horizons
+    title: Product Roadmap Horizons
+    sections:
+      - id: horizon-1
+        title: "Now (0-6 months): Foundation"
+        type: bullet-list
+        examples:
+          - "Core diagnostic features"
+          - "Real-time sensor data integration"
+          - "Offline-first mobile app"
+          - "500-1,000 active users"
+      - id: horizon-2
+        title: "Next (6-12 months): Intelligence"
+        type: bullet-list
+        examples:
+          - "AI-powered diagnostic suggestions"
+          - "Predictive maintenance insights"
+          - "Achieve 60-minute north star target"
+          - "5,000 active users"
+      - id: horizon-3
+        title: "Later (12-24 months): Scale & Expansion"
+        type: bullet-list
+        examples:
+          - "New equipment types (HVAC)"
+          - "Real-time technician collaboration"
+          - "Multi-language expansion"
+          - "20,000 active users"
+
+  - id: positioning
+    title: Market Positioning
+    type: paragraph
+    examples:
+      - "Positioned as 'The AI Technician Assistant for Field Service' - not an asset management system, not a generic troubleshooting tool, but an intelligent co-pilot built specifically for field technicians who need instant, accurate diagnostic support. Premium pricing justified by tangible repair time reduction and ROI."

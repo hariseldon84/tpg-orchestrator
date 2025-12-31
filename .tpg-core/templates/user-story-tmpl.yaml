@@ -1,0 +1,211 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: user-story-template-v1
+  name: User Story (Builder's Hierarchy Level 2)
+  version: 1.0
+  output:
+    format: markdown
+    filename: "docs/stories/story-{{story_id}}-{{short_title}}.md"
+    title: "Story {{story_id}}: {{story_title}}"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: header
+    title: Story Header
+    sections:
+      - id: metadata
+        title: Metadata
+        type: structured
+        template: |
+          **Epic:** {{epic_link}}
+          **Status:** {{status}}
+          **Priority:** {{priority}}
+          **Estimate:** {{estimate}}
+          **Assignee:** {{assignee}}
+        examples:
+          - "**Epic:** EPIC-042 Diagnostic Intelligence\n**Status:** In Progress\n**Priority:** P1 (High)\n**Estimate:** 8 story points\n**Assignee:** Mobile Team"
+
+  - id: user-story
+    title: User Story Statement
+    instruction: |
+      Write story in standard format: As a [role], I want [capability], So that [outcome].
+    elicit: true
+    type: structured
+    template: "As a {{user_role}},\nI want to {{capability}},\nSo that {{outcome}}."
+    examples:
+      - "As a field maintenance technician,\nI want to view real-time sensor data from the equipment I'm diagnosing,\nSo that I can identify issues faster without waiting for support or manual checks."
+
+  - id: context
+    title: Context and Background
+    instruction: |
+      Provide context: user need, current state, evidence, business value.
+    elicit: true
+    sections:
+      - id: user-segment
+        title: User Segment
+        type: text
+        examples:
+          - "Primary: Expert Technicians (3+ years experience)"
+      - id: jtbd
+        title: Job-to-be-Done
+        type: paragraph
+        examples:
+          - "When diagnosing a malfunctioning cooler at a retail location, I want to see live sensor readings so I can quickly pinpoint the issue without trial-and-error."
+      - id: user-need
+        title: User Need
+        type: paragraph
+        examples:
+          - "Technicians currently rely on generic troubleshooting guides and phone support, leading to 2-3 hour average repair times. Real-time sensor data would enable faster, more accurate diagnosis."
+      - id: current-state
+        title: Current State
+        type: paragraph
+        examples:
+          - "Currently, technicians must call support to request sensor readings, or manually check equipment with diagnostic tools. This adds 15-30 minutes per repair and creates dependency on support availability."
+      - id: evidence
+        title: Evidence
+        type: bullet-list
+        examples:
+          - "User interviews (25 technicians) showed 90% need real-time data access"
+          - "Support tickets average 15/day requesting sensor readings"
+          - "Benchmark: Real-time data reduced repair time by 40% in pilot test"
+      - id: business-value
+        title: Business Value
+        type: paragraph
+        examples:
+          - "Reducing repair time by 60% (our north star metric) requires real-time diagnostic capabilities. This feature is critical for achieving our 12-month target."
+
+  - id: acceptance-criteria
+    title: Acceptance Criteria
+    instruction: |
+      Define specific, testable criteria. Use Given/When/Then format.
+    elicit: true
+    sections:
+      - id: functional-criteria
+        title: Functional Acceptance Criteria
+        type: numbered-list
+        examples:
+          - "**AC1: Display Real-Time Sensor Data**\nGiven I'm viewing a diagnostic session for a cooler\nWhen sensor data is available from the equipment\nThen I see current temperature, pressure, and status readings\nAnd data updates every 5 seconds\nAnd timestamps show when data was last received"
+          - "**AC2: Handle Missing Sensor Data**\nGiven I'm viewing a diagnostic session\nWhen sensor data is unavailable (offline equipment)\nThen I see a clear message: 'Sensor data unavailable - equipment offline'\nAnd I can still access historical sensor data\nAnd the app doesn't crash or show errors"
+      - id: nonfunctional-criteria
+        title: Non-Functional Acceptance Criteria
+        type: bullet-list
+        examples:
+          - "Performance: Sensor data loads in < 1 second (p95)"
+          - "Accessibility: Sensor data readable by screen readers, color-coding has text labels"
+          - "Usability: Layout follows design system, mobile-optimized"
+          - "Security: Data accessed only by authenticated technicians, encrypted in transit"
+          - "Instrumentation: Track 'sensor data accessed' event and load time"
+
+  - id: genome-validation
+    title: Product Genome Validation
+    instruction: |
+      Validate alignment with Purpose, User, and Experience DNAs.
+    sections:
+      - id: purpose-alignment
+        title: Purpose Alignment
+        type: paragraph
+        examples:
+          - "This supports Purpose DNA objective: 'Reduce average repair time to 60 minutes.' Real-time sensor data directly contributes to faster diagnosis, moving us toward our north star metric."
+      - id: user-validation
+        title: User Validation
+        type: paragraph
+        examples:
+          - "Validated with 10 technicians via prototype testing. 95% found real-time sensor data 'essential' or 'very helpful.' Feedback incorporated into design."
+      - id: experience-standards
+        title: Experience Standards
+        type: paragraph
+        examples:
+          - "Design approved by Design Lead. Performance tested (< 1s load). Accessibility compliant (WCAG 2.1 AA). Follows mobile-first design system."
+
+  - id: mqb-readiness
+    title: MQB Gate Readiness
+    instruction: |
+      Quick checklist of how this story will meet all 12 MQB gates.
+    type: bullet-list
+    examples:
+      - "✅ Purpose Alignment: Documented above"
+      - "✅ User Need Validation: Prototype tested with 10 users"
+      - "✅ Experience Standards: Design approved, follows design system"
+      - "⚠️ Performance Standards: Target < 1s load, will performance test"
+      - "⚠️ Accessibility Standards: WCAG 2.1 AA compliance required"
+      - "✅ Security Standards: Authentication required, data encrypted"
+      - "✅ Data Integrity: Sensor data validated against manufacturer specs"
+      - "✅ Error Handling: Offline/error states documented in AC"
+      - "⚠️ Documentation: In-app help for sensor data interpretation needed"
+      - "✅ Instrumentation: Events defined (sensor data accessed, errors)"
+      - "⚠️ Technical Quality: Code review + 80% test coverage required"
+      - "✅ Regression Prevention: Existing diagnostic flows must still work"
+
+  - id: dependencies
+    title: Dependencies
+    instruction: |
+      List dependencies on other stories or technical work.
+    type: bullet-list
+    examples:
+      - "Requires: IoT API integration (Story #123) to be complete"
+      - "Requires: Design system v2 (in progress)"
+      - "Blocked by: Equipment sensor standardization (Infrastructure team)"
+
+  - id: tasks
+    title: Implementation Tasks
+    instruction: |
+      Break story into tasks (Level 3 of Builder's Hierarchy).
+    type: numbered-list
+    examples:
+      - "Backend: Create sensor data API endpoint (3 days) - Define API contract, implement real-time fetch from IoT bridge, add error handling, write tests"
+      - "Frontend: Build sensor data display component (3 days) - Implement UI component, connect to API, add 5-second auto-refresh, handle loading/error states"
+      - "Testing: E2E and integration testing (2 days) - Write integration tests for API, write E2E tests for user flows, performance testing"
+      - "Documentation: User-facing help (1 day) - Create in-app tooltip, update help docs"
+      - "Instrumentation: Analytics implementation (1 day) - Add events, track load time and errors"
+
+  - id: instrumentation
+    title: Instrumentation Plan
+    instruction: |
+      Define analytics events and metrics to track.
+    sections:
+      - id: events
+        title: Events to Track
+        type: bullet-list
+        examples:
+          - "sensor_data_accessed: User opens sensor data view"
+          - "sensor_data_loaded: Data successfully loaded (track load_time_ms)"
+          - "sensor_data_error: Error loading sensor data (track error_type)"
+          - "sensor_data_refreshed: User manually refreshes data"
+      - id: metrics
+        title: Metrics to Monitor
+        type: bullet-list
+        examples:
+          - "Usage: % of diagnostic sessions using sensor data"
+          - "Performance: p50, p95, p99 load times"
+          - "Errors: Error rate, error types"
+          - "Impact: Repair time for sessions using sensor data vs. not using"
+
+  - id: risks
+    title: Risks and Mitigations
+    instruction: |
+      Identify potential issues and how to address them.
+    type: table
+    columns: [Risk, Likelihood, Impact, Mitigation]
+    examples:
+      - ["IoT API latency too high", "Medium", "High (blocks < 1s target)", "Implement caching, optimize API, fallback to last-known data"]
+      - ["Equipment sensors offline frequently", "Medium", "Medium (degrades UX)", "Clear offline messaging, show historical data, graceful degradation"]
+      - ["Sensor data format inconsistent across equipment", "Low", "Medium (requires custom parsing)", "Standardize format in IoT layer, validate in tests"]
+
+  - id: definition-of-done
+    title: Definition of Done
+    instruction: |
+      Checklist for when story is complete.
+    type: bullet-list
+    examples:
+      - "All acceptance criteria met"
+      - "All MQB gates passed"
+      - "Code reviewed and approved"
+      - "Tests written and passing (≥80% coverage)"
+      - "Documentation updated"
+      - "Instrumentation verified in staging"
+      - "Deployed to production"
+      - "Validated with real users (if applicable)"
+      - "Product Owner sign-off"

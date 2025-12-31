@@ -1,0 +1,118 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: evolution-plan-template-v1
+  name: Product Evolution Plan
+  version: 1.0
+  output:
+    format: markdown
+    filename: docs/evolution-plan.md
+    title: "{{product_name}} Evolution Plan"
+
+workflow:
+  mode: interactive
+
+sections:
+  - id: metadata
+    title: Metadata
+    sections:
+      - id: changelog
+        type: table
+        columns: [Date, Version, Description, Author]
+        initial_rows:
+          - ["{{current_date}}", "1.0", "Initial evolution plan", "{{author}}"]
+
+  - id: current-state
+    title: Current State Assessment
+    instruction: |
+      Describe current product maturity and health.
+    type: paragraph
+    examples:
+      - "We're in the 'Product-Market Fit' stage with 500 active users (target segment: field maintenance technicians). North star metric (average repair time) is 120 minutes vs. target of 60 minutes. Product Genome health score: 4.2/5.0 (strong). MQB compliance: 98%. Key strengths: clear purpose, validated user needs, strong technical foundation. Key gaps: instrumentation incomplete, cultural practices inconsistent."
+
+  - id: evolution-horizons
+    title: Evolution Horizons
+    instruction: |
+      Define short, medium, and long-term evolution priorities.
+    sections:
+      - id: horizon-1
+        title: "Horizon 1: Next 3-6 Months"
+        type: bullet-list
+        examples:
+          - "Complete AI-powered diagnostic suggestions (Epic #042)"
+          - "Achieve 90-minute average repair time (50% of goal)"
+          - "Expand to 1,000 active users"
+          - "Instrument all key user journeys (complete Intelligence DNA)"
+          - "Tighten MQB gates (add performance budgets)"
+      - id: horizon-2
+        title: "Horizon 2: 6-12 Months"
+        type: bullet-list
+        examples:
+          - "Achieve 60-minute average repair time (north star goal)"
+          - "Expand to 5,000 active users"
+          - "Add predictive maintenance capabilities"
+          - "Launch multi-language support (Spanish for US technicians)"
+          - "Achieve 90% first-visit fix rate"
+      - id: horizon-3
+        title: "Horizon 3: 12-24 Months"
+        type: bullet-list
+        examples:
+          - "Expand to new equipment types (HVAC systems)"
+          - "Enable real-time technician collaboration"
+          - "Achieve 30-minute average repair time (stretch goal)"
+          - "Scale to 20,000 active users"
+          - "Explore adjacent market (facilities management)"
+
+  - id: dna-evolution
+    title: DNA Evolution Roadmap
+    instruction: |
+      How will each DNA evolve?
+    type: table
+    columns: [DNA, Current State, Next Evolution, Timeline]
+    examples:
+      - ["Purpose DNA", "Clear, validated", "Revisit after achieving 60-min target", "12 months"]
+      - ["User DNA", "Single segment focus", "Add secondary segment (HVAC techs)", "12 months"]
+      - ["Experience DNA", "Mobile-first, strong", "Add tablet optimization, dark mode", "6 months"]
+      - ["Architecture DNA", "Solid foundation", "Add ML pipeline, real-time collaboration infra", "9 months"]
+      - ["Intelligence DNA", "Partial instrumentation", "Complete instrumentation, add predictive analytics", "3 months"]
+      - ["Cultural DNA", "Values defined, practices emerging", "Formalize rituals, scale culture to 20-person team", "6 months"]
+
+  - id: technical-evolution
+    title: Technical Evolution
+    type: bullet-list
+    examples:
+      - "ML infrastructure: Build training pipeline, model deployment automation"
+      - "Real-time collaboration: WebSocket infrastructure, conflict resolution"
+      - "Performance optimization: Reduce mobile app load time to < 1 second"
+      - "Offline capabilities: Expand offline feature set to 100% core functionality"
+      - "API evolution: GraphQL adoption complete, deprecate legacy REST endpoints"
+
+  - id: team-evolution
+    title: Team Evolution
+    type: paragraph
+    examples:
+      - "Current team: 8 people (2 backend, 2 mobile, 1 designer, 1 PM, 1 QA, 1 data scientist). Horizon 2: Grow to 12 (add 1 backend, 1 mobile, 1 ML engineer, 1 researcher). Horizon 3: Grow to 20 (split into 2 product teams, maintain single Product Genome). Cultural DNA practices must scale to support larger team."
+
+  - id: mqb-evolution
+    title: MQB Gate Evolution
+    type: paragraph
+    examples:
+      - "MQB gates reviewed quarterly. Horizon 1: Tighten performance gates (p95 < 500ms → < 200ms). Horizon 2: Add new gate for ML model accuracy (≥95%). Horizon 3: Automate all gates in CI/CD pipeline (manual validation → automated)."
+
+  - id: success-milestones
+    title: Success Milestones
+    type: table
+    columns: [Milestone, Target Date, Success Criteria]
+    examples:
+      - ["Product-Market Fit Proven", "Q3 2024", "1,000 active users, NPS ≥ 50, 90-minute avg repair time"]
+      - ["North Star Achieved", "Q1 2025", "60-minute avg repair time sustained for 3 months"]
+      - ["Scale Phase", "Q3 2025", "5,000 active users, <1% monthly churn"]
+      - ["Market Expansion", "Q1 2026", "New equipment type launched, 10,000 active users"]
+
+  - id: risks
+    title: Evolution Risks
+    type: table
+    columns: [Risk, Impact, Mitigation]
+    examples:
+      - ["AI accuracy insufficient", "High - blocks horizon 1", "MVP with rule-based logic, iterate to ML"]
+      - ["Team growth dilutes culture", "Medium - degrades quality", "Cultural DNA practices scaled, onboarding emphasis"]
+      - ["Market shifts (new competitors)", "Medium - slows growth", "User research continuity, differentiation via intelligence"]

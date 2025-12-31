@@ -1,0 +1,436 @@
+# <!-- Powered by Product Genome™ Framework -->
+workflow:
+  id: feature-validation-flow
+  name: Feature Validation Flow (Evolution Flow)
+  version: 1.0
+  description: >-
+    Complete Evolution Flow for validating and shipping a feature.
+    From hypothesis through build, MQB gates, ship, measure, learn, and iterate.
+    Ensures features are validated against Product Genome at every stage.
+
+  use_cases:
+    - New feature development
+    - Feature iteration
+    - Hypothesis validation
+    - Systematic feature delivery
+
+  prerequisites:
+    - Product Genome exists (all 6 DNAs)
+    - MQB gates defined
+    - Feature hypothesis or user story
+
+  agents_involved:
+    - tpg-orchestrator
+    - user-analyst (for validation)
+    - experience-guardian (for design)
+    - quality-specialist (for MQB)
+
+  estimated_duration: "2-4 weeks per feature (varies by complexity)"
+
+  phases:
+    - phase: 1
+      name: Hypothesis & Validation
+      objective: Define and validate feature hypothesis with users
+      duration: "3-5 days"
+      steps:
+        - define_hypothesis
+        - create_user_story
+        - design_prototype
+        - validate_with_users
+      checkpoint:
+        name: user_validated
+        requires_approval: true
+        validation:
+          - User story created
+          - Prototype tested with ≥5 users
+          - User feedback ≥80% positive
+          - Hypothesis validated
+
+    - phase: 2
+      name: Build
+      objective: Implement feature following quality standards
+      duration: "1-2 weeks"
+      steps:
+        - implement_feature
+        - write_tests
+        - code_review
+        - internal_qa
+      checkpoint:
+        name: feature_built
+        validation:
+          - Feature implemented
+          - Tests passing (≥80% coverage)
+          - Code reviewed
+          - Internal QA passed
+
+    - phase: 3
+      name: MQB Gates Validation
+      objective: Validate all 12 MQB gates
+      duration: "1-2 days"
+      steps:
+        - run_mqb_gates
+        - remediate_failures
+        - final_validation
+      checkpoint:
+        name: mqb_passed
+        requires_approval: true
+        validation:
+          - All 12 MQB gates passed
+          - No critical issues
+          - Ready to ship
+
+    - phase: 4
+      name: Ship
+      objective: Deploy to production
+      duration: "1 day"
+      steps:
+        - prepare_deployment
+        - deploy_to_production
+        - monitor_launch
+      checkpoint:
+        name: shipped
+        validation:
+          - Deployed successfully
+          - No critical errors
+          - Monitoring active
+
+    - phase: 5
+      name: Measure & Learn
+      objective: Validate hypothesis post-launch
+      duration: "2-4 weeks"
+      steps:
+        - track_metrics
+        - collect_user_feedback
+        - analyze_results
+        - validate_hypothesis
+      checkpoint:
+        name: hypothesis_validated
+        validation:
+          - Metrics tracked
+          - Hypothesis validated or invalidated
+          - Learnings documented
+
+    - phase: 6
+      name: Iterate or Sunset
+      objective: Decide next steps based on learnings
+      duration: "1 day"
+      steps:
+        - make_decision
+        - plan_next_iteration
+      checkpoint:
+        name: evolution_complete
+        validation:
+          - Decision made (iterate/keep/sunset)
+          - Next steps clear
+
+  steps:
+    - id: define_hypothesis
+      name: Define Feature Hypothesis
+      agent: tpg-orchestrator
+      task: elicit-hypothesis
+      outputs:
+        - Feature hypothesis statement
+        - Success criteria
+        - Risks and assumptions
+      validation:
+        - Hypothesis clear: "If X, then Y because Z"
+        - Success metrics defined
+        - Aligns with Purpose DNA
+      handoff: "Hypothesis defined. Next: Create user story."
+
+    - id: create_user_story
+      name: Create User Story
+      agent: tpg-orchestrator
+      task: create-user-story
+      inputs:
+        - Feature hypothesis
+        - Product Genome
+      outputs:
+        - User story document
+        - Acceptance criteria
+        - MQB readiness assessment
+      validation:
+        - User story follows Builder's Hierarchy
+        - Maps to User DNA segment and JTBD
+        - Aligns with Purpose DNA
+        - Acceptance criteria clear
+      handoff: "User story created. Next: Design prototype."
+
+    - id: design_prototype
+      name: Design and Prototype
+      agent: experience-guardian
+      task: create-prototype
+      inputs:
+        - User story
+        - Experience DNA standards
+      outputs:
+        - Design mockups
+        - Interactive prototype
+      validation:
+        - Follows design system
+        - Meets accessibility standards
+        - Ready for user testing
+      handoff: "Prototype ready. Next: Validate with users."
+
+    - id: validate_with_users
+      name: Validate with Users
+      agent: user-analyst
+      task: conduct-usability-test
+      inputs:
+        - Prototype
+        - User story
+      outputs:
+        - Usability test results
+        - User feedback
+      validation:
+        - Tested with ≥5 users
+        - Task success rate ≥80%
+        - User feedback positive
+        - Hypothesis validated
+      handoff: "User validation passed. Next: Implement feature."
+
+    - id: implement_feature
+      name: Implement Feature
+      agent: tpg-orchestrator
+      task: coordinate-implementation
+      inputs:
+        - User story
+        - Design
+        - Architecture DNA standards
+      outputs:
+        - Feature code
+        - Implementation complete
+      validation:
+        - Follows architecture patterns
+        - Code quality standards met
+      handoff: "Feature implemented. Next: Write tests."
+
+    - id: write_tests
+      name: Write and Run Tests
+      agent: tpg-orchestrator
+      task: testing
+      outputs:
+        - Unit tests
+        - Integration tests
+        - E2E tests
+      validation:
+        - Test coverage ≥80%
+        - All tests passing
+        - Edge cases covered
+      handoff: "Tests written and passing. Next: Code review."
+
+    - id: code_review
+      name: Code Review
+      agent: tpg-orchestrator
+      task: code-review
+      outputs:
+        - Code review approval
+      validation:
+        - Code reviewed by senior engineer
+        - Feedback addressed
+        - Approved for merge
+      handoff: "Code reviewed. Next: Internal QA."
+
+    - id: internal_qa
+      name: Internal QA Testing
+      agent: quality-specialist
+      task: qa-testing
+      outputs:
+        - QA test results
+      validation:
+        - Functional testing complete
+        - No critical bugs
+        - Acceptance criteria met
+      handoff: "QA passed. Next: Run MQB gates."
+
+    - id: run_mqb_gates
+      name: Run MQB Gates Validation
+      agent: quality-specialist
+      task: run-mqb-gates
+      inputs:
+        - Feature to validate
+        - MQB definition
+      outputs:
+        - MQB validation report
+        - Gate pass/fail status
+      validation:
+        - All 12 gates validated
+        - Status documented
+      handoff: "MQB gates validated. Next: Remediate any failures."
+
+    - id: remediate_failures
+      name: Remediate MQB Failures
+      agent: tpg-orchestrator
+      task: fix-mqb-failures
+      inputs:
+        - MQB validation report
+      outputs:
+        - Fixed issues
+        - Re-validation results
+      validation:
+        - All failures addressed
+        - Re-validation passed
+      handoff: "MQB failures remediated. Next: Final validation."
+
+    - id: final_validation
+      name: Final MQB Validation
+      agent: quality-specialist
+      task: run-mqb-gates
+      outputs:
+        - Final MQB status
+      validation:
+        - All 12 gates PASS
+        - Ready to ship
+      handoff: "All MQB gates passed. Ready to ship!"
+
+    - id: prepare_deployment
+      name: Prepare Deployment
+      agent: tpg-orchestrator
+      task: deployment-prep
+      outputs:
+        - Deployment plan
+        - Rollback plan
+        - Monitoring configured
+      validation:
+        - Deployment checklist complete
+        - Rollback plan ready
+      handoff: "Deployment ready. Next: Deploy."
+
+    - id: deploy_to_production
+      name: Deploy to Production
+      agent: tpg-orchestrator
+      task: deploy
+      outputs:
+        - Feature deployed
+        - Deployment status
+      validation:
+        - Deployment successful
+        - No errors
+      handoff: "Deployed! Next: Monitor launch."
+
+    - id: monitor_launch
+      name: Monitor Launch
+      agent: tpg-orchestrator
+      task: monitor
+      outputs:
+        - Launch monitoring report
+      validation:
+        - No critical errors
+        - Performance within thresholds
+        - Analytics events firing
+      handoff: "Launch stable. Next: Track metrics."
+
+    - id: track_metrics
+      name: Track Success Metrics
+      agent: tpg-orchestrator
+      task: analyze-metrics
+      inputs:
+        - Success criteria from hypothesis
+      outputs:
+        - Metrics tracking report
+      validation:
+        - All success metrics tracked
+        - Data collecting properly
+      handoff: "Metrics tracking. Next: Collect user feedback."
+
+    - id: collect_user_feedback
+      name: Collect User Feedback
+      agent: user-analyst
+      task: collect-feedback
+      outputs:
+        - User feedback collected
+        - NPS, CSAT scores
+      validation:
+        - Feedback from ≥20 users
+        - Both quantitative and qualitative
+      handoff: "Feedback collected. Next: Analyze results."
+
+    - id: analyze_results
+      name: Analyze Results
+      agent: tpg-orchestrator
+      task: analyze-metrics
+      inputs:
+        - Metrics data
+        - User feedback
+        - Hypothesis
+      outputs:
+        - Analysis report
+      validation:
+        - Hypothesis tested against data
+        - Insights documented
+      handoff: "Results analyzed. Next: Validate hypothesis."
+
+    - id: validate_hypothesis
+      name: Validate or Invalidate Hypothesis
+      agent: tpg-orchestrator
+      task: hypothesis-validation
+      inputs:
+        - Analysis report
+        - Original hypothesis
+      outputs:
+        - Hypothesis validation result
+        - Learnings documented
+      validation:
+        - Clear validation or invalidation
+        - Learnings captured
+        - Evidence-based conclusion
+      handoff: "Hypothesis validated. Next: Decide next steps."
+
+    - id: make_decision
+      name: Make Iterate/Keep/Sunset Decision
+      agent: tpg-orchestrator
+      task: feature-decision
+      inputs:
+        - Hypothesis validation
+        - Metrics
+        - User feedback
+      outputs:
+        - Decision: Iterate / Keep / Sunset
+        - Rationale documented
+      validation:
+        - Data-driven decision
+        - Rationale clear
+      handoff: "Decision made. Next: Plan next iteration (if applicable)."
+
+    - id: plan_next_iteration
+      name: Plan Next Iteration
+      agent: tpg-orchestrator
+      task: iteration-planning
+      inputs:
+        - Learnings
+        - Decision
+      outputs:
+        - Next iteration plan (if iterate)
+        - Deprecation plan (if sunset)
+      validation:
+        - Next steps clear
+        - Learnings applied
+      handoff: "Evolution Flow complete!"
+
+  deliverables:
+    - User story
+    - Prototype and design
+    - User validation results
+    - Implemented feature
+    - Test suite (≥80% coverage)
+    - MQB validation report (all gates passed)
+    - Deployed feature
+    - Metrics analysis
+    - Hypothesis validation
+    - Learnings documented
+    - Next iteration plan
+
+  success_criteria:
+    - Feature ships with all MQB gates passed
+    - Hypothesis validated or invalidated with evidence
+    - User feedback collected and analyzed
+    - Learnings documented and shared
+    - Data-driven decision on next steps
+    - Evolution Flow principles followed
+
+  next_steps:
+    - If Iterate: Start new Evolution Flow cycle
+    - If Keep: Move to maintenance mode
+    - If Sunset: Execute deprecation plan
+    - Share learnings with team
+    - Update Product Genome if needed

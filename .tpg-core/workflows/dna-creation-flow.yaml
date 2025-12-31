@@ -1,0 +1,328 @@
+# <!-- Powered by Product Genome™ Framework -->
+workflow:
+  id: dna-creation-flow
+  name: DNA Creation Flow (Systematic DNA Building)
+  version: 1.0
+  description: >-
+    Systematic workflow for creating Product Genome DNAs in the correct order
+    with validation at each step. Ensures each DNA is comprehensive, evidence-based,
+    and aligned with other DNAs before moving to the next.
+
+  use_cases:
+    - Creating Product Genome for new products (greenfield)
+    - Creating Product Genome for existing products (brownfield)
+    - Rebuilding incomplete or weak DNAs
+    - Systematic product definition
+
+  prerequisites:
+    - Product idea or existing product
+    - Stakeholder availability for input
+    - User research capability (or willingness to conduct)
+    - Time commitment for thorough creation
+
+  agents_involved:
+    - tpg-orchestrator
+    - purpose-architect
+    - user-analyst
+    - experience-guardian
+    - architecture-expert
+    - intelligence-analyst
+    - culture-coach
+
+  estimated_duration: "4-8 weeks for complete genome (greenfield), 2-4 weeks (brownfield)"
+
+  phases:
+    - phase: 1
+      name: Foundation DNAs (Purpose + User)
+      objective: Establish purpose and validate with users
+      duration: "Week 1-2"
+      steps:
+        - create_purpose_dna
+        - create_user_dna
+        - validate_foundation_alignment
+      checkpoint:
+        name: foundation_validated
+        requires_approval: true
+        validation:
+          - Purpose DNA complete and clear
+          - User DNA evidence-based
+          - Foundation aligned (purpose and users match)
+
+    - phase: 2
+      name: Quality Framework (Experience + Architecture)
+      objective: Define quality standards and technical approach
+      duration: "Week 3-4"
+      steps:
+        - create_experience_dna
+        - create_architecture_dna
+        - validate_quality_framework
+      checkpoint:
+        name: quality_framework_established
+        requires_approval: true
+        validation:
+          - Experience DNA standards defined
+          - Architecture DNA documented
+          - Quality framework serves foundation
+
+    - phase: 3
+      name: Intelligence and Culture
+      objective: Define measurement and team culture
+      duration: "Week 5-6"
+      steps:
+        - create_intelligence_dna
+        - create_cultural_dna
+        - validate_complete_genome
+      checkpoint:
+        name: genome_complete
+        requires_approval: true
+        validation:
+          - All 6 DNAs present
+          - Coherence score ≥ 3.5
+          - MQB gates defined
+
+    - phase: 4
+      name: Operationalization
+      objective: Make genome operational
+      duration: "Week 7-8"
+      steps:
+        - define_mqb_gates
+        - create_evolution_plan
+        - train_team
+        - launch_genome
+      checkpoint:
+        name: genome_operational
+        validation:
+          - MQB gates operational
+          - Team trained
+          - Genome in active use
+
+  steps:
+    - id: create_purpose_dna
+      name: Create Purpose DNA
+      agent: purpose-architect
+      task: create-doc
+      inputs:
+        - template: purpose-dna-tmpl.yaml
+      outputs:
+        - docs/dna/purpose-dna.md
+      validation:
+        - Purpose statement clear (1-2 sentences)
+        - Problem defined with evidence
+        - North star metric defined
+        - Non-negotiables established
+        - Scope boundaries clear
+      handoff: "Purpose DNA created. Next: Validate with users."
+
+    - id: create_user_dna
+      name: Create User DNA
+      agent: user-analyst
+      task: create-doc
+      inputs:
+        - template: user-dna-tmpl.yaml
+        - docs/dna/purpose-dna.md
+      outputs:
+        - docs/dna/user-dna.md
+        - User research findings
+      validation:
+        - User segments defined with evidence
+        - Primary segment chosen
+        - JTBDs mapped to evidence
+        - User context and constraints documented
+        - Continuous discovery plan established
+      handoff: "User DNA created. Next: Validate foundation alignment."
+
+    - id: validate_foundation_alignment
+      name: Validate Purpose-User Alignment
+      agent: tpg-orchestrator
+      task: validate-genome-coherence
+      inputs:
+        - docs/dna/purpose-dna.md
+        - docs/dna/user-dna.md
+      outputs:
+        - Foundation alignment score
+      validation:
+        - Purpose and users aligned (score ≥ 4.0)
+        - Users can achieve purpose
+        - No conflicts
+      handoff: "Foundation validated. Next: Create Experience DNA."
+
+    - id: create_experience_dna
+      name: Create Experience DNA
+      agent: experience-guardian
+      task: create-doc
+      inputs:
+        - template: experience-dna-tmpl.yaml
+        - docs/dna/purpose-dna.md
+        - docs/dna/user-dna.md
+      outputs:
+        - docs/dna/experience-dna.md
+      validation:
+        - Quality thresholds defined
+        - Performance standards set
+        - Accessibility standards committed
+        - UX principles established
+        - Standards serve user needs
+      handoff: "Experience DNA created. Next: Create Architecture DNA."
+
+    - id: create_architecture_dna
+      name: Create Architecture DNA
+      agent: architecture-expert
+      task: create-doc
+      inputs:
+        - template: architecture-dna-tmpl.yaml
+        - docs/dna/experience-dna.md
+        - docs/dna/user-dna.md
+      outputs:
+        - docs/dna/architecture-dna.md
+        - Initial ADRs
+      validation:
+        - Architectural principles defined
+        - System architecture documented
+        - Technology choices justified
+        - Architecture enables experience standards
+        - Architecture respects user constraints
+      handoff: "Architecture DNA created. Next: Validate quality framework."
+
+    - id: validate_quality_framework
+      name: Validate Quality Framework
+      agent: tpg-orchestrator
+      task: validate-genome-coherence
+      inputs:
+        - All 4 DNAs created so far
+      outputs:
+        - Quality framework coherence score
+      validation:
+        - Experience and Architecture aligned
+        - Architecture can deliver experience standards
+        - Quality framework serves foundation
+      handoff: "Quality framework validated. Next: Create Intelligence DNA."
+
+    - id: create_intelligence_dna
+      name: Create Intelligence DNA
+      agent: intelligence-analyst
+      task: create-doc
+      inputs:
+        - template: intelligence-dna-tmpl.yaml
+        - docs/dna/purpose-dna.md (north star metric)
+      outputs:
+        - docs/dna/intelligence-dna.md
+      validation:
+        - North star metric tracking defined
+        - KPIs established
+        - User journey analytics planned
+        - Instrumentation standards set
+        - Privacy and ethics addressed
+      handoff: "Intelligence DNA created. Next: Create Cultural DNA."
+
+    - id: create_cultural_dna
+      name: Create Cultural DNA
+      agent: culture-coach
+      task: create-doc
+      inputs:
+        - template: cultural-dna-tmpl.yaml
+        - All 5 DNAs created so far
+      outputs:
+        - docs/dna/cultural-dna.md
+      validation:
+        - Core values defined (4-6 values)
+        - Decision-making framework established
+        - Rituals and practices defined
+        - Quality culture emphasized (MQB)
+        - Values align with product reality
+      handoff: "Cultural DNA created. Next: Validate complete genome."
+
+    - id: validate_complete_genome
+      name: Validate Complete Genome Coherence
+      agent: tpg-orchestrator
+      task: validate-genome-coherence
+      inputs:
+        - All 6 DNAs
+      outputs:
+        - Complete genome coherence score
+        - Conflicts identified
+      validation:
+        - All 6 DNAs present
+        - Coherence score ≥ 3.5
+        - Critical conflicts resolved
+      handoff: "Genome complete and coherent. Next: Define MQB gates."
+
+    - id: define_mqb_gates
+      name: Define MQB Gates
+      agent: tpg-orchestrator
+      task: define-mqb
+      inputs:
+        - Complete Product Genome
+      outputs:
+        - docs/mqb-definition.md
+        - .tpg-core/checklists/mqb-gate-checklist.md
+      validation:
+        - All 12 gates defined
+        - Criteria specific and measurable
+        - Enforcement process clear
+      handoff: "MQB gates defined. Next: Create evolution plan."
+
+    - id: create_evolution_plan
+      name: Create Evolution Plan
+      agent: tpg-orchestrator
+      task: create-doc
+      inputs:
+        - template: evolution-plan-tmpl.yaml
+        - Complete Product Genome
+      outputs:
+        - docs/evolution-plan.md
+      validation:
+        - Evolution horizons defined
+        - DNA evolution roadmap clear
+        - Milestones established
+      handoff: "Evolution plan created. Next: Train team."
+
+    - id: train_team
+      name: Train Team on Product Genome
+      agent: tpg-orchestrator
+      task: train-team
+      inputs:
+        - Complete Product Genome
+        - MQB definition
+      outputs:
+        - Team training completed
+        - Quick reference guides
+      validation:
+        - Team understands all 6 DNAs
+        - Team knows how to use MQB gates
+        - Team committed to Product Genome
+      handoff: "Team trained. Next: Launch genome."
+
+    - id: launch_genome
+      name: Launch Product Genome
+      agent: tpg-orchestrator
+      task: launch-genome
+      outputs:
+        - Genome operational
+        - First genome assessment scheduled
+      validation:
+        - Genome in active use
+        - MQB gates enforced
+        - Quarterly assessment scheduled
+      handoff: "Product Genome operational!"
+
+  deliverables:
+    - All 6 Product Genome DNAs (complete)
+    - MQB gates defined and operational
+    - Evolution plan
+    - Team trained
+    - Genome coherence validated
+    - Quarterly assessment scheduled
+
+  success_criteria:
+    - All 6 DNAs complete and coherent (≥3.5 score)
+    - MQB gates operational
+    - Team using Product Genome for decisions
+    - Evidence-based DNAs (not assumptions)
+    - Genome is living framework (updated regularly)
+
+  next_steps:
+    - Use Product Genome for all product decisions
+    - Enforce MQB gates on all features
+    - Conduct quarterly genome assessments
+    - Update DNAs as product evolves
+    - Celebrate Product Genome successes

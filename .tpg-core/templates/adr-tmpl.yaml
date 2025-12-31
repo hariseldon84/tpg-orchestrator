@@ -1,0 +1,179 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: adr-template-v1
+  name: Architecture Decision Record (ADR)
+  version: 1.0
+  output:
+    format: markdown
+    filename: "docs/adrs/ADR-{{adr_number}}-{{short_title}}.md"
+    title: "ADR-{{adr_number}}: {{decision_title}}"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: header
+    title: ADR Header
+    instruction: |
+      Document metadata and status information.
+    sections:
+      - id: status
+        title: Status
+        type: structured
+        template: "**Status:** {{status}}"
+        instruction: Status can be: Proposed, Accepted, Rejected, Superseded
+        examples:
+          - "**Status:** Accepted"
+          - "**Status:** Proposed"
+          - "**Status:** Superseded by ADR-015"
+      - id: date
+        title: Date
+        type: structured
+        template: "**Date:** {{date}}"
+      - id: decision_makers
+        title: Decision Makers
+        type: structured
+        template: "**Decision Makers:** {{makers}}"
+        examples:
+          - "**Decision Makers:** Engineering Lead, CTO"
+      - id: supersedes
+        title: Supersedes
+        type: structured
+        template: "**Supersedes:** {{adr_reference}}"
+        instruction: Only if this ADR supersedes a previous one
+        examples:
+          - "**Supersedes:** ADR-005"
+
+  - id: context
+    title: Context
+    instruction: |
+      Describe the situation or problem that requires this decision.
+      Include forces, constraints, and current state.
+    elicit: true
+    type: paragraph
+    examples:
+      - "Our mobile app currently uses REST APIs for all data fetching, resulting in over-fetching (receiving unnecessary data) and under-fetching (requiring multiple requests). As we add features for offline diagnostics, technicians need faster, more efficient data loading with precisely the data they need. Mobile data usage is a concern for field technicians with limited data plans. Current REST approach requires 3-4 API calls to load a diagnostic session, taking 2+ seconds on 3G connections."
+
+  - id: decision
+    title: Decision
+    instruction: |
+      State what we have decided to do. Be clear and unambiguous.
+    elicit: true
+    type: paragraph
+    examples:
+      - "We will adopt GraphQL for mobile app data fetching, while maintaining REST APIs for backward compatibility and third-party integrations. GraphQL will be used for all new mobile features starting Q3. Existing REST endpoints will remain available but will not be enhanced."
+
+  - id: rationale
+    title: Rationale
+    instruction: |
+      Explain WHY we chose this approach. Include evidence, principles, and alignment with Architecture DNA.
+    elicit: true
+    type: paragraph
+    examples:
+      - "GraphQL solves our data fetching inefficiencies: (1) Precise data fetching reduces mobile payload by ~60% (tested in prototype), (2) Single request replaces multiple REST calls, improving latency, (3) Strongly-typed schema prevents breaking changes, (4) Offline-first architecture benefits from GraphQL's flexible querying. This aligns with our Architecture DNA principles of mobile-first performance and user-centric design. Benchmark tests showed 3x faster load times for diagnostic sessions on 3G connections."
+
+  - id: alternatives
+    title: Alternatives Considered
+    instruction: |
+      List alternatives evaluated and why they were rejected.
+    elicit: true
+    sections:
+      - id: alt-1
+        title: Alternative 1
+        type: structured
+        template: "**Option:** {{option_name}}\n**Pros:** {{pros}}\n**Cons:** {{cons}}\n**Rejection Reason:** {{rejection}}"
+        examples:
+          - "**Option:** Continue with REST APIs, add more endpoints\n**Pros:** No new technology, team familiarity, existing tooling\n**Cons:** Doesn't solve over-fetching, requires more API calls, doesn't scale to complex queries\n**Rejection Reason:** Doesn't address root performance issues, technical debt would grow"
+      - id: alt-2
+        title: Alternative 2
+        type: structured
+        template: "**Option:** {{option_name}}\n**Pros:** {{pros}}\n**Cons:** {{cons}}\n**Rejection Reason:** {{rejection}}"
+        examples:
+          - "**Option:** Custom backend aggregation layer (BFF pattern)\n**Pros:** Optimized payloads, controlled by backend team\n**Cons:** More backend code to maintain, still requires custom endpoints for each view\n**Rejection Reason:** Similar benefits to GraphQL but more custom code and maintenance burden"
+      - id: alt-3
+        title: Alternative 3
+        type: structured
+        template: "**Option:** {{option_name}}\n**Pros:** {{pros}}\n**Cons:** {{cons}}\n**Rejection Reason:** {{rejection}}"
+        examples:
+          - "**Option:** Do nothing (keep current REST approach)\n**Pros:** Zero effort, no risk\n**Cons:** Performance issues persist, mobile experience suffers, doesn't support offline goals\n**Rejection Reason:** Unacceptable user experience, conflicts with north star metric (repair time reduction)"
+
+  - id: consequences
+    title: Consequences
+    instruction: |
+      Document positive and negative consequences, trade-offs, risks, and impact.
+    elicit: true
+    sections:
+      - id: positive
+        title: Positive Consequences
+        type: bullet-list
+        examples:
+          - "60% reduction in mobile data payloads (better for technicians on limited data plans)"
+          - "3x faster load times on 3G connections (supports repair time reduction)"
+          - "Single request for complex data (simplifies client logic)"
+          - "Type safety prevents breaking changes (better DX and fewer bugs)"
+          - "Supports offline-first architecture (flexible querying for sync)"
+      - id: negative
+        title: Negative Consequences / Trade-offs
+        type: bullet-list
+        examples:
+          - "Learning curve for team members unfamiliar with GraphQL (~2 weeks)"
+          - "New infrastructure to maintain (GraphQL server, schema management)"
+          - "Two API approaches temporarily (GraphQL + REST during transition)"
+          - "Backend team needs to learn GraphQL resolver patterns"
+          - "Caching strategy more complex (requires Apollo cache or similar)"
+      - id: risks
+        title: Risks to Monitor
+        type: bullet-list
+        examples:
+          - "GraphQL server performance under load (requires load testing)"
+          - "Schema evolution complexity (breaking changes if schema poorly designed)"
+          - "Overly complex queries impacting backend performance (need query complexity limits)"
+          - "Team adoption slower than expected (may need training and support)"
+      - id: technical-debt
+        title: Impact on Technical Debt
+        type: paragraph
+        examples:
+          - "Creates temporary technical debt: maintaining both GraphQL and REST during transition (~6 months). Long-term reduces debt by consolidating data fetching patterns and eliminating over-fetching workarounds. Plan to deprecate REST for mobile in 12 months."
+
+  - id: implementation
+    title: Implementation Notes
+    instruction: |
+      Optional: High-level implementation guidance, migration plan, timeline.
+    sections:
+      - id: migration-plan
+        title: Migration Plan
+        type: bullet-list
+        examples:
+          - "Phase 1 (Q3): Implement GraphQL server, migrate diagnostic flow"
+          - "Phase 2 (Q4): Migrate remaining mobile features"
+          - "Phase 3 (Q1 next year): Deprecate REST endpoints for mobile, maintain for third-party only"
+      - id: timeline
+        title: Timeline
+        type: paragraph
+        examples:
+          - "Implementation starts Q3 2024. Full migration complete by Q1 2025. REST endpoints maintained for backward compatibility and third-party integrations indefinitely."
+      - id: ownership
+        title: Ownership
+        type: paragraph
+        examples:
+          - "Backend team implements GraphQL server. Mobile team adopts GraphQL client. Architecture Lead oversees migration and schema design."
+
+  - id: related
+    title: Related Information
+    instruction: |
+      Links to related ADRs, documentation, research, etc.
+    sections:
+      - id: related-adrs
+        title: Related ADRs
+        type: bullet-list
+        examples:
+          - "ADR-003: Offline-first architecture (GraphQL supports offline sync)"
+          - "ADR-007: Mobile performance standards (GraphQL helps meet thresholds)"
+      - id: references
+        title: References
+        type: bullet-list
+        examples:
+          - "GraphQL performance benchmark: docs/research/graphql-benchmark.md"
+          - "Architecture DNA: Mobile-first performance principle"
+          - "GraphQL Best Practices: https://graphql.org/learn/best-practices/"

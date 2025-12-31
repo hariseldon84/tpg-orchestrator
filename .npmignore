@@ -1,0 +1,60 @@
+# Documentation (internal use only)
+TPGOrchestorcontext.md
+TPGFullstacktasklist.md
+tpgnpmtasks.md
+missingfilelist.md
+IMPLEMENTATION_SUMMARY.md
+BUNDLE_CREATION_SUMMARY.md
+completion_report.md
+create_fullstack_bundle.py
+
+# Test files
+*.test.js
+__tests__/
+coverage/
+.nyc_output/
+
+# IDE configs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Examples that shouldn't ship
+exampleteamfullstack.md
+example-*.md
+
+# Build artifacts
+node_modules/
+dist/
+build/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

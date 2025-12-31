@@ -1,0 +1,53 @@
+markdownExploder: true
+genomeDNA:
+  genomeAssessmentLocation: docs/genome
+  genomeAssessmentFile: docs/genome/assessment.md
+  genomeVersion: v1
+mqb:
+  mqbLocation: docs/mqb
+  mqbFile: docs/mqb/gates.md
+  mqbVersion: v1
+purposeDNA:
+  purposeFile: docs/dna/purpose-dna.md
+  purposeVersion: v1
+userDNA:
+  userFile: docs/dna/user-dna.md
+  userSegmentsFile: docs/dna/user-segments.md
+  jtbdFile: docs/dna/jtbd-analysis.md
+  userVersion: v1
+experienceDNA:
+  experienceFile: docs/dna/experience-dna.md
+  qualityThresholdsFile: docs/dna/quality-thresholds.md
+  experienceVersion: v1
+architectureDNA:
+  architectureFile: docs/dna/architecture-dna.md
+  adrLocation: docs/adr
+  adrFilePattern: adr-{n}*.md
+  architectureVersion: v1
+intelligenceDNA:
+  intelligenceFile: docs/dna/intelligence-dna.md
+  metricsFile: docs/dna/metrics-framework.md
+  experimentationFile: docs/dna/experimentation-framework.md
+  intelligenceVersion: v1
+culturalDNA:
+  culturalFile: docs/dna/cultural-dna.md
+  valuesFile: docs/dna/product-values.md
+  culturalVersion: v1
+evolutionFlow:
+  evolutionFile: docs/evolution/evolution-flow.md
+  learningLogLocation: docs/evolution/learning-logs
+  evolutionVersion: v1
+buildersHierarchy:
+  buildersFile: docs/builders/hierarchy.md
+  goalsLocation: docs/builders/goals
+  buildersVersion: v1
+productStories:
+  storyLocation: docs/stories
+  storyFilePattern: "{epicNum}.{storyNum}.story.md"
+customGenomeDocuments: null
+tpgLoadAlwaysFiles:
+  - docs/genome/assessment.md
+  - docs/mqb/gates.md
+  - docs/dna/purpose-dna.md
+tpgDebugLog: .ai/tpg-debug-log.md
+slashPrefix: TPG

@@ -1,0 +1,66 @@
+{
+  "name": "tpg-orchestrator",
+  "version": "1.0.0-alpha.1",
+  "description": "The Product Genome Orchestrator - AI-powered product development framework",
+  "license": "MIT",
+  "author": "Anand (The Product Genome)",
+  "main": "tools/cli/tpg-cli.js",
+  "bin": {
+    "tpg": "tools/tpg-npx-wrapper.js",
+    "tpg-orchestrator": "tools/tpg-npx-wrapper.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "product-genome",
+    "tpg",
+    "orchestrator",
+    "ai-agents",
+    "product-development",
+    "claude-code",
+    "cursor",
+    "windsurf",
+    "ai-framework",
+    "product-management",
+    "product-dna",
+    "mqb-framework"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hariseldon84/tpg-orchestrator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hariseldon84/tpg-orchestrator/issues"
+  },
+  "homepage": "https://github.com/hariseldon84/tpg-orchestrator#readme",
+  "files": [
+    "tools/",
+    ".tpg-core/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint tools/**/*.js",
+    "lint:fix": "eslint tools/**/*.js --fix",
+    "format": "prettier --write \"tools/**/*.js\"",
+    "prepublishOnly": "npm run lint && npm test"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^8.2.6",
+    "js-yaml": "^4.1.0",
+    "ora": "^5.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.1.1"
+  }
+}

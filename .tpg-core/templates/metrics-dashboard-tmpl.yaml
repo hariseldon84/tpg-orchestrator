@@ -1,0 +1,83 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: metrics-dashboard-template-v1
+  name: Metrics Dashboard Configuration
+  version: 1.0
+  output:
+    format: markdown
+    filename: docs/metrics-dashboard.md
+    title: "{{product_name}} Metrics Dashboard"
+
+workflow:
+  mode: interactive
+
+sections:
+  - id: dashboard-overview
+    title: Dashboard Overview
+    type: paragraph
+    examples:
+      - "This dashboard tracks our north star metric, key performance indicators, and operational metrics. Updated in real-time from our analytics platform. Accessible to entire product team at dashboard.company.com/product."
+
+  - id: north-star-panel
+    title: North Star Metric
+    type: structured
+    template: |
+      **Metric:** {{metric_name}}
+      **Current:** {{current_value}}
+      **Target:** {{target_value}}
+      **Trend:** {{trend}}
+      **Updated:** Real-time
+    examples:
+      - "**Metric:** Average Repair Time\n**Current:** 120 minutes\n**Target:** 60 minutes\n**Trend:** ↓ Decreasing (down from 150)\n**Updated:** Real-time"
+
+  - id: kpis
+    title: Key Performance Indicators
+    type: table
+    columns: [KPI, Current, Target, Trend, Status]
+    examples:
+      - ["First-Visit Fix Rate", "65%", "70%", "↑", "⚠️ At Risk"]
+      - ["Diagnostic Accuracy", "92%", "95%", "↑", "✅ On Track"]
+      - ["Technician Confidence (NPS)", "48", "50+", "→", "⚠️ Flat"]
+      - ["Equipment Downtime", "5.2 hours", "<4 hours", "↓", "✅ Improving"]
+      - ["User Satisfaction (CSAT)", "4.3/5", "4.5/5", "↑", "✅ On Track"]
+
+  - id: user-engagement
+    title: User Engagement Metrics
+    type: table
+    columns: [Metric, Current, Benchmark, Status]
+    examples:
+      - ["Weekly Active Users", "485", "500 target", "⚠️"]
+      - ["Daily Active Users", "280", "-", "✅"]
+      - ["DAU/WAU Ratio", "58%", ">50%", "✅"]
+      - ["Avg Sessions per User/Week", "12", ">10", "✅"]
+      - ["Feature Adoption (AI Suggestions)", "72%", ">70%", "✅"]
+
+  - id: funnels
+    title: Key Funnels
+    type: table
+    columns: [Funnel, Conversion, Target, Status]
+    examples:
+      - ["Onboarding (Signup → First Repair)", "68%", "70%", "⚠️"]
+      - ["Diagnostic Flow (Scan → Diagnosis)", "88%", "85%", "✅"]
+      - ["Repair Completion", "94%", "90%", "✅"]
+
+  - id: quality-metrics
+    title: Quality & Performance
+    type: table
+    columns: [Metric, Value, Threshold, Status]
+    examples:
+      - ["App Load Time (p95)", "1.8s", "<2s", "✅"]
+      - ["API Response (p95)", "180ms", "<200ms", "✅"]
+      - ["Error Rate", "0.8%", "<1%", "✅"]
+      - ["Crash Rate", "0.2%", "<0.5%", "✅"]
+      - ["Uptime", "99.95%", ">99.9%", "✅"]
+
+  - id: alerts
+    title: Alert Configuration
+    type: table
+    columns: [Alert, Condition, Severity, Owner]
+    examples:
+      - ["North star regression", "Avg repair time increases >10%", "Critical", "Product Manager"]
+      - ["Error rate spike", "Error rate >2%", "High", "Engineering Lead"]
+      - ["Performance degradation", "p95 load time >3s", "High", "Engineering Lead"]
+      - ["Funnel drop-off", "Onboarding conversion <60%", "Medium", "Product Manager"]

@@ -1,0 +1,540 @@
+# <!-- Powered by Product Genome™ Framework -->
+workflow:
+  id: brownfield-product
+  name: Existing Product Transformation (Product Genome Retrofit)
+  version: 1.0
+  description: >-
+    Workflow for transforming existing products to Product Genome framework.
+    Gradual, risk-managed approach that assesses current state, identifies critical gaps,
+    and builds Product Genome incrementally without disrupting ongoing operations.
+
+  use_cases:
+    - Existing product with quality/direction issues
+    - Feature factory syndrome (building without purpose)
+    - Technical debt accumulation
+    - Low user satisfaction despite many features
+    - Need systematic product improvement
+    - Want to prevent further waste
+
+  prerequisites:
+    - Existing product (code, users, data)
+    - Access to product codebase and documentation
+    - Stakeholder buy-in for Product Genome approach
+    - Time for assessment and incremental improvement
+    - Team willingness to change practices
+
+  agents_involved:
+    - tpg-orchestrator
+    - purpose-architect
+    - user-analyst
+    - experience-guardian
+    - architecture-expert
+    - intelligence-analyst
+    - culture-coach
+    - evolution-manager
+    - quality-specialist
+
+  estimated_duration: "3-6 months for full transformation (incremental approach)"
+
+  phases:
+    - phase: 1
+      name: Assessment & Discovery
+      objective: Understand current product state across all 6 DNAs
+      duration: "Week 1-2"
+      steps:
+        - assess_current_genome
+        - identify_critical_gaps
+        - prioritize_dna_work
+      checkpoint:
+        name: assessment_review
+        requires_approval: true
+        validation:
+          - Current genome state documented
+          - Critical gaps identified
+          - Priority order agreed upon
+          - Transformation roadmap approved
+
+    - phase: 2
+      name: Foundation Repair (Critical DNAs)
+      objective: Fix foundation DNAs first (typically Purpose and User)
+      duration: "Week 3-6"
+      steps:
+        - fix_purpose_dna
+        - fix_user_dna
+        - validate_foundation_alignment
+        - stop_quality_debt
+      checkpoint:
+        name: foundation_fixed
+        requires_approval: true
+        validation:
+          - Purpose DNA established or corrected
+          - User DNA evidence-based
+          - MQB gates implemented (stop new quality debt)
+          - Team aligned on foundation
+
+    - phase: 3
+      name: Incremental DNA Building
+      objective: Build remaining DNAs in priority order
+      duration: "Week 7-12"
+      steps:
+        - build_experience_dna
+        - build_architecture_dna
+        - build_intelligence_dna
+        - build_cultural_dna
+        - validate_incremental_coherence
+      checkpoint:
+        name: genome_complete
+        requires_approval: true
+        validation:
+          - All 6 DNAs present
+          - Coherence validated
+          - MQB gates operational
+          - Team practices aligned
+
+    - phase: 4
+      name: Coherence Validation & Stabilization
+      objective: Ensure all DNAs work together and are operational
+      duration: "Week 13-16"
+      steps:
+        - validate_complete_coherence
+        - remediate_conflicts
+        - operationalize_mqb
+        - train_team
+        - establish_ongoing_practices
+      checkpoint:
+        name: transformation_complete
+        requires_approval: true
+        validation:
+          - Genome coherence score ≥ 3.5
+          - MQB gates enforced on all new work
+          - Team following Product Genome practices
+          - Quality debt stopped (not increasing)
+
+  steps:
+    - id: assess_current_genome
+      name: Assess Current Product Genome
+      agent: tpg-orchestrator
+      task: assess-genome
+      inputs:
+        - Existing product documentation
+        - Codebase access
+        - User data/analytics if available
+        - Stakeholder interviews
+      outputs:
+        - Genome assessment report
+        - Maturity scores (1-5) for each DNA
+        - Gap analysis
+      validation:
+        - All 6 DNAs assessed
+        - Maturity scores justified with evidence
+        - Gaps documented with severity
+        - Current state baseline established
+      handoff: "Current genome state assessed. Critical gaps identified. Next: prioritize work."
+
+    - id: identify_critical_gaps
+      name: Identify Critical Gaps and Risks
+      agent: tpg-orchestrator
+      task: analyze-gaps
+      inputs:
+        - Genome assessment report
+        - Product metrics and performance data
+        - User satisfaction data
+        - Team pain points
+      outputs:
+        - Prioritized gap list
+        - Risk assessment
+        - Impact analysis
+      validation:
+        - Gaps prioritized by impact and risk
+        - Foundation DNAs (Purpose, User) assessed first if weak
+        - Quick wins identified
+        - High-risk areas flagged
+      handoff: "Critical gaps identified and prioritized. Next: create transformation roadmap."
+
+    - id: prioritize_dna_work
+      name: Create Transformation Roadmap
+      agent: tpg-orchestrator
+      task: create-transformation-plan
+      inputs:
+        - Prioritized gap list
+        - Risk assessment
+        - Team capacity and constraints
+        - Business priorities
+      outputs:
+        - Transformation roadmap
+        - Phased approach plan
+        - Success metrics for transformation
+      validation:
+        - Roadmap starts with foundation DNAs if weak
+        - Incremental approach (not big-bang)
+        - Quick wins included for momentum
+        - Risk mitigation planned
+        - Team capacity respected
+      handoff: "Transformation roadmap approved. Starting with foundation repair."
+
+    - id: fix_purpose_dna
+      name: Establish or Fix Purpose DNA
+      agent: purpose-architect
+      task: create-purpose-dna
+      inputs:
+        - Existing product vision/mission (if any)
+        - Current product metrics
+        - Stakeholder interviews
+        - User feedback and data
+      outputs:
+        - docs/purpose-dna.md
+      validation:
+        - Purpose statement clear and specific
+        - North star metric defined (may differ from current metrics)
+        - Non-negotiables established
+        - Scope boundaries clarified
+        - Aligns with business goals but user-focused
+      handoff: "Purpose DNA established. Product now has clear north star. Next: validate with users."
+
+    - id: fix_user_dna
+      name: Establish Evidence-Based User DNA
+      agent: user-analyst
+      task: create-user-dna
+      inputs:
+        - docs/purpose-dna.md
+        - Existing user data and analytics
+        - User interviews and research (NEW research required)
+        - Support tickets and feedback
+        - Usage patterns
+      outputs:
+        - docs/user-dna.md
+        - User research findings
+        - JTBD analysis
+      validation:
+        - User segments based on evidence (not assumptions)
+        - Primary segment chosen explicitly
+        - JTBD mapped to actual user needs
+        - User context and constraints documented
+        - Continuous discovery plan established
+        - Existing features mapped to user needs (gap analysis)
+      handoff: "User DNA established with evidence. Reality anchor in place. Next: validate alignment."
+
+    - id: validate_foundation_alignment
+      name: Validate Purpose-User Foundation
+      agent: tpg-orchestrator
+      task: validate-coherence
+      inputs:
+        - docs/purpose-dna.md
+        - docs/user-dna.md
+        - Existing product features
+      outputs:
+        - Coherence assessment
+        - Feature alignment analysis
+      validation:
+        - Purpose and User DNAs aligned
+        - Existing features mapped against Purpose/User DNA
+        - Features not serving purpose/users identified for sunset
+        - Foundation solid for building remaining DNAs
+      handoff: "Foundation validated. Purpose and users aligned. Next: stop quality debt immediately."
+
+    - id: stop_quality_debt
+      name: Implement MQB Gates Immediately
+      agent: quality-specialist
+      task: setup-mqb-process
+      inputs:
+        - Product Genome foundation (Purpose + User DNAs)
+        - Current quality issues
+      outputs:
+        - MQB gate checklist
+        - Quality gate process
+        - Team commitment
+      validation:
+        - MQB gates defined (can start with subset initially)
+        - Gate enforcement process established
+        - Team trained and committed
+        - NO NEW FEATURES ship below quality bar (starting now)
+        - First "no-ship" decision celebrated
+      handoff: "MQB gates operational. Quality debt stopped. Next: build Experience DNA."
+
+    - id: build_experience_dna
+      name: Document Experience DNA Standards
+      agent: experience-guardian
+      task: create-experience-dna
+      inputs:
+        - docs/purpose-dna.md
+        - docs/user-dna.md
+        - Current UX patterns and quality
+        - User satisfaction data
+      outputs:
+        - docs/experience-dna.md
+        - Quality standards
+        - UX pattern library
+      validation:
+        - Quality thresholds defined (may exceed current reality)
+        - Performance standards established
+        - Accessibility standards committed
+        - UX patterns documented
+        - Gap between current and desired quality identified
+        - Improvement plan for existing features (backlog)
+      handoff: "Experience DNA established. Quality bar defined. Next: document architecture."
+
+    - id: build_architecture_dna
+      name: Document Architecture DNA (Existing + Future)
+      agent: architecture-expert
+      task: create-architecture-dna
+      inputs:
+        - Existing codebase
+        - Current architecture (as-is)
+        - docs/experience-dna.md (quality requirements)
+        - docs/user-dna.md (constraints)
+      outputs:
+        - docs/architecture-dna.md
+        - ADRs (documenting existing decisions + new ones)
+        - Technical debt inventory
+        - Evolution plan
+      validation:
+        - Current architecture documented (as-is)
+        - Past decisions reverse-engineered into ADRs
+        - Technical debt catalogued
+        - Future architecture vision documented
+        - Evolution path from current to desired state
+        - Technical choices validated against user constraints
+      handoff: "Architecture DNA documented. Technical reality and future path clear. Next: establish metrics."
+
+    - id: build_intelligence_dna
+      name: Establish Intelligence DNA and Instrumentation
+      agent: intelligence-analyst
+      task: create-intelligence-dna
+      inputs:
+        - docs/purpose-dna.md (north star metric)
+        - Existing analytics and data infrastructure
+        - Current measurement gaps
+      outputs:
+        - docs/intelligence-dna.md
+        - Instrumentation plan
+        - Analytics infrastructure improvements
+      validation:
+        - North star metric tracking implemented
+        - Key user journeys instrumented
+        - Experimentation framework established
+        - Current measurement gaps identified
+        - Instrumentation backlog for existing features
+        - Learning loops defined
+      handoff: "Intelligence DNA established. Measurement infrastructure defined. Next: evolve culture."
+
+    - id: build_cultural_dna
+      name: Define and Evolve Cultural DNA
+      agent: culture-coach
+      task: create-cultural-dna
+      inputs:
+        - Product Genome (DNAs 1-5)
+        - Current team culture and practices
+        - Team feedback and retrospectives
+      outputs:
+        - docs/cultural-dna.md
+        - Team values and practices
+        - Decision framework
+      validation:
+        - Product values defined (aligned with purpose)
+        - Decision framework established
+        - Quality culture reinforced (MQB compliance)
+        - Learning culture processes defined
+        - Team practices support Product Genome
+        - Cultural change plan (not instant transformation)
+      handoff: "Cultural DNA defined. Team practices evolving. Next: validate full coherence."
+
+    - id: validate_incremental_coherence
+      name: Validate DNA Coherence After Each Addition
+      agent: tpg-orchestrator
+      task: validate-coherence
+      inputs:
+        - All completed DNAs
+      outputs:
+        - Coherence assessment
+        - Conflict identification
+      validation:
+        - New DNA aligns with existing DNAs
+        - No conflicts introduced
+        - Coherence maintained or improved
+        - Gaps filled systematically
+      handoff: "Coherence validated incrementally. Next DNA can be added safely."
+
+    - id: validate_complete_coherence
+      name: Validate Complete Genome Coherence
+      agent: tpg-orchestrator
+      task: assess-genome
+      inputs:
+        - All 6 DNAs
+      outputs:
+        - Comprehensive genome assessment
+        - Coherence scores
+        - Final gap analysis
+      validation:
+        - All 6 DNAs present and complete
+        - Coherence score ≥ 3.5 (acceptable for brownfield)
+        - Critical conflicts resolved
+        - Product Genome operational
+      handoff: "Product Genome complete and coherent. Next: remediate remaining conflicts."
+
+    - id: remediate_conflicts
+      name: Resolve DNA Conflicts
+      agent: tpg-orchestrator
+      task: resolve-conflicts
+      inputs:
+        - Genome assessment with conflicts
+        - Relevant agents for party-mode discussion
+      outputs:
+        - Resolved conflicts
+        - Updated DNAs
+      validation:
+        - All critical conflicts resolved
+        - DNAs updated to reflect resolutions
+        - Team aligned on resolutions
+      handoff: "Conflicts resolved. Genome coherent. Next: operationalize MQB fully."
+
+    - id: operationalize_mqb
+      name: Fully Operationalize MQB Gates
+      agent: quality-specialist
+      task: operationalize-mqb
+      inputs:
+        - Complete Product Genome
+        - MQB gate process (from phase 2)
+      outputs:
+        - Comprehensive MQB gate checklist (all 12 gates)
+        - Quality enforcement process
+        - Exception handling process
+      validation:
+        - All 12 MQB gates operational
+        - Gates applied to all new work
+        - Quality debt remediation plan for existing features
+        - Team culture supports MQB enforcement
+        - Celebrating "no-ship" decisions is normal
+      handoff: "MQB gates fully operational. Quality protected. Next: train team."
+
+    - id: train_team
+      name: Train Team on Product Genome
+      agent: tpg-orchestrator
+      task: train-team
+      inputs:
+        - Complete Product Genome
+        - Product Genome framework materials
+      outputs:
+        - Training sessions completed
+        - Team understanding validated
+        - Quick reference guides
+      validation:
+        - All team members understand Product Genome
+        - Team can apply Builder's Hierarchy
+        - Team knows how to validate against DNAs
+        - Team committed to MQB gates
+        - Team uses Evolution Flow for features
+      handoff: "Team trained and aligned. Next: establish ongoing practices."
+
+    - id: establish_ongoing_practices
+      name: Establish Ongoing Product Genome Practices
+      agent: tpg-orchestrator
+      task: setup-ongoing-practices
+      inputs:
+        - Complete Product Genome
+        - Cultural DNA practices
+      outputs:
+        - Quarterly genome assessment schedule
+        - DNA update process
+        - MQB gate enforcement rituals
+        - Continuous improvement process
+      validation:
+        - Quarterly genome assessments scheduled
+        - DNA update process defined
+        - MQB gates enforced on every increment
+        - Retrospectives include genome health review
+        - Product Genome is living framework (not static)
+      handoff: "Transformation complete. Product Genome operational and self-sustaining."
+
+  deliverables:
+    - Genome assessment report (baseline)
+    - Transformation roadmap
+    - docs/purpose-dna.md
+    - docs/user-dna.md
+    - docs/experience-dna.md
+    - docs/architecture-dna.md
+    - docs/intelligence-dna.md
+    - docs/cultural-dna.md
+    - Operational MQB gate process
+    - Technical debt inventory and remediation plan
+    - Feature alignment analysis (sunset candidates identified)
+    - Team trained on Product Genome
+    - Ongoing practices established
+
+  success_criteria:
+    - All 6 DNAs created and coherent (≥3.5 coherence score)
+    - MQB gates operational and enforced
+    - Quality debt stopped (not increasing)
+    - Team following Product Genome practices
+    - North star metric tracking operational
+    - Feature factory syndrome ended
+    - Evidence-based decisions becoming norm
+    - User satisfaction improving
+    - Technical debt being actively managed
+
+  failure_recovery:
+    - error_type: resistance_to_change
+      action: address_concerns
+      message: "Team resistance to Product Genome transformation"
+      resolution: "Lead by example, show quick wins, involve team in DNA creation, celebrate successes"
+
+    - error_type: overwhelming_technical_debt
+      action: prioritize_ruthlessly
+      message: "Technical debt too large to tackle comprehensively"
+      resolution: "Stop new debt first (MQB gates), then chip away at existing debt incrementally"
+
+    - error_type: conflicting_stakeholder_visions
+      action: facilitate_alignment
+      message: "Stakeholders disagree on purpose/direction"
+      resolution: "Use Purpose DNA exercise to drive alignment, escalate if needed"
+
+    - error_type: no_user_research_capability
+      action: build_capability
+      message: "No existing user research or ability to conduct"
+      resolution: "Start small (user interviews, support ticket analysis), build capability over time"
+
+    - error_type: feature_commitments_conflict
+      action: reprioritize
+      message: "Existing feature commitments conflict with new Purpose DNA"
+      resolution: "Evaluate commitments against Purpose DNA, renegotiate or deliver then pivot"
+
+  brownfield_specific_guidance:
+    existing_features:
+      action: "Map existing features against Purpose and User DNAs"
+      guidance: "Identify features not serving purpose or users for potential sunset"
+      approach: "Incremental - don't remove everything at once, validate sunset decisions"
+
+    technical_debt:
+      action: "Document in Architecture DNA, create remediation plan"
+      guidance: "Stop NEW debt first (MQB gates), then chip away at existing debt"
+      approach: "Prioritize debt that blocks quality standards or user needs"
+
+    user_research:
+      action: "Conduct NEW research even if existing data available"
+      guidance: "Assumptions may be wrong, validate with real user input"
+      approach: "Start with interviews, then expand methods as capability grows"
+
+    team_habits:
+      action: "Change gradually through Cultural DNA and practice"
+      guidance: "Cultural change is slowest - be patient but persistent"
+      approach: "Lead by example, celebrate Product Genome successes"
+
+    metrics_migration:
+      action: "North star metric may differ from current tracked metrics"
+      guidance: "Define right metric (Purpose DNA), then migrate tracking"
+      approach: "Parallel track old and new metrics during transition"
+
+  next_steps_after_completion:
+    - Quarterly genome assessments to maintain health
+    - Continuous DNA updates as product evolves
+    - MQB gate enforcement on all increments
+    - Technical debt remediation (ongoing)
+    - Feature sunset roadmap execution
+    - Team culture evolution (continuous)
+    - Celebrate Product Genome wins publicly
+
+  references:
+    - .tpg-core/data/tpg-kb.md
+    - .tpg-core/utils/workflow-management.md
+    - .tpg-core/checklists/mqb-gate-checklist.md
+    - Greenfield workflow for DNA creation guidance
+    - Evolution Flow for ongoing feature development

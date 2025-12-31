@@ -1,0 +1,364 @@
+# <!-- Powered by Product Genome™ Framework -->
+template:
+  id: intelligence-dna-template-v1
+  name: Intelligence DNA Document
+  version: 1.0
+  dna: Intelligence DNA
+  output:
+    format: markdown
+    filename: docs/dna/intelligence-dna.md
+    title: "{{product_name}} Intelligence DNA"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+sections:
+  - id: metadata
+    title: Document Metadata
+    instruction: |
+      Capture document metadata for version tracking and ownership.
+    sections:
+      - id: changelog
+        title: Change Log
+        type: table
+        columns: [Date, Version, Description, Author]
+        instruction: Track document versions and changes
+        initial_rows:
+          - ["{{current_date}}", "1.0", "Initial Intelligence DNA definition", "{{author}}"]
+
+  - id: intelligence-philosophy
+    title: Intelligence Philosophy
+    instruction: |
+      Define the core philosophy for how this product uses data and intelligence to learn and improve.
+    elicit: true
+    type: paragraph
+    examples:
+      - "We believe product intelligence is not about collecting all possible data—it's about measuring what matters and using insights to serve users better. Our intelligence practice is grounded in Purpose DNA (tracking north star progress), validated by User DNA (measuring user success), and protective of privacy. We measure to learn, not to surveil."
+
+  - id: north-star-tracking
+    title: North Star Metric Tracking
+    instruction: |
+      Define how the north star metric from Purpose DNA is tracked and monitored.
+    elicit: true
+    sections:
+      - id: north-star-metric
+        title: North Star Metric
+        type: structured
+        template: "**Metric:** {{metric_name}}\n**Definition:** {{definition}}\n**Current Value:** {{current}}\n**Target:** {{target}}"
+        instruction: |
+          Reference the north star metric from Purpose DNA and define tracking approach.
+        examples:
+          - "**Metric:** Average Repair Time\n**Definition:** Time from technician arrival to equipment restoration (minutes)\n**Current Value:** 150 minutes\n**Target:** 60 minutes within 12 months"
+
+      - id: tracking-method
+        title: Tracking Method
+        type: paragraph
+        instruction: |
+          How is the north star metric calculated and tracked?
+        examples:
+          - "Average Repair Time is calculated by tracking: (1) Technician check-in time when arriving at location, (2) Equipment restoration time when marked as fixed in app. We calculate daily average across all completed repairs. Data is collected via mobile app instrumentation and aggregated in our analytics platform. Updated daily on leadership dashboard."
+
+      - id: dashboard-access
+        title: Dashboard and Visibility
+        type: bullet-list
+        instruction: |
+          Where is the north star metric visible? Who has access?
+        examples:
+          - "Real-time dashboard visible to entire product team (link: dashboard.company.com/northstar)"
+          - "Weekly summary emailed to all stakeholders"
+          - "Mobile app shows technician's personal average (gamification)"
+          - "Leadership review includes north star trend and progress to target"
+
+  - id: key-metrics-framework
+    title: Key Metrics Framework
+    instruction: |
+      Define the metrics hierarchy and what gets measured.
+    elicit: true
+    sections:
+      - id: metrics-hierarchy
+        title: Metrics Hierarchy
+        type: paragraph
+        instruction: |
+          Explain the relationship between north star, KPIs, and operational metrics.
+        examples:
+          - "Our metrics follow a 3-tier hierarchy: (1) North Star (repair time) - the one metric that matters most, (2) Key Performance Indicators (KPIs) - 5 metrics that drive north star (first-visit fix rate, diagnostic accuracy, technician confidence, equipment downtime, user satisfaction), (3) Operational Metrics - supporting metrics for specific features and technical health. Focus flows from north star down."
+
+      - id: kpi-definitions
+        title: Key Performance Indicators (KPIs)
+        type: table
+        columns: [KPI, Definition, Target, Current, Owner]
+        instruction: |
+          Define 5-7 KPIs that drive the north star metric.
+        examples:
+          - ["First-Visit Fix Rate", "% of repairs completed on first visit", "70%", "60%", "Product"]
+          - ["Diagnostic Accuracy", "% of diagnoses matching actual issue", "95%", "88%", "Engineering"]
+          - ["Technician Confidence", "NPS score from technicians", "50+", "42", "Product"]
+          - ["Equipment Downtime", "Hours equipment offline before repair", "<4 hours", "6 hours", "Operations"]
+          - ["User Satisfaction", "CSAT score from retailers", "4.5/5", "4.1/5", "Product"]
+
+  - id: user-journey-analytics
+    title: User Journey Analytics
+    instruction: |
+      Define how key user journeys are instrumented and analyzed.
+    elicit: true
+    sections:
+      - id: critical-journeys
+        title: Critical User Journeys
+        type: bullet-list
+        instruction: |
+          List the user journeys that must be tracked.
+        examples:
+          - "Onboarding: Technician sign-up → first diagnostic → first repair completion"
+          - "Diagnostic Flow: Equipment scan → symptom input → diagnosis → repair steps → resolution"
+          - "Offline Sync: Data created offline → sync triggered → successful sync"
+          - "Help & Support: Help accessed → issue resolution"
+
+      - id: funnel-instrumentation
+        title: Funnel Instrumentation
+        type: table
+        columns: [Journey, Steps, Events Tracked, Conversion Target]
+        instruction: |
+          For each journey, define steps and events.
+        examples:
+          - ["Diagnostic Flow", "5 steps", "equipment_scanned, symptoms_entered, diagnosis_generated, repair_started, repair_completed", "85% completion"]
+          - ["Onboarding", "4 steps", "signup_started, profile_completed, first_diagnostic_started, first_repair_completed", "70% to first repair"]
+
+      - id: drop-off-analysis
+        title: Drop-Off Analysis
+        type: paragraph
+        instruction: |
+          How are drop-offs identified and addressed?
+        examples:
+          - "We track conversion between each funnel step. Any step with <70% conversion triggers investigation. Weekly review identifies new drop-off patterns. When drop-off detected, we conduct user research (interviews) and analyze session recordings to understand why users abandon the journey."
+
+  - id: segmentation-strategy
+    title: Segmentation Strategy
+    instruction: |
+      Define how users are segmented for analysis.
+    elicit: true
+    sections:
+      - id: user-segments
+        title: User Segments
+        type: bullet-list
+        instruction: |
+          Reference User DNA segments and define how they're tracked.
+        examples:
+          - "Novice Technicians (< 1 year experience): Tracked via profile field, analyzed for onboarding and help usage"
+          - "Expert Technicians (3+ years experience): Tracked via profile, analyzed for feature adoption and efficiency"
+          - "Equipment Type Segments: Coolers vs. Vending Machines, tracked via diagnostic sessions"
+          - "Geographic Segments: Urban vs. Rural (connectivity analysis)"
+
+      - id: cohort-analysis
+        title: Cohort Analysis
+        type: paragraph
+        instruction: |
+          How are cohorts defined and tracked?
+        examples:
+          - "We define cohorts by signup week and track retention over time. Retention measured at Week 1, Week 4, Month 3, Month 6. We compare cohort performance to identify improvements from product changes. Each cohort analyzed for engagement patterns, feature adoption, and north star contribution."
+
+  - id: experimentation-framework
+    title: Experimentation Framework
+    instruction: |
+      Define the approach to A/B testing and experiments.
+    elicit: true
+    sections:
+      - id: experiment-philosophy
+        title: Experimentation Philosophy
+        type: paragraph
+        instruction: |
+          When and why do we run experiments?
+        examples:
+          - "We experiment to validate hypotheses before full rollout. Experiments required for: (1) Significant UX changes, (2) Features with uncertain impact, (3) North star optimization initiatives. We DON'T experiment on: (1) Obvious usability fixes, (2) Features validated by strong user research, (3) Low-risk incremental improvements."
+
+      - id: experiment-process
+        title: Experiment Process
+        type: numbered-list
+        instruction: |
+          Define the experimentation process.
+        examples:
+          - "Hypothesis: State clear hypothesis (If X, then Y because Z)"
+          - "Metrics: Define primary metric, secondary metrics, guardrail metrics"
+          - "Sample Size: Calculate required sample for statistical significance"
+          - "Duration: Minimum 1 week, until statistical significance or max 4 weeks"
+          - "Analysis: Compare variants, validate significance, check for segment differences"
+          - "Decision: Ship winner, iterate, or kill based on results"
+
+      - id: guardrail-metrics
+        title: Guardrail Metrics
+        type: bullet-list
+        instruction: |
+          Metrics that must not degrade during experiments.
+        examples:
+          - "North star metric must not decrease >5%"
+          - "First-visit fix rate must not decrease"
+          - "Error rates must not increase"
+          - "Page load time must not increase >10%"
+
+  - id: instrumentation-standards
+    title: Instrumentation Standards
+    instruction: |
+      Define standards for event tracking and data collection.
+    elicit: true
+    sections:
+      - id: event-taxonomy
+        title: Event Taxonomy
+        type: paragraph
+        instruction: |
+          How are events named and structured?
+        examples:
+          - "Events follow naming convention: [object]_[action] (e.g., diagnostic_started, repair_completed). Events include standard properties: user_id, timestamp, session_id, platform, version. Context properties added as needed (equipment_id, diagnostic_id, etc.). All events documented in analytics spec."
+
+      - id: required-instrumentation
+        title: Required Instrumentation
+        type: bullet-list
+        instruction: |
+          What must be instrumented for every feature?
+        examples:
+          - "Feature accessed (user opens feature)"
+          - "Key actions completed (user completes core task)"
+          - "Errors encountered (user sees error state)"
+          - "Help accessed (user requests help within feature)"
+          - "Time spent (session duration for feature)"
+          - "Success/failure outcome (feature accomplishes goal or not)"
+
+      - id: data-quality
+        title: Data Quality Standards
+        type: bullet-list
+        instruction: |
+          How is data quality ensured?
+        examples:
+          - "All events tested in staging before production deployment"
+          - "Automated data validation checks (schema compliance, required fields)"
+          - "Weekly data quality review (missing events, anomalies)"
+          - "Documentation updated with every instrumentation change"
+          - "Data retention policy: raw events 90 days, aggregated data 2 years"
+
+  - id: performance-monitoring
+    title: Performance and Technical Monitoring
+    instruction: |
+      Define how technical performance is monitored.
+    elicit: true
+    sections:
+      - id: performance-metrics
+        title: Performance Metrics
+        type: table
+        columns: [Metric, Threshold, Alert Condition, Owner]
+        instruction: |
+          Reference Experience DNA thresholds.
+        examples:
+          - ["Page Load Time (p95)", "< 2 seconds", "> 2.5 seconds", "Engineering"]
+          - ["API Response (p95)", "< 200ms", "> 300ms", "Engineering"]
+          - ["Mobile App Startup", "< 1 second", "> 1.5 seconds", "Mobile Team"]
+          - ["Error Rate", "< 1%", "> 2%", "Engineering"]
+          - ["Uptime", "99.9%", "< 99.5%", "DevOps"]
+
+      - id: monitoring-tools
+        title: Monitoring Tools and Dashboards
+        type: bullet-list
+        instruction: |
+          What tools are used for monitoring?
+        examples:
+          - "Application Performance Monitoring: Datadog APM (real-time performance, error tracking)"
+          - "Infrastructure Monitoring: AWS CloudWatch (server health, resource usage)"
+          - "User Analytics: Mixpanel (user behavior, funnels, retention)"
+          - "Real User Monitoring: Datadog RUM (actual user experience metrics)"
+          - "Alerting: PagerDuty (critical issues trigger on-call)"
+
+  - id: privacy-and-ethics
+    title: Data Privacy and Ethics
+    instruction: |
+      Define how user privacy is protected and data is used ethically.
+    elicit: true
+    sections:
+      - id: privacy-principles
+        title: Privacy Principles
+        type: bullet-list
+        instruction: |
+          Core privacy commitments.
+        examples:
+          - "Minimize data collection: Only collect data necessary for product improvement"
+          - "Anonymize personal data: User IDs anonymized in analytics, no PII in logs"
+          - "Transparent data use: Users informed what data is collected and why"
+          - "User control: Users can opt-out of analytics, delete their data"
+          - "Secure storage: All data encrypted at rest and in transit"
+
+      - id: compliance
+        title: Compliance Requirements
+        type: bullet-list
+        instruction: |
+          Legal and regulatory compliance.
+        examples:
+          - "GDPR compliance: User consent, data access, right to deletion"
+          - "CCPA compliance: California privacy rights supported"
+          - "Data retention policy: Personal data deleted after 2 years inactivity"
+          - "Security audits: Annual third-party security audit"
+
+  - id: learning-loops
+    title: Learning Loops and Continuous Improvement
+    instruction: |
+      Define how insights lead to action.
+    elicit: true
+    sections:
+      - id: insight-to-action
+        title: Insight to Action Process
+        type: numbered-list
+        instruction: |
+          How do insights become product changes?
+        examples:
+          - "Weekly metrics review: Team reviews north star, KPIs, and anomalies"
+          - "Monthly deep dives: In-depth analysis of specific metrics or segments"
+          - "Hypothesis generation: Insights lead to hypotheses for experiments or features"
+          - "Prioritization: Insights inform backlog prioritization (high-impact opportunities)"
+          - "Validation: Post-launch validation confirms expected impact"
+          - "Documentation: Learnings documented for institutional knowledge"
+
+      - id: feedback-loops
+        title: Feedback Loops
+        type: bullet-list
+        instruction: |
+          How quickly can we learn and adapt?
+        examples:
+          - "Real-time: Error alerts trigger immediate investigation"
+          - "Daily: North star metric reviewed daily by product team"
+          - "Weekly: Funnel and engagement metrics reviewed weekly"
+          - "Monthly: Cohort analysis and retention deep dive monthly"
+          - "Quarterly: Full metrics review and strategy adjustment quarterly"
+
+  - id: analytics-infrastructure
+    title: Analytics Infrastructure
+    instruction: |
+      Define the technical infrastructure for analytics.
+    sections:
+      - id: data-pipeline
+        title: Data Pipeline
+        type: paragraph
+        instruction: |
+          How does data flow from product to insights?
+        examples:
+          - "Client instrumentation (mobile app, web) → Event stream (Kafka) → Data warehouse (Snowflake) → Analytics platform (Mixpanel, Looker) → Dashboards. Real-time events processed within seconds. Batch aggregations run nightly. Data warehouse serves as source of truth."
+
+      - id: data-warehouse
+        title: Data Warehouse and Storage
+        type: bullet-list
+        instruction: |
+          Where is data stored and how is it organized?
+        examples:
+          - "Data Warehouse: Snowflake (raw events, aggregated tables, user profiles)"
+          - "Hot Storage: Last 90 days optimized for fast queries"
+          - "Cold Storage: Historical data archived to S3 after 90 days"
+          - "Schema: Star schema with fact tables (events) and dimension tables (users, equipment)"
+
+  - id: validation-questions
+    title: Intelligence Validation Questions
+    instruction: |
+      Questions to ask when making decisions to ensure alignment with Intelligence DNA.
+    type: numbered-list
+    examples:
+      - "Can we measure whether this feature is successful? What metrics?"
+      - "Does this instrumentation serve learning or just data hoarding?"
+      - "Are we tracking what users care about or what's easy to measure?"
+      - "Does this protect user privacy while enabling intelligence?"
+      - "Can we run an experiment to validate this hypothesis?"
+      - "Will this metric lead to action or just a dashboard?"
+      - "Does this analysis inform north star progress?"
