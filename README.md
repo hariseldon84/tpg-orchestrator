@@ -110,7 +110,8 @@ Then activate the orchestrator:
 Reference TPG agents in your Cursor Rules or prompts:
 
 ```
-Use the TPG Product Manager agent to create user stories
+Use the TPG Product Owner agent to create user stories
+Use the Purpose Architect to define product vision
 ```
 
 ### In Windsurf
@@ -194,18 +195,18 @@ your-project/
 
 ## The 10 Specialized Agents
 
-Each agent is an expert in a specific domain:
+Each agent specializes in a Product Genome DNA:
 
-1. **TPG Orchestrator** - Master coordinator and framework expert
-2. **Product Manager** - Product strategy and roadmap planning
-3. **Product Owner** - User stories and backlog management
-4. **Architect** - System design and technical architecture
-5. **Developer** - Implementation and coding best practices
-6. **QA Engineer** - Testing strategy and quality assurance
-7. **UX Expert** - User experience and design
-8. **Analyst** - Data analysis and insights
-9. **Scrum Master** - Agile processes and team facilitation
-10. **AI Strategist** - AI integration and intelligence design
+1. **TPG Orchestrator** - Master coordinator and Product Genome framework expert
+2. **Purpose Architect (Sophia)** - Purpose DNA specialist - vision, mission, and strategic direction
+3. **User Analyst (Maya)** - User DNA specialist - user research, personas, and Jobs-to-be-Done
+4. **Experience Guardian (Emma)** - Experience DNA & MQB specialist - user journeys and quality gates
+5. **Architecture Expert (Winston)** - Architecture DNA specialist - system design and ADRs
+6. **Intelligence Analyst (Iris)** - Intelligence DNA specialist - metrics, analytics, and data strategy
+7. **Culture Coach (Carlos)** - Cultural DNA specialist - team values and collaboration
+8. **Evolution Manager (Evelyn)** - Evolution Flow specialist - continuous improvement cycles
+9. **Product Owner (Olivia)** - Builder's Hierarchy specialist - stories, epics, and delivery
+10. **Quality Specialist (Quinn)** - QA, AI integration, and security specialist
 
 ## Web Bundles
 
