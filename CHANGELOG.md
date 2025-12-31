@@ -5,6 +5,32 @@ All notable changes to TPG Orchestrator will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-alpha.2] - 2025-12-31
+
+### Added
+- **IDE-Specific Configuration Generation**: Installer now creates IDE-specific folders and wrapper files for Claude Code, Cursor, Windsurf, and GitHub Copilot
+- **Multi-IDE Support**: All 10 TPG agents and 14 tasks are now available as:
+  - Claude Code slash commands (`.claude/commands/TPG/`)
+  - Cursor rules (`.cursor/rules/tpg/`)
+  - Windsurf workflows (`.windsurf/workflows/`)
+  - GitHub Copilot chat modes (`.github/chatmodes/`)
+- **Automatic IDE Detection**: Installer generates appropriate wrapper files based on selected IDEs
+- **IDE-Specific Instructions**: Post-installation guidance customized for each IDE
+
+### Changed
+- Installer now generates 24+ IDE configuration files (10 agents + 14 tasks) for each selected IDE
+- Improved installation output to show IDE-specific folder structure
+- Enhanced post-installation instructions with IDE-specific activation steps
+
+### Fixed
+- Agent ID extraction from YAML now handles Windows line endings correctly
+- IDE configuration files now have correct command names and metadata
+
+### Technical
+- New module: `tools/lib/ide-config-generator.js` - Generates IDE-specific wrapper files
+- Updated: `tools/lib/installer.js` - Integrates IDE config generation
+- Updated: `tools/lib/installer.js` - Uninstaller now removes IDE-specific folders
+
 ## [1.0.0-alpha.1] - 2025-12-31
 
 ### Added

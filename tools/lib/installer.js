@@ -5,9 +5,10 @@ const ora = require('ora');
 const inquirer = require('inquirer');
 const FileCopier = require('./file-copier');
 const ManifestManager = require('./manifest-manager');
+const IDEConfigGenerator = require('./ide-config-generator');
 
 // Package version (should match package.json)
-const PACKAGE_VERSION = '1.0.0-alpha.1';
+const PACKAGE_VERSION = '1.0.0-alpha.2';
 
 // Available IDEs
 const AVAILABLE_IDES = [
@@ -181,6 +182,44 @@ async function install(options = {}) {
 
     spinner.succeed(chalk.green('Installation manifest created'));
 
+    // Generate IDE-specific configurations
+    if (ides.length > 0) {
+      spinner.start('Generating IDE configurations...');
+
+      try {
+        const ideGenerator = new IDEConfigGenerator(targetPath, projectRoot);
+        const ideResults = await ideGenerator.generateAll(ides);
+
+        let totalIDEFiles = 0;
+        const successfulIDEs = [];
+        const failedIDEs = [];
+
+        for (const ideResult of ideResults.ides) {
+          if (ideResult.success && !ideResult.skipped) {
+            totalIDEFiles += (ideResult.agentsCreated || 0) + (ideResult.tasksCreated || 0);
+            successfulIDEs.push(ideResult.ide);
+          } else if (!ideResult.success) {
+            failedIDEs.push(ideResult.ide);
+          }
+        }
+
+        if (successfulIDEs.length > 0) {
+          spinner.succeed(chalk.green(`Generated ${totalIDEFiles} IDE configuration files for ${successfulIDEs.length} IDE(s)`));
+        } else {
+          spinner.warn(chalk.yellow('No IDE configurations generated'));
+        }
+
+        if (failedIDEs.length > 0) {
+          console.log(chalk.yellow(`Warning: Failed to generate configs for: ${failedIDEs.join(', ')}`));
+        }
+
+      } catch (error) {
+        spinner.warn(chalk.yellow('IDE configuration generation failed'));
+        console.log(chalk.gray(`Error: ${error.message}`));
+        console.log(chalk.gray('Continuing with basic installation...'));
+      }
+    }
+
     // Show success message
     console.log('\n' + chalk.green.bold('✓ Installation complete!') + '\n');
 
@@ -193,25 +232,36 @@ async function install(options = {}) {
 
     if (ides.includes('claude-code')) {
       console.log(chalk.yellow('For Claude Code:'));
-      console.log(chalk.white('  1. Type *help to see available commands'));
-      console.log(chalk.white('  2. Start with /tpg-orchestrator to activate the framework'));
+      console.log(chalk.white('  1. Restart Claude Code or reload the window'));
+      console.log(chalk.white('  2. Type /tpg-orchestrator to activate the master orchestrator'));
+      console.log(chalk.white('  3. Use /purpose-architect, /user-analyst, etc. to activate specific agents'));
+      console.log(chalk.white('  4. All 10 TPG agents are now available as slash commands!'));
     }
 
     if (ides.includes('cursor')) {
       console.log(chalk.yellow('\nFor Cursor:'));
-      console.log(chalk.white('  1. Open Cursor Rules'));
-      console.log(chalk.white('  2. Reference the TPG Orchestrator agents in your prompts'));
+      console.log(chalk.white('  1. Open Cursor Settings > Rules'));
+      console.log(chalk.white('  2. Use @tpg-orchestrator, @purpose-architect, @user-analyst in your prompts'));
+      console.log(chalk.white('  3. All 10 TPG agents are now available as Cursor rules!'));
     }
 
     if (ides.includes('windsurf')) {
       console.log(chalk.yellow('\nFor Windsurf:'));
-      console.log(chalk.white('  1. Open the command palette'));
-      console.log(chalk.white('  2. Reference TPG agents in your cascade'));
+      console.log(chalk.white('  1. Open Windsurf Cascade'));
+      console.log(chalk.white('  2. Select TPG agents from the workflows list'));
+      console.log(chalk.white('  3. All 10 TPG agents are now available as Windsurf workflows!'));
+    }
+
+    if (ides.includes('github-copilot')) {
+      console.log(chalk.yellow('\nFor GitHub Copilot:'));
+      console.log(chalk.white('  1. Open GitHub Copilot Chat'));
+      console.log(chalk.white('  2. Activate agents using chat mode syntax'));
+      console.log(chalk.white('  3. All 10 TPG agents are now available as chat modes!'));
     }
 
     console.log('\n' + chalk.white('File structure created:'));
     console.log(chalk.gray('  your-project/'));
-    console.log(chalk.gray('  ├── .tpg-core/'));
+    console.log(chalk.gray('  ├── .tpg-core/           (Core framework files)'));
     console.log(chalk.gray('  │   ├── agents/          (10 specialized agents)'));
     console.log(chalk.gray('  │   ├── tasks/           (14 executable tasks)'));
     console.log(chalk.gray('  │   ├── templates/       (16 structured templates)'));
@@ -219,6 +269,23 @@ async function install(options = {}) {
     console.log(chalk.gray('  │   ├── workflows/       (6 workflow definitions)'));
     console.log(chalk.gray('  │   ├── data/            (5 knowledge files)'));
     console.log(chalk.gray('  │   └── core-config.yaml'));
+
+    // Show IDE-specific folders
+    if (ides.includes('claude-code')) {
+      console.log(chalk.gray('  ├── .claude/commands/TPG/'));
+      console.log(chalk.gray('  │   ├── agents/          (10 agent slash commands)'));
+      console.log(chalk.gray('  │   └── tasks/           (14 task slash commands)'));
+    }
+    if (ides.includes('cursor')) {
+      console.log(chalk.gray('  ├── .cursor/rules/tpg/   (10 agent rules)'));
+    }
+    if (ides.includes('windsurf')) {
+      console.log(chalk.gray('  ├── .windsurf/workflows/ (10 agent cascades)'));
+    }
+    if (ides.includes('github-copilot')) {
+      console.log(chalk.gray('  ├── .github/chatmodes/   (10 agent chat modes)'));
+    }
+
     console.log(chalk.gray('  └── install-manifest.yaml'));
 
     console.log('\n' + chalk.blue('Run') + chalk.bold(' npx tpg-orchestrator info ') + chalk.blue('to view installation details'));
@@ -388,6 +455,17 @@ async function uninstall() {
     const targetPath = path.join(projectRoot, '.tpg-core');
     const fileCopier = new FileCopier('', targetPath);
     await fileCopier.removeAll();
+
+    // Remove IDE configurations
+    if (summary.ides && summary.ides.length > 0) {
+      spinner.text = 'Removing IDE configurations...';
+
+      const ideGenerator = new IDEConfigGenerator(targetPath, projectRoot);
+
+      for (const ide of summary.ides) {
+        await ideGenerator.removeIDEConfig(ide);
+      }
+    }
 
     // Remove manifest
     await manifestManager.remove();
