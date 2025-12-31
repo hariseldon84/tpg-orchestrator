@@ -142,52 +142,85 @@ your-project/
 ├── .tpg-core/
 │   ├── agents/              # 10 specialized AI agents
 │   │   ├── tpg-orchestrator.md
-│   │   ├── tpg-pm.md
-│   │   ├── tpg-po.md
-│   │   ├── tpg-architect.md
-│   │   ├── tpg-developer.md
-│   │   ├── tpg-qa.md
-│   │   ├── tpg-ux.md
-│   │   ├── tpg-analyst.md
-│   │   ├── tpg-sm.md
-│   │   └── tpg-ai-strategist.md
+│   │   ├── purpose-architect.md
+│   │   ├── user-analyst.md
+│   │   ├── experience-guardian.md
+│   │   ├── architecture-expert.md
+│   │   ├── intelligence-analyst.md
+│   │   ├── culture-coach.md
+│   │   ├── evolution-manager.md
+│   │   ├── product-owner.md
+│   │   └── quality-specialist.md
 │   │
 │   ├── tasks/               # 14 executable tasks
-│   │   ├── assess-dna.md
-│   │   ├── create-dna.md
-│   │   ├── mqb-gate-check.md
-│   │   ├── user-research.md
-│   │   ├── journey-mapping.md
-│   │   ├── architecture-design.md
-│   │   └── ... (and more)
+│   │   ├── assess-genome.md
+│   │   ├── assess-purpose-dna.md
+│   │   ├── assess-user-dna.md
+│   │   ├── assess-experience-dna.md
+│   │   ├── assess-architecture-dna.md
+│   │   ├── assess-intelligence-dna.md
+│   │   ├── assess-cultural-dna.md
+│   │   ├── define-mqb.md
+│   │   ├── run-mqb-gates.md
+│   │   ├── create-user-story.md
+│   │   ├── create-adr.md
+│   │   ├── analyze-metrics.md
+│   │   ├── validate-genome-coherence.md
+│   │   └── create-doc.md
 │   │
 │   ├── templates/           # 16 structured templates
-│   │   ├── dna-assessment.md
-│   │   ├── user-persona.md
-│   │   ├── user-journey.md
-│   │   ├── system-architecture.md
-│   │   └── ... (and more)
+│   │   ├── genome-assessment-tmpl.yaml
+│   │   ├── purpose-dna-tmpl.yaml
+│   │   ├── user-dna-tmpl.yaml
+│   │   ├── experience-dna-tmpl.yaml
+│   │   ├── architecture-dna-tmpl.yaml
+│   │   ├── intelligence-dna-tmpl.yaml
+│   │   ├── cultural-dna-tmpl.yaml
+│   │   ├── mqb-definition-tmpl.yaml
+│   │   ├── user-story-tmpl.yaml
+│   │   ├── epic-tmpl.yaml
+│   │   ├── adr-tmpl.yaml
+│   │   ├── product-brief-tmpl.yaml
+│   │   ├── metrics-dashboard-tmpl.yaml
+│   │   ├── evolution-plan-tmpl.yaml
+│   │   ├── culture-rituals-tmpl.yaml
+│   │   └── genome-coherence-report-tmpl.yaml
 │   │
 │   ├── checklists/          # 10 validation checklists
 │   │   ├── purpose-dna-checklist.md
 │   │   ├── user-dna-checklist.md
 │   │   ├── experience-dna-checklist.md
-│   │   └── ... (and more)
+│   │   ├── architecture-dna-checklist.md
+│   │   ├── intelligence-dna-checklist.md
+│   │   ├── cultural-dna-checklist.md
+│   │   ├── mqb-gate-checklist.md
+│   │   ├── evolution-flow-checklist.md
+│   │   ├── genome-coherence-checklist.md
+│   │   └── ship-readiness-checklist.md
 │   │
 │   ├── workflows/           # 6 end-to-end workflows
-│   │   ├── greenfield-product.md
-│   │   ├── brownfield-enhancement.md
-│   │   ├── ai-integration.md
-│   │   └── ... (and more)
+│   │   ├── greenfield-product.yaml
+│   │   ├── brownfield-product.yaml
+│   │   ├── genome-assessment-flow.yaml
+│   │   ├── dna-creation-flow.yaml
+│   │   ├── feature-validation-flow.yaml
+│   │   └── ship-validation-flow.yaml
 │   │
 │   ├── data/                # 5 knowledge files
-│   │   ├── product-genome-guide.md
-│   │   ├── mqb-framework.md
-│   │   ├── builders-hierarchy.md
-│   │   ├── evolution-flow.md
-│   │   └── best-practices.md
+│   │   ├── tpg-kb.md
+│   │   ├── genome-patterns.md
+│   │   ├── case-studies.md
+│   │   ├── elicitation-methods.md
+│   │   └── technical-preferences.md
 │   │
-│   ├── utils/               # Utility scripts
+│   ├── utils/               # 3 utility files
+│   │   ├── genome-calculator.md
+│   │   ├── template-format.md
+│   │   └── workflow-management.md
+│   │
+│   ├── agent-teams/         # Team configuration
+│   │   └── team-product-genome.yaml
+│   │
 │   └── core-config.yaml     # Framework configuration
 │
 └── install-manifest.yaml    # Installation tracking
